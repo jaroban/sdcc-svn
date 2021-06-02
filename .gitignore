@@ -405,6 +405,16 @@ sdcc/support/cpp/auto-host.h
 sdcc/support/cpp/options.c
 sdcc/support/cpp/options.h
 *.rul
+Makefile
+sdcc/main.mk
+sdcc/support/regression/ports/host/spec.mk
+sdcc/confdefs.h
+sdcc/sdccconf.h
+sdcc/support/packihx/config.h
+sdcc/Makefile.common
+sdcc/ports.all
+sdcc/ports.build
+config.status
 
 # build dir
 sdcc/bin_vc/*
