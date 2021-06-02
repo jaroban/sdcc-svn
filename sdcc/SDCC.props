@@ -4,7 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <ExecutablePath>$(SolutionDir)\..\utils;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(SolutionDir)\..\boost_1_76_0\boost;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\boost\boost_1_76_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemGroup />

@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5339F39B-0A44-4248-972C-F8833B0F5537}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -232,10 +233,6 @@ copy %(Identity) bin\sdld6808.exe /y &gt; nul</Command>
     </ProjectReference>
     <ProjectReference Include="support\cpp\sdcpp.vcxproj">
       <Project>{57bcb0f8-ef4a-4688-9b36-55a8f6dc93bf}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="support\librarian\librarian.vcxproj">
-      <Project>{fc989bcf-4aad-4f53-8a21-3d6ff8f2f0b5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="support\packihx\PackIhx.vcxproj">

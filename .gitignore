@@ -404,6 +404,7 @@ sdcc/src/version.h
 sdcc/support/cpp/auto-host.h
 sdcc/support/cpp/options.c
 sdcc/support/cpp/options.h
+*.rul
 
 # build dir
 sdcc/bin_vc/*

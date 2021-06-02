@@ -75,5 +75,11 @@
     <CustomBuild Include="peeph-tlcs90.def">
       <Filter>Custom Build</Filter>
     </CustomBuild>
+    <CustomBuild Include="peeph-ez80_z80.def">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="peeph-z80n.def">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

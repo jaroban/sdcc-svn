@@ -1,5 +1,6 @@
 # TODO: check for updates at
 # https://www.boost.org
+# if the version changes, also update the include path in \sdcc\SDCC.props !
 $version = '1_76_0'
 
 $version_with_dots = $version.replace('_', '.')

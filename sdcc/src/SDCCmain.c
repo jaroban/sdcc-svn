@@ -33,6 +33,7 @@
 #include "common.h"
 #include <ctype.h>
 #include "dbuf_string.h"
+#include "SDCCglobl.h"
 #include "SDCCerr.h"
 #include "SDCCmacro.h"
 #include "SDCCargs.h"
@@ -372,13 +373,13 @@ static PORT *_ports[] = {
 #if !OPT_DISABLE_STM8
   &stm8_port,
 #endif
-#if !OPT_DISABLE_PDK13
+#if !OPT_DISABLE_PDK13 && !_WIN32
   &pdk13_port,
 #endif
-#if !OPT_DISABLE_PDK14
+#if !OPT_DISABLE_PDK14 && !_WIN32
   &pdk14_port,
 #endif
-#if !OPT_DISABLE_PDK15
+#if !OPT_DISABLE_PDK15 && !_WIN32
   &pdk15_port,
 #endif
 };

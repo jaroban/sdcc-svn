@@ -108,7 +108,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;..\sdbinutils\include;.\win32;.\libcpp;.\libcpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;WIN32;_CONSOLE;HAVE_CONFIG_H;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/sdcpp.pch</PrecompiledHeaderOutputFile>
@@ -118,7 +117,7 @@
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -153,6 +152,7 @@
     <ClCompile Include="..\sdbinutils\libiberty\obstack.c" />
     <ClCompile Include="..\sdbinutils\libiberty\safe-ctype.c" />
     <ClCompile Include="..\sdbinutils\libiberty\vasprintf.c" />
+    <ClCompile Include="..\sdbinutils\libiberty\vprintf-support.c" />
     <ClCompile Include="..\sdbinutils\libiberty\xexit.c" />
     <ClCompile Include="..\sdbinutils\libiberty\xmalloc.c" />
     <ClCompile Include="..\sdbinutils\libiberty\xmemdup.c" />

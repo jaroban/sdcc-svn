@@ -164,6 +164,9 @@
     <ClCompile Include="SDCCbtree.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SDCCattr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\support\scripts\resource.rc">

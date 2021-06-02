@@ -38,6 +38,12 @@
     <ClCompile Include="symtab.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\support\util\dbuf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\support\util\dbuf_string.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="break.h">
@@ -65,6 +71,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="symtab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\support\util\dbuf_string.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

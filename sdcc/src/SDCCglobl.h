@@ -47,9 +47,12 @@
 
 #define UNIX_DIR_SEPARATOR_CHAR    '/'
 
-#if defined(__BORLANDC__) || defined(_MSC_VER)
+#if defined(__BORLANDC__)
 # define STRCASECMP   stricmp
 # define STRNCASECMP  strnicmp
+#elif defined(_MSC_VER)
+# define STRCASECMP   _stricmp
+# define STRNCASECMP  _strnicmp
 #else
 # define STRCASECMP   strcasecmp
 # define STRNCASECMP  strncasecmp

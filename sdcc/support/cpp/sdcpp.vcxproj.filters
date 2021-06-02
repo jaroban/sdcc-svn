@@ -160,6 +160,9 @@
     <ClCompile Include="win32\dirent.c">
       <Filter>Source Files\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdbinutils\libiberty\vprintf-support.c">
+      <Filter>Source Files\libiberty</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ansidecl.h">
