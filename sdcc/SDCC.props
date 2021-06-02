@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>C:\Local\boost_1_64_0;$(IncludePath)</IncludePath>
-    <ExecutablePath>C:\Programs\GnuWin32\bin;$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(SolutionDir)\..\utils;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)\..\boost_1_76_0\boost;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemGroup />
