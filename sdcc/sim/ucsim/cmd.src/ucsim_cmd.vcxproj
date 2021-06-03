@@ -59,15 +59,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\SDCC.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\SDCC.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\SDCC.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\SDCC.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -154,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cmdlexcl.h" />
+    <ClInclude Include="cmdpars.hh" />
     <ClInclude Include="cmdutil.h" />
     <ClInclude Include="cmd_bpcl.h" />
     <ClInclude Include="cmd_confcl.h" />
@@ -173,6 +178,7 @@
     <ClInclude Include="syntaxcl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cmdpars.cc" />
     <ClCompile Include="cmdutil.cc" />
     <ClCompile Include="cmd_bp.cc" />
     <ClCompile Include="cmd_conf.cc" />
@@ -190,6 +196,24 @@
     <ClCompile Include="newcmd.cc" />
     <ClCompile Include="newcmdposix.cc" />
     <ClCompile Include="syntax.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="cmdlex.l">
+      <Message>Generating Lexer: cmdlex.cc</Message>
+      <Outputs>cmdlex.cc</Outputs>
+      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatOutputAsContent>
+      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</TreatOutputAsContent>
+      <Command>flex -8 -f -ocmdlex.cc cmdlex.l</Command>
+    </CustomBuild>
+    <CustomBuild Include="cmdpars.y">
+      <Command>bison -d -v -o cmdpars.cc cmdpars.y</Command>
+      <Message>Generating Parser: cmdpars.cc</Message>
+      <Outputs>cmdpars.cc;cmdpars.hh</Outputs>
+      <TreatOutputAsContent>false</TreatOutputAsContent>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\SDCC.props" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

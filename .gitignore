@@ -416,6 +416,10 @@ sdcc/Makefile.common
 sdcc/ports.all
 sdcc/ports.build
 config.status
+sdcc/sim/ucsim/cmd.src/cmdlex.cc
+sdcc/sim/ucsim/cmd.src/cmdpars.cc
+sdcc/sim/ucsim/cmd.src/cmdpars.hh
+sdcc/sim/ucsim/cmd.src/cmdpars.output
 
 # build dir
 sdcc/bin_vc/*

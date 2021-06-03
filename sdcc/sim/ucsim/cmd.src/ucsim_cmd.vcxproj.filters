@@ -69,6 +69,9 @@
     <ClInclude Include="syntaxcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cmdpars.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cmd_bp.cc">
@@ -122,5 +125,15 @@
     <ClCompile Include="syntax.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cmdpars.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="cmdlex.l" />
+    <CustomBuild Include="cmdpars.y" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\SDCC.props" />
   </ItemGroup>
 </Project>
