@@ -30,7 +30,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 
 #include <stdio.h>
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 // prj
 #include "stypes.h"

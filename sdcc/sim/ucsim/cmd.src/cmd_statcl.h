@@ -28,7 +28,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef CMD_CMD_STATCL_HEADER
 #define CMD_CMD_STATCL_HEADER
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #include "newcmdcl.h"
 

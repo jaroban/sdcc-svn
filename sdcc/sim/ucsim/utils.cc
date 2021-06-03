@@ -25,7 +25,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #if defined(HAVE_VASPRINTF) && !defined(_GNU_SOURCE)
   /* define before including stdio.h to enable vasprintf() declaration */

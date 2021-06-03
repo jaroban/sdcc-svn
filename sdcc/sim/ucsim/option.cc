@@ -25,7 +25,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>

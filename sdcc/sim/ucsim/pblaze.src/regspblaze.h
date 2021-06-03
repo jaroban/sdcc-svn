@@ -23,7 +23,11 @@
 #ifndef REGPBLAZE_HEADER
 #define REGPBLAZE_HEADER
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #define REGISTER_BANK_A 0x01
 #define REGISTER_BANK_B 0x02

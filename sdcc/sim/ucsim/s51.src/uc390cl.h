@@ -29,7 +29,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef UC390CL_HEADER
 #define UC390CL_HEADER
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #include "uc52cl.h"
 

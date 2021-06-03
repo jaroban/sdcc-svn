@@ -25,7 +25,11 @@
 #include <map>
 #include <list>
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 #include "stypes.h"
 #include "pobjcl.h"
 #include "uccl.h"

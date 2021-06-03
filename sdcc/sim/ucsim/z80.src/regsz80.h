@@ -30,7 +30,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef REGSZ80_HEADER
 #define REGSZ80_HEADER
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 
 struct t_regpair

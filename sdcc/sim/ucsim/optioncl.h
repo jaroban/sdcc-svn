@@ -28,7 +28,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef SIM_OPTIONCL_HEADER
 #define SIM_OPTIONCL_HEADER
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #include <stdio.h>
 

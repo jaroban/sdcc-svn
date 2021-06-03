@@ -406,6 +406,7 @@ sdcc/support/cpp/options.c
 sdcc/support/cpp/options.h
 *.rul
 Makefile
+Makefile.dep
 sdcc/main.mk
 sdcc/support/regression/ports/host/spec.mk
 sdcc/confdefs.h
@@ -418,3 +419,21 @@ config.status
 
 # build dir
 sdcc/bin_vc/*
+
+# compilation results
+*.po
+*.o
+*.a
+*.lst
+*.hex
+*.plo
+*.bin
+*.stamp
+a.cod
+check.asm
+stamp-h1
+pics.supported
+
+# test results
+sdcc/support/regression/results/*
+sdcc/support/regression/gen/*

@@ -25,13 +25,18 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#include <io.h>
+#else
 #include "ddconfig.h"
+#include <unistd.h>
+#include HEADER_FD
+#endif
 
 #include <stdio.h>
 //#include <sys/time.h>
 #include <sys/types.h>
-#include <unistd.h>
-#include HEADER_FD
 //#include <errno.h>
 #include <string.h>
 #if defined HAVE_SYS_SOCKET_H

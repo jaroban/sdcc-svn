@@ -28,7 +28,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef SIM_BRKCL_HEADER
 #define SIM_BRKCL_HEADER
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 // prj
 #include "pobjcl.h"

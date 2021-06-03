@@ -1,5 +1,9 @@
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #include <stdio.h>
 #if defined HAVE_SYS_SOCKET_H

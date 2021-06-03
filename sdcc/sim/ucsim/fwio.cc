@@ -5,7 +5,11 @@
 #endif
 #define WINVER 0x500
 
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 #ifdef SOCKET_AVAIL
 # include HEADER_SOCKET

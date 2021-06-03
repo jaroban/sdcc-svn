@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "*.rul": "c"
+        "*.rul": "c",
+        "*.ipp": "cpp"
     }
 }

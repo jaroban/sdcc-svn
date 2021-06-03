@@ -24,7 +24,11 @@
 #include <stdlib.h>
 
 #include "globals.h"
+#if defined(_WIN32)
+#include "ddconfig_win.h"
+#else
 #include "ddconfig.h"
+#endif
 
 // sim
 #include "memcl.h"
