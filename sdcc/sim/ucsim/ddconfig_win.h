@@ -6,10 +6,16 @@
 #define TYPE_BYTE char
 #define TYPE_WORD short
 #define TYPE_DWORD int
-#define TYPE_QWORD long int
+#define TYPE_QWORD long long int
 
 #define UCSOCKET_T int
 #define VERSIONSTR "0.6-pre69"
+
+#define STATISTIC
+
+#define STDC_HEADERS 1
+#define SOCKET_AVAIL 1
+#define HEADER_SOCKET <winsock2.h>
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

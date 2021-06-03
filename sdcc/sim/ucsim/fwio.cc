@@ -473,11 +473,11 @@ mk_io(const char *fn, const char *mode)
     {
       if (strcmp(mode, "r") == 0)
 	{
-	  return cp_io(fileno(stdin), mode);
+	  return cp_io(_fileno(stdin), mode);
 	}
       else if (strcmp(mode, "w") == 0)
 	{
-	  return cp_io(fileno(stdout), mode);
+	  return cp_io(_fileno(stdout), mode);
 	}
     }
   io= new cl_io(fn, mode);
@@ -530,7 +530,7 @@ srv_accept(class cl_f *listen_io,
 	{
 	  if (fh > 0)
 	    {
-	      FILE *f= fdopen(fh, "r");
+	      FILE *f= _fdopen(fh, "r");
 	      //printf("fdopened f=%p for fh=%d as input\n", f, fh);
 	      io->own_opened(f, "r");
 	      io->type= F_SOCKET;
@@ -548,7 +548,7 @@ srv_accept(class cl_f *listen_io,
 	  //int fh= _open_osfhandle((intptr_t)new_sock, _O_TEXT);
 	  if (fh > 0)
 	    {
-	      FILE *f= fdopen(fh, "w");
+	      FILE *f= _fdopen(fh, "w");
 	      //printf("fdopened f=%p for fh=%d as output\n", f, fh);
 	      io->use_opened(f, "w");
 	      io->type= F_SOCKET;

@@ -25,14 +25,19 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
-#include <string.h>
+#ifdef _WIN32
+#include <string.h> 
+#include <io.h>
+#else
 #include <strings.h>
 #include <unistd.h>
+#endif
 
 //#include "ddconfig.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "linux_win.h"
 
 #include "pstr.h"
 /*#include "pobjt.h"*/
@@ -135,7 +140,7 @@ cl_base::is_inamed(const char *the_name) const
       !the_name ||
       !*the_name*/name.empty())
     return(false);
-  return(strcasecmp(name, the_name) == 0);
+  return(STRCASECMP(name, the_name) == 0);
 }
 
 

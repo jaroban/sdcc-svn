@@ -31,8 +31,13 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 //#include <stdlib.h>
 //#include <ctype.h>
 //#include <errno.h>
+#ifdef _WIN32
+#include <string.h> 
+#else
 #include <strings.h>
+#endif
 //#include "i_string.h"
+#include "linux_win.h"
 
 #include "globals.h"
 //#include "utils.h"
@@ -73,7 +78,7 @@ cl_sim51::mk_controller(void)
   if ((typ= type_option.get_value(typ)) == 0)
     typ= "C52";
   while ((cpus_51[i].type_str != NULL) &&
-	 (strcasecmp(typ, cpus_51[i].type_str) != 0))
+	 (STRCASECMP(typ, cpus_51[i].type_str) != 0))
     i++;
   if (cpus_51[i].type_str == NULL)
     {

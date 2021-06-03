@@ -35,6 +35,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include <stdlib.h>
 #include <ctype.h>
 #include "i_string.h"
+#include "linux_win.h"
 
   // local, prj
 #include "stypes.h"
@@ -67,7 +68,7 @@ cl_option::cl_option(class cl_base *the_creator, const char *aname, const char *
 {
   creator= the_creator;
   set_name(aname);
-  help= strdup(Ihelp);
+  help= STRDUP(Ihelp);
   char *s= (char*)malloc(strlen(aname)+100);
   sprintf(s, "users of option \"%s\"", aname);
   users= new cl_list(2, 2, s);
@@ -165,9 +166,9 @@ cl_option::set_value(const char *opt)
     free(value.sval);
   if (opt &&
       *opt)
-    value.sval= strdup(opt);
+    value.sval= STRDUP(opt);
   else
-    value.sval= strdup("");
+    value.sval= STRDUP("");
   //fprintf(stderr,"new value=%p\"%s\"\n",value.sval,value.sval);
   inform_users();
 }

@@ -133,7 +133,4 @@
     <CustomBuild Include="cmdlex.l" />
     <CustomBuild Include="cmdpars.y" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\SDCC.props" />
-  </ItemGroup>
 </Project>

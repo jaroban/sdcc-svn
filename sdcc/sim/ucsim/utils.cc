@@ -40,8 +40,13 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include <stdarg.h>
 #include <stdlib.h>
 //#include <unistd.h>
+#if defined(_WIN32)
+#include "gettimeofday_win.h"
+#else
 #include <sys/time.h>
+#endif
 #include <string.h>
+#include "linux_win.h"
 
   // prj
 //#include "stypes.h"
@@ -186,7 +191,7 @@ object_name(class cl_base *o)
 char *
 case_string(enum letter_case lcase, const char *str)
 {
-  char *p= strdup(str);
+  char *p= STRDUP(str);
   char *s= p;
 
   switch (lcase)
