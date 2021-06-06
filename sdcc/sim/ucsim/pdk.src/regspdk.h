@@ -28,11 +28,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef REGPDK_HEADER
 #define REGPDK_HEADER
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
 
 
 const t_addr io_size = 64;

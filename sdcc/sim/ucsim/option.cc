@@ -25,11 +25,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -68,7 +64,7 @@ cl_option::cl_option(class cl_base *the_creator, const char *aname, const char *
 {
   creator= the_creator;
   set_name(aname);
-  help= STRDUP(Ihelp);
+  help= strdup(Ihelp);
   char *s= (char*)malloc(strlen(aname)+100);
   sprintf(s, "users of option \"%s\"", aname);
   users= new cl_list(2, 2, s);
@@ -166,9 +162,9 @@ cl_option::set_value(const char *opt)
     free(value.sval);
   if (opt &&
       *opt)
-    value.sval= STRDUP(opt);
+    value.sval= strdup(opt);
   else
-    value.sval= STRDUP("");
+    value.sval= strdup("");
   //fprintf(stderr,"new value=%p\"%s\"\n",value.sval,value.sval);
   inform_users();
 }

@@ -45,6 +45,11 @@
     <ClInclude Include="pobjt.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="cmd.src\ucsim_cmd.vcxproj">
+      <Project>{814bbc63-9739-4b2c-848b-6d5696effb03}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

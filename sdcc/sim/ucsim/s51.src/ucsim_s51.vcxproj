@@ -81,6 +81,12 @@
     <ProjectReference Include="..\cmd.src\ucsim_cmd.vcxproj">
       <Project>{814bbc63-9739-4b2c-848b-6d5696effb03}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\gui.src\ucsim_gui.vcxproj">
+      <Project>{e0aa7fa7-da3d-45dd-8fc3-7e1c4e90d085}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sim.src\ucsim_sim.vcxproj">
+      <Project>{ff7556df-ec6a-411a-8586-e4b508fd36f1}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\ucsim_util.vcxproj">
       <Project>{7764c152-5d81-467d-87a6-99e9a35e046f}</Project>
     </ProjectReference>

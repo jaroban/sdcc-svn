@@ -68,7 +68,8 @@ UTF8IDF         {UTF8IDF1ST}|\xcc[\x80-\xbf]|\xcd[\x80-\xaf]|\xe2\x83[\x90-\xbf]
 #endif
 /* MSVC has no unistd.h but has read() declaration in io.h */
 #if defined(_MSC_VER)
-# include <io.h>
+#include <io.h>
+#define YY_NO_UNISTD_H 1
 #endif
 
 #define TKEYWORD(token) return (isTargetKeyword(yytext) ? (token) :\

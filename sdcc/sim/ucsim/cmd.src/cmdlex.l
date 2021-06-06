@@ -1,7 +1,9 @@
 %{
 #include <stdio.h>
 //#include <stdint.h>
-#include <unistd.h>
+#if defined(_MSC_VER)
+#include <io.h>
+#endif
 #include <string.h>
 #include "cmdlexcl.h"
 #include "cmdpars.hh"

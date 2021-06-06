@@ -15,125 +15,109 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cmd_bpcl.h">
+    <ClInclude Include="argcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_confcl.h">
+    <ClInclude Include="brkcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_execcl.h">
+    <ClInclude Include="dregcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_getcl.h">
+    <ClInclude Include="guiobjcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_guicl.h">
+    <ClInclude Include="hwcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_infocl.h">
+    <ClInclude Include="itsrccl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_memcl.h">
+    <ClInclude Include="iwrap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_setcl.h">
+    <ClInclude Include="memcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_showcl.h">
+    <ClInclude Include="obsolete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_statcl.h">
+    <ClInclude Include="port_hwcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_timercl.h">
+    <ClInclude Include="serial_hwcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmd_uccl.h">
+    <ClInclude Include="simcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmdlexcl.h">
+    <ClInclude Include="simifcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cmdutil.h">
+    <ClInclude Include="stackcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="commandcl.h">
+    <ClInclude Include="uccl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="newcmdcl.h">
+    <ClInclude Include="uccl_instructions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="newcmdposixcl.h">
+    <ClInclude Include="varcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="syntaxcl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cmdpars.hh">
+    <ClInclude Include="vcdcl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cmd_bp.cc">
+    <ClCompile Include="arg.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_conf.cc">
+    <ClCompile Include="brk.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_exec.cc">
+    <ClCompile Include="dreg.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_get.cc">
+    <ClCompile Include="guiobj.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_gui.cc">
+    <ClCompile Include="hw.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_info.cc">
+    <ClCompile Include="itsrc.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_mem.cc">
+    <ClCompile Include="iwrap.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_set.cc">
+    <ClCompile Include="mem.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_show.cc">
+    <ClCompile Include="port_hw.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_stat.cc">
+    <ClCompile Include="serial_hw.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_timer.cc">
+    <ClCompile Include="sim.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_uc.cc">
+    <ClCompile Include="simif.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cmdutil.cc">
+    <ClCompile Include="stack.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="command.cc">
+    <ClCompile Include="uc.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="newcmd.cc">
+    <ClCompile Include="var.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="newcmdposix.cc">
+    <ClCompile Include="vcd.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="syntax.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cmdpars.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cmdlex.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="cmdlex.l" />
-    <CustomBuild Include="cmdpars.y" />
   </ItemGroup>
 </Project>

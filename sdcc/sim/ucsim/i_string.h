@@ -28,11 +28,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef I_STRING_HEADER
 #define I_STRING_HEADER
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
 
 #if STDC_HEADERS
 # include <string.h>

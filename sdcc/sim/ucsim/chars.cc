@@ -76,7 +76,7 @@ chars::chars(const char *, const char *fmt, ...)
   vsnprintf(n, 999, fmt, ap);
   va_end(ap);
 
-  chars_string= STRDUP(n);
+  chars_string= strdup(n);
   chars_length= strlen(n);
   dynamic= true;
   pars_pos= 0;

@@ -28,11 +28,8 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef STYPES_HEADER
 #define STYPES_HEADER
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
+
 
 typedef unsigned char	uchar;
 typedef unsigned int	uint;

@@ -17,6 +17,8 @@
 #define SOCKET_AVAIL 1
 #define HEADER_SOCKET <winsock2.h>
 
+#define YY_NO_UNISTD_H 1
+
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
 #if defined AC_APPLE_UNIVERSAL_BUILD

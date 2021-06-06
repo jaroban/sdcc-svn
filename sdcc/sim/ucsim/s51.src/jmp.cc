@@ -2,7 +2,7 @@
  * Simulator of microcontrollers (jmp.cc)
  *
  * Copyright (C) 1999,99 Drotos Daniel, Talker Bt.
- *
+ * 
  * To contact author send email to drdani@mazsola.iit.uni-miskolc.hu
  *
  */
@@ -50,13 +50,13 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 int
 cl_51core::instruction_01/*inst_ajmp_addr*/(t_mem/*uchar*/ code)
 {
-	uchar h, l;
+  uchar h, l;
 
-	h = (code >> 5) & 0x07;
-	l = fetch();
-	tick(1);
-	PC = (PC & 0xf800) | ((t_addr)h << 8) | l;
-	return(resGO);
+  h= (code >> 5) & 0x07;
+  l= fetch();
+  tick(1);
+  PC= (PC & 0xf800) | (h*256 + l);
+  return(resGO);
 }
 
 
@@ -69,27 +69,27 @@ cl_51core::instruction_01/*inst_ajmp_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_10/*inst_jbc_bit_addr*/(t_mem/*uchar*/ code)
 {
-	uchar bitaddr, jaddr, b;
+  uchar bitaddr, jaddr, b;
 
-	bitaddr = fetch();
-	jaddr = fetch();
-	//t_addr a;
-	//t_mem m;
-	//class cl_address_space *mem;
-	//if ((mem= bit2mem(bitaddr, &a, &m)) == 0)
-	//return(resBITADDR);
-	//t_mem d= mem->read(a, HW_PORT);
-	//mem->write(a, d & ~m);
-	b = bits->get(bitaddr);
-	vc.rd++;
-	if (/*d & m*/b)
-	{
-		bits->write(bitaddr, 0);
-		PC = rom->validate_address(PC + (signed char)jaddr);
-		vc.wr++;
-	}
-	tick(1);
-	return(resGO);
+  bitaddr= fetch();
+  jaddr  = fetch();
+  //t_addr a;
+  //t_mem m;
+  //class cl_address_space *mem;
+  //if ((mem= bit2mem(bitaddr, &a, &m)) == 0)
+  //return(resBITADDR);
+  //t_mem d= mem->read(a, HW_PORT);
+  //mem->write(a, d & ~m);
+  b= bits->get(bitaddr);
+  vc.rd++;
+  if (/*d & m*/b)
+    {
+      bits->write(bitaddr, 0);
+      PC= rom->validate_address(PC + (signed char)jaddr);
+      vc.wr++;
+    }
+  tick(1);
+  return(resGO);
 }
 
 
@@ -102,9 +102,9 @@ cl_51core::instruction_10/*inst_jbc_bit_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_02/*inst_ljmp*/(t_mem code)
 {
-	PC = ((t_addr)fetch() << 8) | fetch();
-	tick(1);
-	return(resGO);
+  PC= fetch()*256 + fetch();
+  tick(1);
+  return(resGO);
 }
 
 /*
@@ -116,30 +116,30 @@ cl_51core::instruction_02/*inst_ljmp*/(t_mem code)
 int
 cl_51core::instruction_11/*inst_acall_addr*/(t_mem/*uchar*/ code)
 {
-	uchar h, l;
-	class cl_memory_cell* stck;
-	t_mem sp, sp_before/*, sp_after*/;
+  uchar h, l;
+  class cl_memory_cell *stck;
+  t_mem sp, sp_before/*, sp_after*/;
 
-	h = (code >> 5) & 0x07;
-	l = fetch();
-	sp_before = sfr->get(SP);
-	sp = sfr->write(SP, sfr->read(SP) + 1);
-	//proc_write_sp(sp);
-	stck = iram->get_cell(sp);
-	stck->write(PC & 0xff); // push low byte
-	tick(1);
+  h= (code >> 5) & 0x07;
+  l= fetch();
+  sp_before= sfr->get(SP);
+  sp= sfr->write(SP, sfr->read(SP) + 1);
+  //proc_write_sp(sp);
+  stck= iram->get_cell(sp);
+  stck->write(PC & 0xff); // push low byte
+  tick(1);
 
-	sp = /*sp_after*= */sfr->write(SP, sfr->read(SP) + 1);
-	//proc_write_sp(sp);
-	stck = iram->get_cell(sp);
-	stck->write((PC >> 8) & 0xff); // push high byte
-	t_mem pushed = PC;
-	PC = (PC & 0xf800) | ((t_addr)h << 8) | l;
-	class cl_stack_op* so = new cl_stack_call(instPC, PC, pushed, sp_before, sp);
-	so->init();
-	stack_write(so);
-	vc.wr += 2;
-	return(resGO);
+  sp= /*sp_after*= */sfr->write(SP, sfr->read(SP) + 1);
+  //proc_write_sp(sp);
+  stck= iram->get_cell(sp);
+  stck->write((PC >> 8) & 0xff); // push high byte
+  t_mem pushed= PC;
+  PC= (PC & 0xf800) | (h*256 + l);
+  class cl_stack_op *so= new cl_stack_call(instPC, PC, pushed, sp_before, sp);
+  so->init();
+  stack_write(so);
+  vc.wr+= 2;
+  return(resGO);
 }
 
 
@@ -152,41 +152,41 @@ cl_51core::instruction_11/*inst_acall_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::inst_lcall(t_mem code, uint addr, bool intr)
 {
-	uchar h = 0, l = 0;
-	t_mem sp, sp_before/*, sp_after*/;
-	class cl_memory_cell* stck;
+  uchar h= 0, l= 0;
+  t_mem sp, sp_before/*, sp_after*/;
+  class cl_memory_cell *stck;
 
-	if (!addr)
-	{
-		h = fetch();
-		l = fetch();
-	}
-	sp_before = sfr->get(SP);
-	sp = sfr->write(SP, sfr->read(SP) + 1);
-	//proc_write_sp(sp);
-	stck = iram->get_cell(sp);
-	stck->write(PC & 0xff); // push low byte
-	if (!addr)
-		tick(1);
+  if (!addr)
+    {
+      h= fetch();
+      l= fetch();
+    }
+  sp_before= sfr->get(SP);
+  sp= sfr->write(SP, sfr->read(SP) + 1);
+  //proc_write_sp(sp);
+  stck= iram->get_cell(sp);
+  stck->write(PC & 0xff); // push low byte
+  if (!addr)
+    tick(1);
 
-	sp = sfr->write(SP, sfr->read(SP) + 1);
-	//proc_write_sp(sp);
-	stck = iram->get_cell(sp);
-	stck->write((PC >> 8) & 0xff); // push high byte
-	t_mem pushed = PC;
-	if (addr)
-		PC = addr;
-	else
-		PC = ((t_addr)h << 8) + l;
-	class cl_stack_op* so;
-	if (intr)
-		so = new cl_stack_intr(instPC, PC, pushed, sp_before, sp/*_after*/);
-	else
-		so = new cl_stack_call(instPC, PC, pushed, sp_before, sp/*_after*/);
-	so->init();
-	stack_write(so);
-	vc.wr += 2;
-	return(resGO);
+  sp= sfr->write(SP, sfr->read(SP) + 1);
+  //proc_write_sp(sp);
+  stck= iram->get_cell(sp);
+  stck->write((PC >> 8) & 0xff); // push high byte
+  t_mem pushed= PC;
+  if (addr)
+    PC= addr;
+  else
+    PC= h*256 + l;
+  class cl_stack_op *so;
+  if (intr)
+    so= new cl_stack_intr(instPC, PC, pushed, sp_before, sp/*_after*/);
+  else
+    so= new cl_stack_call(instPC, PC, pushed, sp_before, sp/*_after*/);
+  so->init();
+  stack_write(so);
+  vc.wr+= 2;
+  return(resGO);
 }
 
 
@@ -199,21 +199,21 @@ cl_51core::inst_lcall(t_mem code, uint addr, bool intr)
 int
 cl_51core::instruction_20/*inst_jb_bit_addr*/(t_mem/*uchar*/ code)
 {
-	uchar bitaddr, jaddr, b;
-	//t_addr a;
-	//t_mem m;
+  uchar bitaddr, jaddr, b;
+  //t_addr a;
+  //t_mem m;
 
-	bitaddr = fetch();
-	//class cl_address_space *mem;
-	//if ((mem= bit2mem(bitaddr= fetch(), &a, &m)) == 0)
-	//return(resBITADDR);
-	tick(1);
-	jaddr = fetch();
-	b = bits->read(bitaddr);
-	if (/*mem->read(a) & m*/b)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	vc.rd++;
-	return(resGO);
+  bitaddr= fetch();
+  //class cl_address_space *mem;
+  //if ((mem= bit2mem(bitaddr= fetch(), &a, &m)) == 0)
+  //return(resBITADDR);
+  tick(1);
+  jaddr= fetch();
+  b= bits->read(bitaddr);
+  if (/*mem->read(a) & m*/b)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  vc.rd++;
+  return(resGO);
 }
 
 
@@ -226,25 +226,25 @@ cl_51core::instruction_20/*inst_jb_bit_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_22/*inst_ret*/(t_mem/*uchar*/ code)
 {
-	uchar h = 0, l = 0;
-	t_mem sp, sp_before/*, sp_after*/;
-	class cl_memory_cell* stck;
+  uchar h= 0, l= 0;
+  t_mem sp, sp_before/*, sp_after*/;
+  class cl_memory_cell *stck;
 
-	sp = sp_before = sfr->read(SP);
-	stck = iram->get_cell(sp);
-	h = stck->read();
-	sp = sfr->write(SP, sfr->read(SP) - 1);
-	tick(1);
+  sp= sp_before= sfr->read(SP);
+  stck= iram->get_cell(sp);
+  h= stck->read();
+  sp= sfr->write(SP, sfr->read(SP) - 1);
+  tick(1);
 
-	stck = iram->get_cell(sp);
-	l = stck->read();
-	sp = sfr->write(SP, sfr->read(SP) - 1);
-	PC = ((t_addr)h << 8) | l;
-	class cl_stack_op* so = new cl_stack_ret(instPC, PC, sp_before, sp/*_after*/);
-	so->init();
-	stack_read(so);
-	vc.rd += 2;
-	return(resGO);
+  stck= iram->get_cell(sp);
+  l= stck->read();
+  sp= sfr->write(SP, sfr->read(SP)  - 1);
+  PC= h*256 + l;
+  class cl_stack_op *so= new cl_stack_ret(instPC, PC, sp_before, sp/*_after*/);
+  so->init();
+  stack_read(so);
+  vc.rd+= 2;
+  return(resGO);
 }
 
 
@@ -257,21 +257,21 @@ cl_51core::instruction_22/*inst_ret*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_30/*inst_jnb_bit_addr*/(t_mem/*uchar*/ code)
 {
-	uchar bitaddr, jaddr, b;
-	//t_mem m;
-	//t_addr a;
-	//class cl_address_space *mem;
+  uchar bitaddr, jaddr, b;
+  //t_mem m;
+  //t_addr a;
+  //class cl_address_space *mem;
 
-	//if ((mem= bit2mem(bitaddr= fetch(), &a, &m)) == 0)
-	//return(resBITADDR);
-	tick(1);
-	bitaddr = fetch();
-	jaddr = fetch();
-	b = bits->read(bitaddr);
-	if (!/*(mem->read(a) & m)*/b)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	vc.rd++;
-	return(resGO);
+  //if ((mem= bit2mem(bitaddr= fetch(), &a, &m)) == 0)
+  //return(resBITADDR);
+  tick(1);
+  bitaddr= fetch();
+  jaddr= fetch();
+  b= bits->read(bitaddr);
+  if (!/*(mem->read(a) & m)*/b)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  vc.rd++;
+  return(resGO);
 }
 
 
@@ -284,35 +284,35 @@ cl_51core::instruction_30/*inst_jnb_bit_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_32/*inst_reti*/(t_mem/*uchar*/ code)
 {
-	uchar h = 0, l = 0;
-	t_mem sp, sp_before, sp_after;
-	class cl_memory_cell* stck;
+  uchar h= 0, l= 0;
+  t_mem sp, sp_before, sp_after;
+  class cl_memory_cell *stck;
 
-	sp = sp_before = sfr->read(SP);
-	stck = iram->get_cell(sp);
-	h = stck->read();
-	sp = sfr->write(SP, sfr->read(SP) - 1);
-	tick(1);
+  sp= sp_before= sfr->read(SP);
+  stck= iram->get_cell(sp);
+  h= stck->read();
+  sp= sfr->write(SP, sfr->read(SP) - 1);
+  tick(1);
 
-	stck = iram->get_cell(sp);
-	l = stck->read();
-	sp = sp_after = sfr->write(SP, sfr->read(SP) - 1);
-	PC = ((t_addr)h << 8) | l;
+  stck= iram->get_cell(sp);
+  l= stck->read();
+  sp= sp_after= sfr->write(SP, sfr->read(SP) - 1);
+  PC= h*256 + l;
 
-	interrupt->was_reti = true;
-	class it_level* il = (class it_level*)(it_levels->top());
-	if (il &&
-		il->level >= 0)
-	{
-		il = (class it_level*)(it_levels->pop());
-		delete il;
-	}
-	class cl_stack_op* so =
-		new cl_stack_iret(instPC, PC, sp_before, sp_after);
-	so->init();
-	stack_read(so);
-	vc.rd += 2;
-	return(resGO);
+  interrupt->was_reti= true;
+  class it_level *il= (class it_level *)(it_levels->top());
+  if (il &&
+      il->level >= 0)
+    {
+      il= (class it_level *)(it_levels->pop());
+      delete il;
+    }
+  class cl_stack_op *so=
+    new cl_stack_iret(instPC, PC, sp_before, sp_after);
+  so->init();
+  stack_read(so);
+  vc.rd+= 2;
+  return(resGO);
 }
 
 
@@ -325,13 +325,13 @@ cl_51core::instruction_32/*inst_reti*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_40/*inst_jc_addr*/(t_mem/*uchar*/ code)
 {
-	uchar jaddr;
+  uchar jaddr;
 
-	jaddr = fetch();
-	tick(1);
-	if (/*SFR_GET_C*/bits->get(0xd7))
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	return(resGO);
+  jaddr= fetch();
+  tick(1);
+  if (/*SFR_GET_C*/bits->get(0xd7))
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  return(resGO);
 }
 
 
@@ -344,13 +344,13 @@ cl_51core::instruction_40/*inst_jc_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_50/*inst_jnc_addr*/(t_mem/*uchar*/ code)
 {
-	uchar jaddr;
+  uchar jaddr;
 
-	jaddr = fetch();
-	tick(1);
-	if (!/*SFR_GET_C*/bits->get(0xd7))
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	return(resGO);
+  jaddr= fetch();
+  tick(1);
+  if (!/*SFR_GET_C*/bits->get(0xd7))
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  return(resGO);
 }
 
 
@@ -363,13 +363,13 @@ cl_51core::instruction_50/*inst_jnc_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_60/*inst_jz_addr*/(t_mem/*uchar*/ code)
 {
-	uchar jaddr;
+  uchar jaddr;
 
-	jaddr = fetch();
-	tick(1);
-	if (!acc->read())
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	return(resGO);
+  jaddr= fetch();
+  tick(1);
+  if (!acc->read())
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  return(resGO);
 }
 
 
@@ -382,13 +382,13 @@ cl_51core::instruction_60/*inst_jz_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_70/*inst_jnz_addr*/(t_mem/*uchar*/ code)
 {
-	uchar jaddr;
+  uchar jaddr;
 
-	jaddr = fetch();
-	tick(1);
-	if (acc->read())
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	return(resGO);
+  jaddr= fetch();
+  tick(1);
+  if (acc->read())
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  return(resGO);
 }
 
 
@@ -401,12 +401,12 @@ cl_51core::instruction_70/*inst_jnz_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_73/*inst_jmp_Sa_dptr*/(t_mem/*uchar*/ code)
 {
-	u16_t h = /*sfr*/dptr->read(/*DPH*/1);
-	u16_t l = /*sfr*/dptr->read(/*DPL*/0);
-	PC = rom->validate_address(((t_addr)h << 8) + l + acc->read());
-	tick(1);
-	vc.rd += 2;
-	return(resGO);
+  u16_t h= /*sfr*/dptr->read(/*DPH*/1);
+  u16_t l= /*sfr*/dptr->read(/*DPL*/0);
+  PC= rom->validate_address(h*256 + l + acc->read());
+  tick(1);
+  vc.rd+= 2;
+  return(resGO);
 }
 
 
@@ -419,11 +419,11 @@ cl_51core::instruction_73/*inst_jmp_Sa_dptr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_80/*inst_sjmp*/(t_mem/*uchar*/ code)
 {
-	signed char target = fetch();
+  signed char target= fetch();
 
-	PC = rom->validate_address(PC + target);
-	tick(1);
-	return(resGO);
+  PC= rom->validate_address(PC + target);
+  tick(1);
+  return(resGO);
 }
 
 
@@ -436,16 +436,16 @@ cl_51core::instruction_80/*inst_sjmp*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_b4/*inst_cjne_a_Sdata_addr*/(t_mem/*uchar*/ code)
 {
-	uchar data, jaddr, ac;
+  uchar data, jaddr, ac;
 
-	data = fetch();
-	jaddr = fetch();
-	tick(1);
-	/*SFR_SET_C(*/bits->set(0xd7, (ac = acc->read()) < data);
-	if (ac != data)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	vc.rd++;
-	return(resGO);
+  data = fetch();
+  jaddr= fetch();
+  tick(1);
+  /*SFR_SET_C(*/bits->set(0xd7, (ac= acc->read()) < data);
+  if (ac != data)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  vc.rd++;
+  return(resGO);
 }
 
 
@@ -458,19 +458,19 @@ cl_51core::instruction_b4/*inst_cjne_a_Sdata_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_b5/*inst_cjne_a_addr_addr*/(t_mem/*uchar*/ code)
 {
-	uchar data, jaddr;
-	t_addr a;
-	class cl_memory_cell* cell;
+  uchar data, jaddr;
+  t_addr a;
+  class cl_memory_cell *cell;
 
-	cell = get_direct(a = fetch());
-	jaddr = fetch();
-	tick(1);
-	data = cell->read();
-	/*SFR_SET_C(*/bits->set(0xd7, acc->get() < data);
-	if (acc->read() != data)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	vc.rd++;//= 2;
-	return(resGO);
+  cell= get_direct(a= fetch());
+  jaddr= fetch();
+  tick(1);
+  data= cell->read();
+  /*SFR_SET_C(*/bits->set(0xd7, acc->get() < data);
+  if (acc->read() != data)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  vc.rd++;//= 2;
+  return(resGO);
 }
 
 
@@ -483,19 +483,19 @@ cl_51core::instruction_b5/*inst_cjne_a_addr_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_b6/*inst_cjne_Sri_Sdata_addr*/(t_mem/*uchar*/ code)
 {
-	uchar data, jaddr;
-	class cl_memory_cell* cell;
+  uchar data, jaddr;
+  class cl_memory_cell *cell;
 
-	cell = iram->get_cell(R[code & 0x01]->read());
-	data = fetch();
-	jaddr = fetch();
-	tick(1);
-	t_mem d;
-	/*SFR_SET_C(*/bits->set(0xd7, (d = cell->read()) < data);
-	if (d != data)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	vc.rd++;//= 2;
-	return(resGO);
+  cell= iram->get_cell(R[code & 0x01]->read());
+  data = fetch();
+  jaddr= fetch();
+  tick(1);
+  t_mem d;
+  /*SFR_SET_C(*/bits->set(0xd7, (d= cell->read()) < data);
+  if (d != data)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  vc.rd++;//= 2;
+  return(resGO);
 }
 
 
@@ -508,19 +508,19 @@ cl_51core::instruction_b6/*inst_cjne_Sri_Sdata_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_b8/*inst_cjne_rn_Sdata_addr*/(t_mem/*uchar*/ code)
 {
-	uchar data, jaddr;
-	class cl_memory_cell* reg;
+  uchar data, jaddr;
+  class cl_memory_cell *reg;
 
-	reg = R[code & 0x07];
-	data = fetch();
-	jaddr = fetch();
-	tick(1);
-	t_mem r;
-	/*SFR_SET_C(*/bits->set(0xd7, (r = reg->read()) < data);
-	if (r != data)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	//vc.rd++;
-	return(resGO);
+  reg  = R[code & 0x07];
+  data = fetch();
+  jaddr= fetch();
+  tick(1);
+  t_mem r;
+  /*SFR_SET_C(*/bits->set(0xd7, (r= reg->read()) < data);
+  if (r != data)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  //vc.rd++;
+  return(resGO);
 }
 
 
@@ -533,19 +533,19 @@ cl_51core::instruction_b8/*inst_cjne_rn_Sdata_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_d5/*inst_djnz_addr_addr*/(t_mem/*uchar*/ code)
 {
-	uchar jaddr;
-	class cl_memory_cell* cell;
+  uchar jaddr;
+  class cl_memory_cell *cell;
 
-	cell = get_direct(fetch());
-	jaddr = fetch();
-	tick(1);
-	t_mem d = cell->read(HW_PORT);//cell->wadd(-1);
-	d = cell->write(d - 1);
-	if (d)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	vc.rd++;
-	vc.wr++;
-	return(resGO);
+  cell = get_direct(fetch());
+  jaddr= fetch();
+  tick(1);
+  t_mem d= cell->read(HW_PORT);//cell->wadd(-1);
+  d= cell->write(d-1);
+  if (d)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  vc.rd++;
+  vc.wr++;
+  return(resGO);
 }
 
 
@@ -558,18 +558,18 @@ cl_51core::instruction_d5/*inst_djnz_addr_addr*/(t_mem/*uchar*/ code)
 int
 cl_51core::instruction_d8/*inst_djnz_rn_addr*/(t_mem/*uchar*/ code)
 {
-	uchar jaddr;
-	class cl_memory_cell* reg;
+  uchar jaddr;
+  class cl_memory_cell *reg;
 
-	reg = R[code & 0x07];
-	jaddr = fetch();
-	tick(1);
-	t_mem r = reg->write(reg->read() - 1);
-	if (r)
-		PC = rom->validate_address(PC + (signed char)jaddr);
-	//vc.rd++;
-	//vc.wr++;
-	return(resGO);
+  reg  = R[code & 0x07];
+  jaddr= fetch();
+  tick(1);
+  t_mem r= reg->write(reg->read() - 1);
+  if (r)
+    PC= rom->validate_address(PC + (signed char)jaddr);
+  //vc.rd++;
+  //vc.wr++;
+  return(resGO);
 }
 
 

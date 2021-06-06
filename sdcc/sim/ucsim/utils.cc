@@ -25,11 +25,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
 
 #if defined(HAVE_VASPRINTF) && !defined(_GNU_SOURCE)
   /* define before including stdio.h to enable vasprintf() declaration */
@@ -46,7 +42,6 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include <sys/time.h>
 #endif
 #include <string.h>
-#include "linux_win.h"
 
   // prj
 //#include "stypes.h"
@@ -191,7 +186,7 @@ object_name(class cl_base *o)
 char *
 case_string(enum letter_case lcase, const char *str)
 {
-  char *p= STRDUP(str);
+  char *p= strdup(str);
   char *s= p;
 
   switch (lcase)

@@ -373,13 +373,13 @@ static PORT *_ports[] = {
 #if !OPT_DISABLE_STM8
   &stm8_port,
 #endif
-#if !OPT_DISABLE_PDK13 && !_WIN32
+#if !OPT_DISABLE_PDK13
   &pdk13_port,
 #endif
-#if !OPT_DISABLE_PDK14 && !_WIN32
+#if !OPT_DISABLE_PDK14
   &pdk14_port,
 #endif
-#if !OPT_DISABLE_PDK15 && !_WIN32
+#if !OPT_DISABLE_PDK15
   &pdk15_port,
 #endif
 };

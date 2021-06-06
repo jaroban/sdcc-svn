@@ -30,11 +30,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef REGST7_HEADER
 #define REGST7_HEADER
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
 
 
 struct t_regs

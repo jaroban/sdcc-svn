@@ -28,11 +28,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #ifndef CMD_CMDUTIL_HEADER
 #define CMD_CMDUTIL_HEADER
 
-#if defined(_WIN32)
-#include "ddconfig_win.h"
-#else
 #include "ddconfig.h"
-#endif
 
 #ifdef SOCKET_AVAIL
 # include HEADER_SOCKET
