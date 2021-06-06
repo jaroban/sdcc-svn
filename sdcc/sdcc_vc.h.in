@@ -84,6 +84,9 @@
 #undef OPT_DISABLE_PIC14
 #undef OPT_DISABLE_PIC16
 #define OPT_DISABLE_XA51  1
+#define OPT_DISABLE_PDK13 1
+#define OPT_DISABLE_PDK14 1
+#define OPT_DISABLE_PDK15 1
 
 /* Define to 1 if c supports tags in unnamed struct. */
 #define UNNAMED_STRUCT_TAG 1

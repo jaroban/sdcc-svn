@@ -42,6 +42,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include <ctype.h>
 #include <string.h>
 //#include "i_string.h"
+#include "linux_win.h"
 
 #include "glob.h"
 #include "uc390cl.h"
@@ -320,138 +321,138 @@ struct dis_entry disass_390f[] = {
  * Making an 390 CPU object
  */
 
-cl_uc390::cl_uc390 (struct cpu_entry *Itype, class cl_sim *asim):
-  cl_uc52 (Itype, asim)
+cl_uc390::cl_uc390(struct cpu_entry* Itype, class cl_sim* asim) :
+	cl_uc52(Itype, asim)
 {
-  //flat24_flag= 0;
-  if (Itype->type == CPU_DS390F)
-    {
-      printf ("24-bit flat mode, warning: lots of sfr-functions not implemented!\n");
-      //flat24_flag = 1;
-    }
-  // todo: add interrupt sources
+	//flat24_flag= 0;
+	if (Itype->type == CPU_DS390F)
+	{
+		printf("24-bit flat mode, warning: lots of sfr-functions not implemented!\n");
+		//flat24_flag = 1;
+	}
+	// todo: add interrupt sources
 }
 
 void
-cl_uc390::mk_hw_elements (void)
+cl_uc390::mk_hw_elements(void)
 {
-  class cl_hw *h;
+	class cl_hw* h;
 
-  cl_uc52::mk_hw_elements();
-  add_hw(h = new cl_uc390_hw (this));
-  h->init();
+	cl_uc52::mk_hw_elements();
+	add_hw(h = new cl_uc390_hw(this));
+	h->init();
 }
 
 void
 cl_uc390::make_memories(void)
 {
-  class cl_address_decoder *ad;
+	class cl_address_decoder* ad;
 
-  make_address_spaces();
-  dptr= 0;
-  make_chips();
+	make_address_spaces();
+	dptr = 0;
+	make_chips();
 
-  acc= sfr->get_cell(ACC);
-  psw= sfr->get_cell(PSW);
+	acc = sfr->get_cell(ACC);
+	psw = sfr->get_cell(PSW);
 
-  decode_regs();
-  decode_rom();
-  decode_iram();
-  decode_sfr();
-  decode_xram();
-  decode_bits();
-  decode_dptr();
-  
-  ad= new cl_address_decoder(ixram, ixram_chip, 0, 0xfff, 0);
-  ad->init();
-  ixram->decoders->add(ad);
-  ad->activate(0);
+	decode_regs();
+	decode_rom();
+	decode_iram();
+	decode_sfr();
+	decode_xram();
+	decode_bits();
+	decode_dptr();
+
+	ad = new cl_address_decoder(ixram, ixram_chip, 0, 0xfff, 0);
+	ad->init();
+	ixram->decoders->add(ad);
+	ad->activate(0);
 }
 
 void
 cl_uc390::make_address_spaces(void)
 {
-  rom= new cl_address_space("rom", 0, 0x20000, 8);
-  rom->init();
-  address_spaces->add(rom);
-  
-  iram= new cl_address_space("iram", 0, 0x100, 8);
-  iram->init();
-  address_spaces->add(iram);
+	rom = new cl_address_space("rom", 0, 0x20000, 8);
+	rom->init();
+	address_spaces->add(rom);
 
-  sfr= new cl_address_space("sfr", 0x80, 0x80, 8);
-  sfr->init();
-  address_spaces->add(sfr);
+	iram = new cl_address_space("iram", 0, 0x100, 8);
+	iram->init();
+	address_spaces->add(iram);
 
-  xram= new cl_address_space("xram", 0, 0x100000+128, 8);
-  xram->init();
-  address_spaces->add(xram);
+	sfr = new cl_address_space("sfr", 0x80, 0x80, 8);
+	sfr->init();
+	address_spaces->add(sfr);
 
-  ixram= new cl_address_space("ixram", 0, 0x1000, 8);
-  ixram->init();
-  address_spaces->add(ixram);
+	xram = new cl_address_space("xram", 0, 0x100000 + 128, 8);
+	xram->init();
+	address_spaces->add(xram);
 
-  regs= new cl_address_space("regs", 0, 8, 8);
-  regs->init();
-  address_spaces->add(regs);
+	ixram = new cl_address_space("ixram", 0, 0x1000, 8);
+	ixram->init();
+	address_spaces->add(ixram);
 
-  bits= new cl_address_space("bits", 0, 0x100, 1);
-  bits->init();
-  address_spaces->add(bits);
+	regs = new cl_address_space("regs", 0, 8, 8);
+	regs->init();
+	address_spaces->add(regs);
+
+	bits = new cl_address_space("bits", 0, 0x100, 1);
+	bits->init();
+	address_spaces->add(bits);
 }
 
 void
 cl_uc390::make_chips(void)
 {
-  rom_chip= new cl_chip8("rom_chip", 0x20000, 8, 0xff);
-  rom_chip->init();
-  memchips->add(rom_chip);
+	rom_chip = new cl_chip8("rom_chip", 0x20000, 8, 0xff);
+	rom_chip->init();
+	memchips->add(rom_chip);
 
-  iram_chip= new cl_chip8("iram_chip", 0x100, 8, 0);
-  iram_chip->init();
-  memchips->add(iram_chip);
+	iram_chip = new cl_chip8("iram_chip", 0x100, 8, 0);
+	iram_chip->init();
+	memchips->add(iram_chip);
 
-  xram_chip= new cl_chip8("xram_chip", 0x100000+128, 8, 0);
-  xram_chip->init();
-  memchips->add(xram_chip);
+	xram_chip = new cl_chip8("xram_chip", 0x100000 + 128, 8, 0);
+	xram_chip->init();
+	memchips->add(xram_chip);
 
-  ixram_chip= new cl_chip8("ixram_chip", 0x1000, 8);
-  ixram_chip->init();
-  memchips->add(ixram_chip);
+	ixram_chip = new cl_chip8("ixram_chip", 0x1000, 8);
+	ixram_chip->init();
+	memchips->add(ixram_chip);
 
-  sfr_chip= new cl_chip8("sfr_chip", 0x80, 8, 0);
-  sfr_chip->init();
-  memchips->add(sfr_chip);
+	sfr_chip = new cl_chip8("sfr_chip", 0x80, 8, 0);
+	sfr_chip->init();
+	memchips->add(sfr_chip);
 }
 
 void
 cl_uc390::decode_rom(void)
 {
-  class cl_address_decoder *ad;
-  ad= new cl_address_decoder(rom, rom_chip, 0, 0x1ffff, 0);
-  ad->init();
-  rom->decoders->add(ad);
-  ad->activate(0);
+	class cl_address_decoder* ad;
+	ad = new cl_address_decoder(rom, rom_chip, 0, 0x1ffff, 0);
+	ad->init();
+	rom->decoders->add(ad);
+	ad->activate(0);
 }
 
 void
 cl_uc390::decode_xram(void)
 {
-  class cl_address_decoder *ad;
-  
-  ad= new cl_address_decoder(xram, xram_chip, 0, 0x10007f, 0);
-  ad->init();
-  xram->decoders->add(ad);
-  ad->activate(0);
+	class cl_address_decoder* ad;
+
+	ad = new cl_address_decoder(xram, xram_chip, 0, 0x10007f, 0);
+	ad->init();
+	xram->decoders->add(ad);
+	ad->activate(0);
 }
 
 void
 cl_uc390::decode_dptr(void)
 {
-  vars->add("dpl", sfr, 0x82, 7, 0, "");
-  vars->add("DPL", sfr, 0x82, 7, 0, "");
-  vars->add("dph", sfr, 0x83, 7, 0, "");
-  vars->add("DPH", sfr, 0x83, 7, 0, "");
+	vars->add("dpl", sfr, 0x82, 7, 0, "");
+	vars->add("DPL", sfr, 0x82, 7, 0, "");
+	vars->add("dph", sfr, 0x83, 7, 0, "");
+	vars->add("DPH", sfr, 0x83, 7, 0, "");
 }
 
 
@@ -462,87 +463,87 @@ cl_uc390::decode_dptr(void)
 void
 cl_uc390::clear_sfr(void)
 {
-  cl_uc52::clear_sfr();
-	  /* SFR   value */
-  sfr->write(0x80, 0xff); /* P4     */
-  sfr->write(0x81, 0x07); /* SP     */
-  sfr->write(0x86, 0x04); /* DPS    */
-  sfr->write(0x90, 0xff); /* P1     */
-  sfr->write(0x92, 0xbf); /* P4CNT  */
-  sfr->write(0x9b, 0xfc); /* ESP    */
-  if (type->type == CPU_DS390F/*flat24_flag*/)
-    {
-      sfr->/*write*/set(ACON, 0xfa); /* ACON; AM1 set: 24-bit flat */
-      //printf("ACON inited to 0xfa, 24 bit flat mode!\n");
-      //printf("CPU type=%d (%x) flag24=%d\n", type, type, flat24_flag);
-    }
-  else
-    sfr->/*write*/set(ACON, 0xf8); /* ACON   */
-  sfr->write(0xa0, 0xff); /* P2     */
-  sfr->write(0xa1, 0xff); /* P5     */
-  sfr->write(0xa3, 0x09); /* COC    */
-  sfr->write(0xb0, 0xff); /* P3     */
-  sfr->write(0xb8, 0x80); /* IP     */
-  sfr->write(0xc5, 0x10); /* STATUS */
-  sfr->write(0xc6, 0x10); /* MCON   */
-  sfr->write(0xc7, 0xff); /* TA     */
-  sfr->write(0xc9, 0xe4); /* T2MOD  */
-  sfr->write(0xd2, 0x2f); /* MCNT1  */
-  sfr->write(0xe3, 0x09); /* C1C    */
+	cl_uc52::clear_sfr();
+	/* SFR   value */
+	sfr->write(0x80, 0xff); /* P4     */
+	sfr->write(0x81, 0x07); /* SP     */
+	sfr->write(0x86, 0x04); /* DPS    */
+	sfr->write(0x90, 0xff); /* P1     */
+	sfr->write(0x92, 0xbf); /* P4CNT  */
+	sfr->write(0x9b, 0xfc); /* ESP    */
+	if (type->type == CPU_DS390F/*flat24_flag*/)
+	{
+		sfr->/*write*/set(ACON, 0xfa); /* ACON; AM1 set: 24-bit flat */
+		//printf("ACON inited to 0xfa, 24 bit flat mode!\n");
+		//printf("CPU type=%d (%x) flag24=%d\n", type, type, flat24_flag);
+	}
+	else
+		sfr->/*write*/set(ACON, 0xf8); /* ACON   */
+	sfr->write(0xa0, 0xff); /* P2     */
+	sfr->write(0xa1, 0xff); /* P5     */
+	sfr->write(0xa3, 0x09); /* COC    */
+	sfr->write(0xb0, 0xff); /* P3     */
+	sfr->write(0xb8, 0x80); /* IP     */
+	sfr->write(0xc5, 0x10); /* STATUS */
+	sfr->write(0xc6, 0x10); /* MCON   */
+	sfr->write(0xc7, 0xff); /* TA     */
+	sfr->write(0xc9, 0xe4); /* T2MOD  */
+	sfr->write(0xd2, 0x2f); /* MCNT1  */
+	sfr->write(0xe3, 0x09); /* C1C    */
 }
 
 
 t_mem
-cl_uc390::read_mem(const char *id/*enum mem_class type*/, t_addr addr)
+cl_uc390::read_mem(const char* id/*enum mem_class type*/, t_addr addr)
 {
 
-  if (strcmp(/*type*/id,/* == */MEM_XRAM_ID)==0 &&
-      addr >= 0x400000 &&
-      (sfr->get (ACON) & 0x02)) /* AM1 set: 24-bit flat? */
-    {
-      addr -= 0x400000;
-      id/*type*/ = MEM_IXRAM_ID;
-    }
-  return cl_51core::read_mem(id/*type*/, addr); /* 24 bit */
+	if (strcmp(/*type*/id,/* == */MEM_XRAM_ID) == 0 &&
+		addr >= 0x400000 &&
+		(sfr->get(ACON) & 0x02)) /* AM1 set: 24-bit flat? */
+	{
+		addr -= 0x400000;
+		id/*type*/ = MEM_IXRAM_ID;
+	}
+	return cl_51core::read_mem(id/*type*/, addr); /* 24 bit */
 }
 
 t_mem
-cl_uc390::get_mem (const char *id/*enum mem_class type*/, t_addr addr)
+cl_uc390::get_mem(const char* id/*enum mem_class type*/, t_addr addr)
 {
-  if (strcmp(/*type*/id/* == */,MEM_XRAM_ID)==0 &&
-      addr >= 0x400000 &&
-      (sfr->get (ACON) & 0x02)) /* AM1 set: 24-bit flat? */
-    {
-      addr -= 0x400000;
-      /*type*/id = MEM_IXRAM_ID;
-    }
-  return cl_51core::get_mem (/*type*/id, addr);
+	if (strcmp(/*type*/id/* == */, MEM_XRAM_ID) == 0 &&
+		addr >= 0x400000 &&
+		(sfr->get(ACON) & 0x02)) /* AM1 set: 24-bit flat? */
+	{
+		addr -= 0x400000;
+		/*type*/id = MEM_IXRAM_ID;
+	}
+	return cl_51core::get_mem(/*type*/id, addr);
 }
 
 void
-cl_uc390::write_mem (const char *id/*enum mem_class type*/, t_addr addr, t_mem val)
+cl_uc390::write_mem(const char* id/*enum mem_class type*/, t_addr addr, t_mem val)
 {
-  if (strcmp(/*type ==*/id, MEM_XRAM_ID)==0 &&
-      addr >= 0x400000 &&
-      (sfr->get (ACON) & 0x02)) /* AM1 set: 24-bit flat? */
-    {
-      addr -= 0x400000;
-      /*type*/id = MEM_IXRAM_ID;
-    }
-  cl_51core::write_mem (/*type*/id, addr, val);
+	if (strcmp(/*type ==*/id, MEM_XRAM_ID) == 0 &&
+		addr >= 0x400000 &&
+		(sfr->get(ACON) & 0x02)) /* AM1 set: 24-bit flat? */
+	{
+		addr -= 0x400000;
+		/*type*/id = MEM_IXRAM_ID;
+	}
+	cl_51core::write_mem(/*type*/id, addr, val);
 }
 
 void
-cl_uc390::set_mem (/*enum mem_class type*/const char *id, t_addr addr, t_mem val)
+cl_uc390::set_mem(/*enum mem_class type*/const char* id, t_addr addr, t_mem val)
 {
-  if (/*type == */strcmp(id,MEM_XRAM_ID)==0 &&
-      addr >= 0x400000 &&
-      (sfr->get (ACON) & 0x02)) /* AM1 set: 24-bit flat? */
-    {
-      addr -= 0x400000;
-      /*type*/id = MEM_IXRAM_ID;
-    }
-  cl_51core::set_mem (id/*type*/, addr, val);
+	if (/*type == */strcmp(id, MEM_XRAM_ID) == 0 &&
+		addr >= 0x400000 &&
+		(sfr->get(ACON) & 0x02)) /* AM1 set: 24-bit flat? */
+	{
+		addr -= 0x400000;
+		/*type*/id = MEM_IXRAM_ID;
+	}
+	cl_51core::set_mem(id/*type*/, addr, val);
 }
 
 /*
@@ -550,52 +551,52 @@ cl_uc390::set_mem (/*enum mem_class type*/const char *id, t_addr addr, t_mem val
  */
 
 void
-cl_uc390::push_byte (t_mem uc)
+cl_uc390::push_byte(t_mem uc)
 {
-  t_addr sp;
+	t_addr sp;
 
-  sp = sfr->write(SP, sfr->read(SP) + 1);
-  if (sfr->get (ACON) & 0x04) /* SA: 10 bit stack */
-    {
-      if (sp == 0) /* overflow SP */
-        sfr->write(R51_ESP, sfr->read(R51_ESP) + 1);
-      sp += (sfr->read (R51_ESP) & 0x3) * 256;
-      write_mem (MEM_IXRAM_ID, sp, uc); // fixme
-    }
-  else
-    {
-      class cl_memory_cell *stck;
+	sp = sfr->write(SP, sfr->read(SP) + 1);
+	if (sfr->get(ACON) & 0x04) /* SA: 10 bit stack */
+	{
+		if (sp == 0) /* overflow SP */
+			sfr->write(R51_ESP, sfr->read(R51_ESP) + 1);
+		sp += (t_addr)(sfr->read(R51_ESP) & 0x3) << 8;
+		write_mem(MEM_IXRAM_ID, sp, uc); // fixme
+	}
+	else
+	{
+		class cl_memory_cell* stck;
 
-      stck = iram->get_cell (sp);
-      stck->write (uc);
-    }
+		stck = iram->get_cell(sp);
+		stck->write(uc);
+	}
 }
 
 t_mem
-cl_uc390::pop_byte (void)
+cl_uc390::pop_byte(void)
 {
-  t_mem temp;
-  t_addr sp;
+	t_mem temp;
+	t_addr sp;
 
-  if (sfr->get (ACON) & 0x04) /* SA: 10 bit stack */
-    {
-      sp = sfr->read (SP);
-      sp += (sfr->read (R51_ESP) & 0x3) * 256;
-      temp = read_mem (MEM_IXRAM_ID, sp); // fixme
-      sp = sfr->write(SP, sfr->read(SP) - 1);
-      if (sp == 0xff) /* underflow SP */
-        sfr->write(R51_ESP, sfr->read(R51_ESP) - 1);
-      return temp;
-    }
-  else
-    {
-      class cl_memory_cell *stck;
+	if (sfr->get(ACON) & 0x04) /* SA: 10 bit stack */
+	{
+		sp = sfr->read(SP);
+		sp += (t_addr)(sfr->read(R51_ESP) & 0x3) << 8;
+		temp = read_mem(MEM_IXRAM_ID, sp); // fixme
+		sp = sfr->write(SP, sfr->read(SP) - 1);
+		if (sp == 0xff) /* underflow SP */
+			sfr->write(R51_ESP, sfr->read(R51_ESP) - 1);
+		return temp;
+	}
+	else
+	{
+		class cl_memory_cell* stck;
 
-      stck = iram->get_cell (sfr->get (SP));
-      temp = stck->read();
-      sp = sfr->write(SP, sfr->read(SP) - 1);
-      return temp;
-    }
+		stck = iram->get_cell(sfr->get(SP));
+		temp = stck->read();
+		sp = sfr->write(SP, sfr->read(SP) - 1);
+		return temp;
+	}
 }
 
 /*
@@ -605,45 +606,45 @@ cl_uc390::pop_byte (void)
  */
 
 int
-cl_uc390::instruction_a3/*inst_inc_dptr*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_a3/*inst_inc_dptr*/(t_mem/*uchar*/ code)
 {
-  ulong dptr;
+	ulong dptr;
 
-  uchar pl, ph, px, dps, dec;
+	uchar pl, ph, px, dps, dec;
 
-  dps = sfr->get (DPS);
-  if (dps & 0x01)
-    {
-      pl = DPL1;
-      ph = DPH1;
-      px = DPX1;
-      dec = 0x80;
-    }
-  else
-    {
-      pl = DPL;
-      ph = DPH;
-      px = DPX;
-      dec = 0x040;
-    }
+	dps = sfr->get(DPS);
+	if (dps & 0x01)
+	{
+		pl = DPL1;
+		ph = DPH1;
+		px = DPX1;
+		dec = 0x80;
+	}
+	else
+	{
+		pl = DPL;
+		ph = DPH;
+		px = DPX;
+		dec = 0x040;
+	}
 
-  dptr = sfr->read (ph) * 256 + sfr->read (pl);
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    dptr += sfr->read (px) *256*256;
-  if (dps & dec) /* decr set */
-    dptr--;
-  else
-    dptr++;
+	dptr = sfr->read(ph) * 256 + sfr->read(pl);
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		dptr += sfr->read(px) * 256 * 256;
+	if (dps & dec) /* decr set */
+		dptr--;
+	else
+		dptr++;
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    sfr->write (px, (dptr >> 16) & 0xff);
-  sfr->write (ph, (dptr >> 8) & 0xff);
-  sfr->write (pl, dptr & 0xff);
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		sfr->write(px, (dptr >> 16) & 0xff);
+	sfr->write(ph, (dptr >> 8) & 0xff);
+	sfr->write(pl, dptr & 0xff);
 
-  if (dps & 0x20)                      /* auto-switch dptr */
-    sfr->write (DPS, dps ^ 1);  /* toggle dual-dptr switch */
-  tick (1);
-  return resGO;
+	if (dps & 0x20)                      /* auto-switch dptr */
+		sfr->write(DPS, dps ^ 1);  /* toggle dual-dptr switch */
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -653,31 +654,30 @@ cl_uc390::instruction_a3/*inst_inc_dptr*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_73/*inst_jmp_Sa_dptr*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_73/*inst_jmp_Sa_dptr*/(t_mem/*uchar*/ code)
 {
-  uchar pl, ph, px, dps;
+	uchar pl, ph, px, dps;
 
-  dps = sfr->get (DPS);
-  if (dps & 0x01)
-    {
-      pl = DPL1;
-      ph = DPH1;
-      px = DPX1;
-    }
-  else
-    {
-      pl = DPL;
-      ph = DPH;
-      px = DPX;
-    }
+	dps = sfr->get(DPS);
+	if (dps & 0x01)
+	{
+		pl = DPL1;
+		ph = DPH1;
+		px = DPX1;
+	}
+	else
+	{
+		pl = DPL;
+		ph = DPH;
+		px = DPX;
+	}
 
-  PC = rom->validate_address(sfr->read (ph) * 256 + sfr->read (pl) +
-			     acc->read());
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    PC += sfr->read (px) * 256*256;
+	PC = ((t_addr)rom->validate_address(sfr->read(ph)) << 8) + sfr->read(pl) + acc->read();
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		PC += (t_addr)(sfr->read(px)) << 16;
 
-  tick (1);
-  return resGO;
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -687,34 +687,34 @@ cl_uc390::instruction_73/*inst_jmp_Sa_dptr*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_90/*inst_mov_dptr_Sdata*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_90/*inst_mov_dptr_Sdata*/(t_mem/*uchar*/ code)
 {
-  uchar pl, ph, px, dps;
+	uchar pl, ph, px, dps;
 
-  dps = sfr->get (DPS);
-  if (dps & 0x01)
-    {
-      pl = DPL1;
-      ph = DPH1;
-      px = DPX1;
-    }
-  else
-    {
-      pl = DPL;
-      ph = DPH;
-      px = DPX;
-    }
+	dps = sfr->get(DPS);
+	if (dps & 0x01)
+	{
+		pl = DPL1;
+		ph = DPH1;
+		px = DPX1;
+	}
+	else
+	{
+		pl = DPL;
+		ph = DPH;
+		px = DPX;
+	}
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    sfr->write (px, fetch ());
-  sfr->write (ph, fetch ());
-  sfr->write (pl, fetch ());
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		sfr->write(px, fetch());
+	sfr->write(ph, fetch());
+	sfr->write(pl, fetch());
 
-  if (dps & 0x20)                      /* auto-switch dptr */
-    sfr->write (DPS, dps ^ 1);    /* toggle dual-dptr switch */
+	if (dps & 0x20)                      /* auto-switch dptr */
+		sfr->write(DPS, dps ^ 1);    /* toggle dual-dptr switch */
 
-  tick (1);
-  return resGO;
+	tick(1);
+	return resGO;
 }
 
 
@@ -725,37 +725,47 @@ cl_uc390::instruction_90/*inst_mov_dptr_Sdata*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_93/*inst_movc_a_Sa_dptr*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_93/*inst_movc_a_Sa_dptr*/(t_mem/*uchar*/ code)
 {
-  uchar pl, ph, px, dps;
+	uchar pl, ph, px, dps;
 
-  dps = sfr->get (DPS);
-  if (dps & 0x01)
-    {
-      pl = DPL1;
-      ph = DPH1;
-      px = DPX1;
-    }
-  else
-    {
-      pl = DPL;
-      ph = DPH;
-      px = DPX;
-    }
+	dps = sfr->get(DPS);
+	if (dps & 0x01)
+	{
+		pl = DPL1;
+		ph = DPH1;
+		px = DPX1;
+	}
+	else
+	{
+		pl = DPL;
+		ph = DPH;
+		px = DPX;
+	}
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    acc->write (rom->read ((sfr->read (px) * 256*256 +
-			    sfr->read (ph) * 256 + sfr->read (pl) +
-                acc->read())));
-  else
-    acc->write (rom->read ((sfr->read (ph) * 256 + sfr->read (pl) +
-			    acc->read())));
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		acc->write(
+			rom->read(
+				((t_addr)(sfr->read(px)) << 16) + 
+				((t_addr)(sfr->read(ph)) << 8) + 
+				sfr->read(pl) +
+				acc->read()
+			)
+		);
+	else
+		acc->write(
+			rom->read(
+				((t_addr)(sfr->read(ph)) << 8) + 
+				sfr->read(pl) +
+				acc->read()
+			)
+		);
 
-  if (dps & 0x20)                      /* auto-switch dptr */
-    sfr->write (DPS, dps ^ 1);  /* toggle dual-dptr switch */
+	if (dps & 0x20)                      /* auto-switch dptr */
+		sfr->write(DPS, dps ^ 1);  /* toggle dual-dptr switch */
 
-  tick (1);
-  return resGO;
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -765,20 +775,20 @@ cl_uc390::instruction_93/*inst_movc_a_Sa_dptr*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_c0/*inst_push*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_c0/*inst_push*/(t_mem/*uchar*/ code)
 {
-  class cl_memory_cell *cell;
+	class cl_memory_cell* cell;
 
-  cell = get_direct(fetch());
-  t_addr sp_before= sfr->get(SP);
-  t_mem data;
-  push_byte (data= cell->read());
-  class cl_stack_op *so=
-    new cl_stack_push(instPC, data, sp_before, sfr->get(SP));
-  so->init();
-  stack_write(so);
-  tick (1);
-  return resGO;
+	cell = get_direct(fetch());
+	t_addr sp_before = sfr->get(SP);
+	t_mem data;
+	push_byte(data = cell->read());
+	class cl_stack_op* so =
+		new cl_stack_push(instPC, data, sp_before, sfr->get(SP));
+	so->init();
+	stack_write(so);
+	tick(1);
+	return resGO;
 }
 
 
@@ -789,20 +799,20 @@ cl_uc390::instruction_c0/*inst_push*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_d0/*inst_pop*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_d0/*inst_pop*/(t_mem/*uchar*/ code)
 {
-  class cl_memory_cell *cell;
+	class cl_memory_cell* cell;
 
-  t_addr sp_before= sfr->get(SP);
-  t_mem data;
-  cell = get_direct (fetch());
-  cell->write (data= pop_byte());
-  class cl_stack_op *so=
-    new cl_stack_pop(instPC, data, sp_before, sfr->get(SP));
-  so->init();
-  stack_read(so);
-  tick (1);
-  return resGO;
+	t_addr sp_before = sfr->get(SP);
+	t_mem data;
+	cell = get_direct(fetch());
+	cell->write(data = pop_byte());
+	class cl_stack_op* so =
+		new cl_stack_pop(instPC, data, sp_before, sfr->get(SP));
+	so->init();
+	stack_read(so);
+	tick(1);
+	return resGO;
 }
 
 
@@ -813,36 +823,45 @@ cl_uc390::instruction_d0/*inst_pop*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_e0/*inst_movx_a_Sdptr*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_e0/*inst_movx_a_Sdptr*/(t_mem/*uchar*/ code)
 {
-  uchar pl, ph, px, dps;
+	uchar pl, ph, px, dps;
 
-  dps = sfr->get (DPS);
-  if (dps & 0x01)
-    {
-      pl = DPL1;
-      ph = DPH1;
-      px = DPX1;
-    }
-  else
-    {
-      pl = DPL;
-      ph = DPH;
-      px = DPX;
-    }
+	dps = sfr->get(DPS);
+	if (dps & 0x01)
+	{
+		pl = DPL1;
+		ph = DPH1;
+		px = DPX1;
+	}
+	else
+	{
+		pl = DPL;
+		ph = DPH;
+		px = DPX;
+	}
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    acc->write (read_mem (MEM_XRAM_ID,
-                sfr->read (px) * 256*256 + sfr->read (ph) * 256 + sfr->read (pl)));
-  else
-    acc->write (read_mem (MEM_XRAM_ID,
-                sfr->read (ph) * 256 + sfr->read (pl)));
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		acc->write(
+			read_mem(MEM_XRAM_ID,
+				((t_addr)(sfr->read(px)) << 16) + 
+				((t_addr)(sfr->read(ph)) << 8) + 
+				sfr->read(pl)
+			)
+		);
+	else
+		acc->write(
+			read_mem(MEM_XRAM_ID,
+				((t_addr)(sfr->read(ph)) << 8) + 
+				sfr->read(pl)
+			)
+		);
 
-  if (dps & 0x20)                      /* auto-switch dptr */
-    sfr->write (DPS, dps ^ 1);   /* toggle dual-dptr switch */
+	if (dps & 0x20)                      /* auto-switch dptr */
+		sfr->write(DPS, dps ^ 1);   /* toggle dual-dptr switch */
 
-  tick (1);
-  return resGO;
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -852,38 +871,43 @@ cl_uc390::instruction_e0/*inst_movx_a_Sdptr*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_f0/*inst_movx_Sdptr_a*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_f0/*inst_movx_Sdptr_a*/(t_mem/*uchar*/ code)
 {
-  uchar pl, ph, px, dps;
+	uchar pl, ph, px, dps;
 
-  dps = sfr->get (DPS);
-  if (dps & 0x01)
-    {
-      pl = DPL1;
-      ph = DPH1;
-      px = DPX1;
-    }
-  else
-    {
-      pl = DPL;
-      ph = DPH;
-      px = DPX;
-    }
+	dps = sfr->get(DPS);
+	if (dps & 0x01)
+	{
+		pl = DPL1;
+		ph = DPH1;
+		px = DPX1;
+	}
+	else
+	{
+		pl = DPL;
+		ph = DPH;
+		px = DPX;
+	}
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    write_mem (MEM_XRAM_ID,
-               sfr->read (px) * 256*256 + sfr->read (ph) * 256 + sfr->read (pl),
-               acc->read());
-  else
-    write_mem (MEM_XRAM_ID,
-               sfr->read (ph) * 256 + sfr->read (pl),
-               acc->read());
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		write_mem(MEM_XRAM_ID,
+			((t_addr)(sfr->read(px)) << 16) + 
+			((t_addr)(sfr->read(ph)) << 8) + 
+			sfr->read(pl),
+			acc->read()
+		);
+	else
+		write_mem(MEM_XRAM_ID,
+			((t_addr)(sfr->read(ph)) << 8) + 
+			sfr->read(pl),
+			acc->read()
+		);
 
-  if (dps & 0x20)                      /* auto-switch dptr */
-    sfr->write (DPS, dps ^ 1);   /* toggle dual-dptr switch */
+	if (dps & 0x20)                      /* auto-switch dptr */
+		sfr->write(DPS, dps ^ 1);   /* toggle dual-dptr switch */
 
-  tick (1);
-  return resGO;
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -893,25 +917,25 @@ cl_uc390::instruction_f0/*inst_movx_Sdptr_a*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_01/*inst_ajmp_addr*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_01/*inst_ajmp_addr*/(t_mem/*uchar*/ code)
 {
-  uchar x, h, l;
+	uchar x, h, l;
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    {
-      x = (code >> 5) & 0x07;
-      h = fetch ();
-      l = fetch ();
-      PC = (PC & 0xf800) | (x * 256*256 + h * 256 + l);
-    }
-  else
-    {
-      h = (code >> 5) & 0x07;
-      l = fetch ();
-      PC = (PC & 0xf800) | (h * 256 + l);
-    }
-  tick (1);
-  return resGO;
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+	{
+		x = (code >> 5) & 0x07;
+		h = fetch();
+		l = fetch();
+		PC = (PC & 0xf800) | (((t_addr)x) << 16) | (((t_addr)h) << 8) | l;
+	}
+	else
+	{
+		h = (code >> 5) & 0x07;
+		l = fetch();
+		PC = (PC & 0xf800) | (((t_addr)h) << 8) | l;
+	}
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -921,26 +945,26 @@ cl_uc390::instruction_01/*inst_ajmp_addr*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_02/*inst_ljmp*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_02/*inst_ljmp*/(t_mem/*uchar*/ code)
 {
-  uchar x, h, l;
+	uchar x, h, l;
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    {
-      //printf("LJMP in 24 bit mode! PC=%x\n", PC);
-      x = fetch ();
-      h = fetch ();
-      l = fetch ();
-      PC = x * 256*256 + h * 256 + l;
-    }
-  else
-    {
-      h = fetch ();
-      l = fetch ();
-      PC = h * 256 + l;
-    }
-  tick (1);
-  return resGO;
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+	{
+		//printf("LJMP in 24 bit mode! PC=%x\n", PC);
+		x = fetch();
+		h = fetch();
+		l = fetch();
+		PC = (((t_addr)x) << 16) | (((t_addr)h) << 8) | l;
+	}
+	else
+	{
+		h = fetch();
+		l = fetch();
+		PC = (((t_addr)h) << 8) | l;
+	}
+	tick(1);
+	return resGO;
 }
 
 /*
@@ -950,41 +974,41 @@ cl_uc390::instruction_02/*inst_ljmp*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_11/*inst_acall_addr*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_11/*inst_acall_addr*/(t_mem/*uchar*/ code)
 {
-  uchar x, h, l;
+	uchar x, h, l;
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    {
-      x = (code >> 5) & 0x07;
-      h = fetch ();
-      l = fetch ();
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+	{
+		x = (code >> 5) & 0x07;
+		h = fetch();
+		l = fetch();
 
-      push_byte ( PC        & 0xff); /* push low byte  */
-      push_byte ((PC >>  8) & 0xff); /* push high byte */
-      push_byte ((PC >> 16) & 0xff); /* push x byte    */
+		push_byte(PC & 0xff); /* push low byte  */
+		push_byte((PC >> 8) & 0xff); /* push high byte */
+		push_byte((PC >> 16) & 0xff); /* push x byte    */
 
-      PC = (PC & 0xf800) | (x * 256*256 + h * 256 + l);
-    }
-  else
-    {
-      /* stock mcs51 mode */
-      class cl_memory_cell *stck;
-      t_mem sp;
+		PC = (PC & 0xf800) | (((t_addr)x) << 16) | (((t_addr)h) << 8) | l;
+	}
+	else
+	{
+		/* stock mcs51 mode */
+		class cl_memory_cell* stck;
+		t_mem sp;
 
-      h = (code >> 5) & 0x07;
-      l = fetch();
-      sp = sfr->write(SP, sfr->read(SP) + 1);
-      stck = iram->get_cell (sp);
-      stck->write (PC & 0xff); // push low byte
+		h = (code >> 5) & 0x07;
+		l = fetch();
+		sp = sfr->write(SP, sfr->read(SP) + 1);
+		stck = iram->get_cell(sp);
+		stck->write(PC & 0xff); // push low byte
 
-      sp = sfr->write(SP, sfr->read(SP) + 1);
-      stck = iram->get_cell (sp);
-      stck->write ((PC >> 8) & 0xff); // push high byte
-      PC = (PC & 0xf800) | (h*256 + l);
-    }
-  tick (1);
-  return resGO;
+		sp = sfr->write(SP, sfr->read(SP) + 1);
+		stck = iram->get_cell(sp);
+		stck->write((PC >> 8) & 0xff); // push high byte
+		PC = (PC & 0xf800) | (((t_addr)h) << 8) | l;
+	}
+	tick(1);
+	return resGO;
 }
 
 
@@ -995,49 +1019,49 @@ cl_uc390::instruction_11/*inst_acall_addr*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::inst_lcall (t_mem/*uchar*/ code, uint addr, bool intr)
+cl_uc390::inst_lcall(t_mem/*uchar*/ code, uint addr, bool intr)
 {
-  uchar x = 0, h = 0, l = 0;
+	uchar x = 0, h = 0, l = 0;
 
-  if (!intr)
-    { /* this is a normal lcall */
-     if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-        x = fetch ();
-      h = fetch ();
-      l = fetch ();
-    }
-    /* else, this is interrupt processing */
-
-  t_addr sp_before= sfr->get(SP);
-  push_byte ( PC       & 0xff); /* push low byte  */
-  push_byte ((PC >> 8) & 0xff); /* push high byte */
-
-  t_mem pushed= PC;
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    {
-      push_byte ((PC >> 16) & 0xff); /* push x byte */
-      if (addr)
-        PC = addr & 0xfffful; /* if interrupt: x-Byte is 0 */
-      else
-        PC = x * 256*256 + h * 256 + l;
-    }
-  else
-    {
-      class cl_stack_op *so;
-      if (addr)
-        {
-	  PC = addr;
-	  so= new cl_stack_intr(instPC, PC, pushed, sp_before, sfr->get(SP));
+	if (!intr)
+	{ /* this is a normal lcall */
+		if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+			x = fetch();
+		h = fetch();
+		l = fetch();
 	}
-      else
-        {
-	  PC = h * 256 + l;
-	  so= new cl_stack_call(instPC, PC, pushed, sp_before, sfr->get(SP));
+	/* else, this is interrupt processing */
+
+	t_addr sp_before = sfr->get(SP);
+	push_byte(PC & 0xff); /* push low byte  */
+	push_byte((PC >> 8) & 0xff); /* push high byte */
+
+	t_mem pushed = PC;
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+	{
+		push_byte((PC >> 16) & 0xff); /* push x byte */
+		if (addr)
+			PC = addr & 0xfffful; /* if interrupt: x-Byte is 0 */
+		else
+			PC = (((t_addr)x) << 16) | (((t_addr)h) << 8) | l;
 	}
-      so->init();
-      stack_write(so);
-    }
-  return resGO;
+	else
+	{
+		class cl_stack_op* so;
+		if (addr)
+		{
+			PC = addr;
+			so = new cl_stack_intr(instPC, PC, pushed, sp_before, sfr->get(SP));
+		}
+		else
+		{
+			PC = (((t_addr)h) << 8) | l;
+			so = new cl_stack_call(instPC, PC, pushed, sp_before, sfr->get(SP));
+		}
+		so->init();
+		stack_write(so);
+	}
+	return resGO;
 }
 
 /*
@@ -1047,30 +1071,30 @@ cl_uc390::inst_lcall (t_mem/*uchar*/ code, uint addr, bool intr)
  */
 
 int
-cl_uc390::instruction_22/*inst_ret*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_22/*inst_ret*/(t_mem/*uchar*/ code)
 {
-  uchar x = 0, h, l;
+	uchar x = 0, h, l;
 
-  t_addr sp_before= sfr->get(SP);
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    x = pop_byte ();
-  h = pop_byte ();
-  l = pop_byte ();
+	t_addr sp_before = sfr->get(SP);
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		x = pop_byte();
+	h = pop_byte();
+	l = pop_byte();
 
-  tick (1);
+	tick(1);
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    {
-      tick (1);
-      PC = x * 256*256 + h * 256 + l;
-    }
-  else
-    PC = h * 256 + l;
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+	{
+		tick(1);
+		PC = (x << 16) | (h << 8) | l;
+	}
+	else
+		PC = (h << 8) | l;
 
-  class cl_stack_op *so= new cl_stack_ret(instPC, PC, sp_before, sfr->get(SP));
-  so->init();
-  stack_read(so);
-  return resGO;
+	class cl_stack_op* so = new cl_stack_ret(instPC, PC, sp_before, sfr->get(SP));
+	so->init();
+	stack_read(so);
+	return resGO;
 }
 
 /*
@@ -1080,39 +1104,39 @@ cl_uc390::instruction_22/*inst_ret*/ (t_mem/*uchar*/ code)
  */
 
 int
-cl_uc390::instruction_32/*inst_reti*/ (t_mem/*uchar*/ code)
+cl_uc390::instruction_32/*inst_reti*/(t_mem/*uchar*/ code)
 {
-  uchar x = 0, h, l;
+	uchar x = 0, h, l;
 
-  t_addr sp_before= sfr->get(SP);
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    x = pop_byte ();
-  h = pop_byte ();
-  l = pop_byte ();
-  tick (1);
+	t_addr sp_before = sfr->get(SP);
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		x = pop_byte();
+	h = pop_byte();
+	l = pop_byte();
+	tick(1);
 
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    {
-      tick (1);
-      PC = x * 256*256 + h * 256 + l;
-    }
-  else
-    PC = h * 256 + l;
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+	{
+		tick(1);
+		PC = (((t_addr)x) << 16) | (((t_addr)h) << 8) | l;
+	}
+	else
+		PC = (((t_addr)h) << 8) | l;
 
-  interrupt->was_reti = true;
-  class it_level *il = (class it_level *) (it_levels->top ());
-  if (il &&
-      il->level >= 0)
-    {
-      il = (class it_level *) (it_levels->pop ());
-      delete il;
-    }
+	interrupt->was_reti = true;
+	class it_level* il = (class it_level*)(it_levels->top());
+	if (il &&
+		il->level >= 0)
+	{
+		il = (class it_level*)(it_levels->pop());
+		delete il;
+	}
 
-  class cl_stack_op *so=
-    new cl_stack_iret(instPC, PC, sp_before, sfr->get(SP));
-  so->init();
-  stack_read(so);
-  return resGO;
+	class cl_stack_op* so =
+		new cl_stack_iret(instPC, PC, sp_before, sfr->get(SP));
+	so->init();
+	stack_read(so);
+	return resGO;
 }
 
 
@@ -1120,177 +1144,184 @@ cl_uc390::instruction_32/*inst_reti*/ (t_mem/*uchar*/ code)
  * Disassembling an instruction
  */
 
-struct dis_entry *
-cl_uc390::dis_tbl (void)
+struct dis_entry*
+	cl_uc390::dis_tbl(void)
 {
-  if (sfr->get (ACON) & 0x02) /* AM1 set: 24-bit flat? */
-    return disass_390f;
-  else
-    return disass_51;
-    //t_uc51::dis_tbl ();
+	if (sfr->get(ACON) & 0x02) /* AM1 set: 24-bit flat? */
+		return disass_390f;
+	else
+		return disass_51;
+	//t_uc51::dis_tbl ();
 
 }
 
-char *
-cl_uc390::disass (t_addr addr)
+char*
+cl_uc390::disass(t_addr addr)
 {
-  chars work= chars(), temp= chars();
-  const char *b;
-  t_addr operand;
-  t_mem code;
-  uchar dps;
-  bool first= true;
-  
-  if (! (sfr->get (ACON) & 0x02)) /* AM1 set: 24-bit flat? */
-    return cl_51core::disass (addr);
-  code = rom->get(addr);
+	chars work = chars(), temp = chars();
+	const char* b;
+	t_addr operand;
+	t_mem code;
+	uchar dps;
+	bool first = true;
 
-  work= "";
-  b = dis_tbl()[code].mnemonic;
-  while (*b)
-    {
-      if ((*b == ' ') && first)
+	if (!(sfr->get(ACON) & 0x02)) /* AM1 set: 24-bit flat? */
+		return cl_51core::disass(addr);
+	code = rom->get(addr);
+
+	work = "";
+	b = dis_tbl()[code].mnemonic;
+	while (*b)
 	{
-	  first= false;
-	  while (work.len() < 6) work.append(' ');
+		if ((*b == ' ') && first)
+		{
+			first = false;
+			while (work.len() < 6) work.append(' ');
+		}
+		if (*b == '%')
+		{
+			b++;
+			temp = "";
+			switch (*(b++))
+			{
+			case 'A': // absolute address
+			  // stock:
+			  // sprintf (temp, "%04lx",
+			  //          (addr & 0xf800)|
+			  //          (((code >> 5) & 0x07) * 256 +
+			  //          rom->get (addr + 1)));
+
+				operand = (addr & 0xf80000L) |
+					((((code >> 5) & 0x07) << 16) |
+						(rom->get(addr + 1) << 8) |
+						 rom->get(addr + 2));
+				temp.format(rom->addr_format, operand);
+				addr_name(operand, rom, &temp);
+				break;
+			case 'l': // long address
+				operand = 
+					(rom->get(addr + 1) << 16) |
+					(rom->get(addr + 2) << 8) +
+					 rom->get(addr + 3);
+				temp.format(rom->addr_format, operand);
+				addr_name(operand, rom, &temp);
+				break;
+			case 'a': // addr8 (direct address) at 2nd byte
+				daddr_name(rom->get(addr + 1), &temp);
+				break;
+			case '8': // addr8 (direct address) at 3rd byte
+				daddr_name(rom->get(addr + 2), &temp);
+				break;
+			case 'b': // bitaddr at 2nd byte
+			{
+				t_addr ba = rom->get(addr + 1);
+				baddr_name(ba, &temp);
+				break;
+			}
+			case 'r': // rel8 address at 2nd byte
+				operand = (u16_t)(addr + 2 + (i8_t)(rom->get(addr + 1)));
+				temp.format(rom->addr_format, operand);
+				addr_name(operand, rom, &temp);
+				break;
+			case 'R': // rel8 address at 3rd byte
+				operand = (u16_t)(addr + 3 + (i8_t)(rom->get(addr + 2)));
+				temp.format(rom->addr_format, operand);
+				addr_name(operand, rom, &temp);
+				break;
+			case 'd': // data8 at 2nd byte
+				temp.format("0x%02x", (int)rom->get(addr + 1));
+				break;
+			case 'D': // data8 at 3rd byte
+				temp.format("0x%02x", (int)rom->get(addr + 2));
+				break;
+			case 'i': // inc/dec dptr
+			  // N.B. The direction depends on DPS at the time the instruction is
+			  // executed NOT the time we disassemble it. This is only going to
+			  // be guaranteed correct when disassembling on break.
+			  // The correct assembler mnemonic here is INC even if it decrements
+			  // when executed!
+				dps = sfr->get(DPS);
+				temp.format(((dps & 0x01) ? (dps & 0x80) : (dps & 0x40)) ? "DEC" : "INC");
+				break;
+			default:
+				temp = "?";
+				break;
+			}
+			work += temp;
+		}
+		else
+			work += *b++;
 	}
-      if (*b == '%')
-        {
-          b++;
-	  temp= "";
-          switch (*(b++))
-            {
-            case 'A': // absolute address
-              // stock:
-              // sprintf (temp, "%04lx",
-              //          (addr & 0xf800)|
-              //          (((code >> 5) & 0x07) * 256 +
-              //          rom->get (addr + 1)));
 
-	      operand= (addr & 0xf80000L) |
-		       (((code >> 5) & 0x07) * (256 * 256) +
-		        (rom->get (addr + 1) * 256) +
-		        rom->get (addr + 2));
-              temp.format(rom->addr_format, operand);
-	      addr_name(operand, rom, &temp);
-              break;
-            case 'l': // long address
-	      operand= rom->get (addr + 1) * (256*256L) +
-		       rom->get (addr + 2) * 256 +
-		       rom->get (addr + 3);
-              temp.format(rom->addr_format, operand);
-	      addr_name(operand, rom, &temp);
-              break;
-            case 'a': // addr8 (direct address) at 2nd byte
-	      daddr_name(rom->get(addr+1), &temp);
-              break;
-            case '8': // addr8 (direct address) at 3rd byte
-	      daddr_name(rom->get(addr+2), &temp);
-              break;
-            case 'b': // bitaddr at 2nd byte
-	      {
-		t_addr ba = rom->get (addr+1);
-		baddr_name(ba, &temp);
-		break;
-	      }
-            case 'r': // rel8 address at 2nd byte
-	      operand= (u16_t)(addr + 2 + (i8_t)(rom->get(addr + 1)));
-              temp.format(rom->addr_format, operand);
-	      addr_name(operand, rom, &temp);
-              break;
-            case 'R': // rel8 address at 3rd byte
-	      operand= (u16_t)(addr + 3 + (i8_t)(rom->get(addr + 2)));
-              temp.format(rom->addr_format, operand);
-	      addr_name(operand, rom, &temp);
-              break;
-            case 'd': // data8 at 2nd byte
-              temp.format("0x%02x", (int)rom->get (addr + 1));
-              break;
-            case 'D': // data8 at 3rd byte
-              temp.format("0x%02x", (int)rom->get (addr + 2));
-              break;
-            case 'i': // inc/dec dptr
-              // N.B. The direction depends on DPS at the time the instruction is
-              // executed NOT the time we disassemble it. This is only going to
-              // be guaranteed correct when disassembling on break.
-              // The correct assembler mnemonic here is INC even if it decrements
-              // when executed!
-              dps = sfr->get(DPS);
-              temp.format(((dps & 0x01) ? (dps & 0x80) : (dps & 0x40)) ? "DEC" : "INC");
-              break;
-            default:
-	    temp= "?";
-              break;
-            }
-	  work+= temp;
-        }
-      else
-        work+= *b++;
-    }
-
-  return strdup(work.c_str());
+	return strdup(work.c_str());
 }
 
 void
-cl_uc390::print_regs (class cl_console_base *con)
+cl_uc390::print_regs(class cl_console_base* con)
 {
-  t_addr start;
-  t_mem data;
-  uchar dps;
+	t_addr start;
+	t_mem data;
+	uchar dps;
 
-  con->dd_color("answer");
-  if (! (sfr->get (ACON) & 0x02)) /* AM1 set: 24-bit flat? */
-    {
-      cl_51core::print_regs (con);
-      return;
-    }
-  start = sfr->get (PSW) & 0x18;
-  iram->dump (start, start + 7, 8, con/*->get_fout()*/);
-  con->dd_printf("     R0 R1 R2 R3 R4 R5 R6 R7\n");
-  data = iram->get (iram->get (start));
-  con->dd_printf ("@R0 %02x %c", data, isprint (data) ? data : '.');
-  con->dd_printf ("  ACC= 0x%02x %3d %c  B= 0x%02x",
-                  sfr->get (ACC), sfr->get (ACC),
-                  isprint (sfr->get (ACC)) ?
-                  (sfr->get (ACC)) : '.', sfr->get (B));
-  eram2xram ();
-  dps = sfr->get(DPS);
-  data = get_mem (MEM_XRAM_ID,
-                  sfr->get (DPX) * 256*256 + sfr->get (DPH) * 256 + sfr->get (DPL));
-  con->dd_printf ("  %cDPTR0= 0x%02x%02x%02x @DPTR0= 0x%02x %3d %c",
-                  dps & 0x01 ? ' ' : dps & 0x20 ? 't' : '*',
-                  sfr->get (DPX), sfr->get (DPH), sfr->get (DPL),
-                  data, data, isprint (data) ? data : '.');
-  data = get_mem (MEM_XRAM_ID,
-                  sfr->get (DPX1) * 256*256 + sfr->get (DPH1) * 256 + sfr->get (DPL1));
-  con->dd_printf ("  %cDPTR1= 0x%02x%02x%02x @DPTR1= 0x%02x %3d %c\n",
-                  dps & 0x01 ? dps & 0x20 ? 't' : '*' : ' ',
-                  sfr->get (DPX1), sfr->get (DPH1), sfr->get (DPL1),
-                  data, data, isprint (data) ? data : '.');
-  data = iram->get (iram->get (start + 1));
-  con->dd_printf ("@R1 %02x %c", data, isprint (data) ? data : '.');
-  con->dd_printf ("  AP= 0x%02x", sfr->get (AP));
-  data= sfr->get (PSW);
-  con->dd_printf ("  PSW= 0x%02x CY=%c AC=%c OV=%c P=%c    ",
-                  data,
-                  (data & bmCY) ? '1' : '0', (data & bmAC) ? '1' : '0',
-                  (data & bmOV) ? '1' : '0', (data & bmP ) ? '1' : '0');
-  /* show stack pointer */
-  if (sfr->get (ACON) & 0x04)
-    {
-      /* SA: 10 bit stack */
-      start = (sfr->get (R51_ESP) & 3) * 256 + sfr->get (SP);
-      con->dd_printf ("SP10 ", start);
-      ixram->dump (start, start - 7, 8, con/*->get_fout()*/);
-    }
-  else
-    {
-      start = sfr->get (SP);
-      con->dd_printf ("SP ", start);
-      iram->dump (start, start - 7, 8, con/*->get_fout()*/);
-    }
+	con->dd_color("answer");
+	if (!(sfr->get(ACON) & 0x02)) /* AM1 set: 24-bit flat? */
+	{
+		cl_51core::print_regs(con);
+		return;
+	}
+	start = sfr->get(PSW) & 0x18;
+	iram->dump(start, start + 7, 8, con/*->get_fout()*/);
+	con->dd_printf("     R0 R1 R2 R3 R4 R5 R6 R7\n");
+	data = iram->get(iram->get(start));
+	con->dd_printf("@R0 %02x %c", data, isprint(data) ? data : '.');
+	con->dd_printf("  ACC= 0x%02x %3d %c  B= 0x%02x",
+		sfr->get(ACC), sfr->get(ACC),
+		isprint(sfr->get(ACC)) ?
+		(sfr->get(ACC)) : '.', sfr->get(B));
+	eram2xram();
+	dps = sfr->get(DPS);
+	data = get_mem(MEM_XRAM_ID,
+		((t_addr)(sfr->get(DPX)) << 16) | 
+		((t_addr)(sfr->get(DPH)) << 8) | 
+		sfr->get(DPL)
+	);
+	con->dd_printf("  %cDPTR0= 0x%02x%02x%02x @DPTR0= 0x%02x %3d %c",
+		dps & 0x01 ? ' ' : dps & 0x20 ? 't' : '*',
+		sfr->get(DPX), sfr->get(DPH), sfr->get(DPL),
+		data, data, isprint(data) ? data : '.');
+	data = get_mem(MEM_XRAM_ID,
+		((t_addr)(sfr->get(DPX1)) << 16) |
+		((t_addr)(sfr->get(DPH1)) << 8) |
+		sfr->get(DPL1)
+	);
+	con->dd_printf("  %cDPTR1= 0x%02x%02x%02x @DPTR1= 0x%02x %3d %c\n",
+		dps & 0x01 ? dps & 0x20 ? 't' : '*' : ' ',
+		sfr->get(DPX1), sfr->get(DPH1), sfr->get(DPL1),
+		data, data, isprint(data) ? data : '.');
+	data = iram->get(iram->get(start + 1));
+	con->dd_printf("@R1 %02x %c", data, isprint(data) ? data : '.');
+	con->dd_printf("  AP= 0x%02x", sfr->get(AP));
+	data = sfr->get(PSW);
+	con->dd_printf("  PSW= 0x%02x CY=%c AC=%c OV=%c P=%c    ",
+		data,
+		(data & bmCY) ? '1' : '0', (data & bmAC) ? '1' : '0',
+		(data & bmOV) ? '1' : '0', (data & bmP) ? '1' : '0');
+	/* show stack pointer */
+	if (sfr->get(ACON) & 0x04)
+	{
+		/* SA: 10 bit stack */
+		start = ((t_addr)(sfr->get(R51_ESP) & 3) << 8) | sfr->get(SP);
+		con->dd_printf("SP10 ", start);
+		ixram->dump(start, start - 7, 8, con/*->get_fout()*/);
+	}
+	else
+	{
+		start = sfr->get(SP);
+		con->dd_printf("SP ", start);
+		iram->dump(start, start - 7, 8, con/*->get_fout()*/);
+	}
 
-  print_disass (PC, con);
+	print_disass(PC, con);
 }
 
 /* End of s51.src/uc390.cc */

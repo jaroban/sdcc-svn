@@ -586,7 +586,7 @@ cl_f::process_esc(char c)
 	}
       if (ci == 0xff)
 	{
-	  esc_buffer[0]= 0xff, esc_buffer[1]= 0;
+	  esc_buffer[0]= -1, esc_buffer[1]= 0;
 	  return 0;
 	}
     }

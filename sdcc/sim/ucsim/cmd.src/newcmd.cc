@@ -33,7 +33,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include <stdarg.h>
 #include <stdlib.h>
 #include <ctype.h>
+#if defined(_WIN32)
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
 #include <string.h>
 
 //#include "i_string.h"
@@ -249,7 +253,9 @@ cl_console_base::print_expr_result(t_mem val, const char *fmt)
 		    {
 		    case '\a': con->dd_printf("'\\a'"); break;
 		    case '\b': con->dd_printf("'\\b'"); break;
+#if !defined(_MSC_VER)
 		    case '\e': con->dd_printf("'\\e'"); break;
+#endif
 		    case '\f': con->dd_printf("'\\f'"); break;
 		    case '\n': con->dd_printf("'\\n'"); break;
 		    case '\r': con->dd_printf("'\\r'"); break;
@@ -965,7 +971,7 @@ cl_commander_base::flag_printf(int iflags, const char *format, ...)
   for (i= 0; i < cons->count; i++)
     {
       class cl_console_base *c= (class cl_console_base*)(cons->at(i));
-      if ((c->get_flag(iflags)) == iflags)
+      if ((c->get_flag(iflags)) == (iflags != 0))
         {
           va_start(ap, format);
           ret= c->cmd_do_print(format, ap);

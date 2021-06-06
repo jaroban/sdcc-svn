@@ -35,7 +35,11 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 //#include <sys/types.h>
 //#include <sys/time.h>
 #include <string.h>
+#if defined(_WIN32)
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
 
 //#include "i_string.h"
 
