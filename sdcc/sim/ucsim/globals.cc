@@ -30,7 +30,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include <stdio.h>
 
 #include "stypes.h"
-
+#include "globals.h"
 
 // No other global variable should exists!
 class cl_app *application;
@@ -47,7 +47,7 @@ struct id_element error_type_names[]= {
 };
 
 
-const char *warranty= 
+extern const char *warranty= 
 "                            NO WARRANTY\n"
 "\n"
 "  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY\n"
@@ -72,7 +72,7 @@ const char *warranty=
 ;
 
 
-const char *copying=
+extern const char *copying=
 "		    GNU GENERAL PUBLIC LICENSE\n"
 "		       Version 2, June 1991\n"
 "\n"

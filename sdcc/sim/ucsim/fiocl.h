@@ -219,22 +219,24 @@ class cl_f: public cl_base
 
 //extern void deb(const char *format, ...);
 
-extern int mk_srv_socket(int port);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-extern class cl_f *mk_io(const char *fn, const char *mode);
-extern class cl_f *cp_io(/*FILE *f*/int file_id, const char *mode);
-extern class cl_f *mk_srv(int server_port);
-extern int srv_accept(class cl_f *listen_io,
-		      class cl_f **fin, class cl_f **fout);
+int mk_srv_socket(int port);
+class cl_f *mk_io(const char *fn, const char *mode);
+class cl_f *cp_io(/*FILE *f*/int file_id, const char *mode);
+class cl_f *mk_srv(int server_port);
+int srv_accept(class cl_f *listen_io, class cl_f **fin, class cl_f **fout);
+bool check_inputs(class cl_list *active, class cl_list *avail);
+void msleep(int msec);
+void loop_delay();
+const char *fio_type_name(enum file_type t);
+void sigpipe_off();
 
-extern bool check_inputs(class cl_list *active, class cl_list *avail);
-
-extern void msleep(int msec);
-extern void loop_delay();
-
-extern const char *fio_type_name(enum file_type t);
-extern void  sigpipe_off();
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

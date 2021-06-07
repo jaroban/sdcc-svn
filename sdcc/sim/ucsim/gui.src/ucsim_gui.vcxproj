@@ -33,7 +33,6 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{e0aa7fa7-da3d-45dd-8fc3-7e1c4e90d085}</ProjectGuid>
     <RootNamespace>ucsimgui</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

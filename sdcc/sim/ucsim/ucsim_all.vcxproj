@@ -19,45 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="app.cc" />
-    <ClCompile Include="chars.cc" />
-    <ClCompile Include="error.cc" />
-    <ClCompile Include="fio.cc" />
-    <ClCompile Include="ftest.cc" />
-    <ClCompile Include="fuio.cc" />
-    <ClCompile Include="fwio.cc" />
-    <ClCompile Include="globals.cc" />
-    <ClCompile Include="option.cc" />
-    <ClCompile Include="pobj.cc" />
-    <ClCompile Include="ptt.cc" />
-    <ClCompile Include="relay.cc" />
-    <ClCompile Include="ucsim.cc" />
-    <ClCompile Include="utils.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="appcl.h" />
-    <ClInclude Include="charscl.h" />
-    <ClInclude Include="ddconfig_in.h" />
-    <ClInclude Include="errorcl.h" />
-    <ClInclude Include="eventcl.h" />
-    <ClInclude Include="fiocl.h" />
-    <ClInclude Include="fuiocl.h" />
-    <ClInclude Include="fwiocl.h" />
-    <ClInclude Include="globals.h" />
-    <ClInclude Include="i_string.h" />
-    <ClInclude Include="optioncl.h" />
-    <ClInclude Include="pobjcl.h" />
-    <ClInclude Include="pobjt.h" />
-    <ClInclude Include="pstr.h" />
-    <ClInclude Include="stypes.h" />
-    <ClInclude Include="utils.h" />
+    <ProjectReference Include="s51.src\ucsim_s51.vcxproj">
+      <Project>{2738ce2b-d7e2-42d8-9415-0bb2751ab514}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{cc304f9b-2629-49ce-8581-e86a5c79ed46}</ProjectGuid>
     <RootNamespace>ucsim</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ucsim_all</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

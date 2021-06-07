@@ -34,16 +34,12 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #include "stypes.h"
 #include "appcl.h"
 
-
 extern class cl_app *application;
 
 extern char delimiters[];
 
 extern struct id_element error_type_names[];
 //extern char *case_string(enum letter_case lcase, const char *str);
-
-extern char *warranty;
-extern char *copying;
 
 extern struct cpu_entry *cpus;
 extern struct cpu_entry cpus_51[];
@@ -52,6 +48,16 @@ extern struct cpu_entry cpus_hc08[];
 extern struct cpu_entry cpus_stm8[];
 extern struct cpu_entry cpus_pdk[];
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern const char *warranty;
+extern const char *copying;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

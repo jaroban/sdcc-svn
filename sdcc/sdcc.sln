@@ -85,7 +85,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stm8", "src\stm8\stm8.vcxpr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdasstm8", "sdas\asstm8\sdasstm8.vcxproj", "{BB1E28DD-A6B6-4C51-BA0E-CCFE0E10523D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucsim", "sim\ucsim\ucsim.vcxproj", "{CC304F9B-2629-49CE-8581-E86A5C79ED46}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucsim_all", "sim\ucsim\ucsim_all.vcxproj", "{CC304F9B-2629-49CE-8581-E86A5C79ED46}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucsim_cmd", "sim\ucsim\cmd.src\ucsim_cmd.vcxproj", "{814BBC63-9739-4B2C-848B-6D5696EFFB03}"
 EndProject
@@ -96,6 +96,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucsim_sim", "sim\ucsim\sim.src\ucsim_sim.vcxproj", "{FF7556DF-EC6A-411A-8586-E4B508FD36F1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucsim_gui", "sim\ucsim\gui.src\ucsim_gui.vcxproj", "{E0AA7FA7-DA3D-45DD-8FC3-7E1C4E90D085}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ucsim", "ucsim", "{283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -288,6 +290,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CC304F9B-2629-49CE-8581-E86A5C79ED46} = {283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}
+		{814BBC63-9739-4B2C-848B-6D5696EFFB03} = {283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}
+		{2738CE2B-D7E2-42D8-9415-0BB2751AB514} = {283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}
+		{7764C152-5D81-467D-87A6-99E9A35E046F} = {283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}
+		{FF7556DF-EC6A-411A-8586-E4B508FD36F1} = {283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}
+		{E0AA7FA7-DA3D-45DD-8FC3-7E1C4E90D085} = {283B9BB2-B4E1-4BFC-9CDC-F3B02D1EE727}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F90282CC-D407-4651-919E-36A42D2A6E78}
