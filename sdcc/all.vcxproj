@@ -213,6 +213,9 @@ copy %(Identity) bin\sdld6808.exe /y &gt; nul</Command>
       <Project>{c14982c0-731b-46a0-9dd2-845e3811cf18}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="sdas\as8xcxxx\sdas390.vcxproj">
+      <Project>{a9548e03-2812-4970-9749-e6c436e8c410}</Project>
+    </ProjectReference>
     <ProjectReference Include="sdas\asgb\asgb.vcxproj">
       <Project>{37192eef-c964-4598-a8bd-4395df7ef5bf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

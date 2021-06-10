@@ -1,3 +1,17 @@
+## Why this fork
+
+I'm updating this project's MS Visual Studio projects to work under
+the newest Windows 10 / MSVC Community edition 19.
+The roadmap is:
+
+- Add x64 configurations to existing projects
+- Compile ucsim
+- Cross-compile the sdcc standard lib
+- Compile regression tests
+
+The goal is to make it possible to develop entirely in MSVC.
+
+
 # SDCC - free open source, retargettable, optimizing ANSI-C compiler
 
 Welcome to SDCC, free open source, retargettable, optimizing ANSI C

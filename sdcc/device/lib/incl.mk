@@ -1,11 +1,5 @@
 COMMON_FLOAT = \
   _atof.c \
-  _schar2fs.c \
-  _sint2fs.c \
-  _slong2fs.c \
-  _uchar2fs.c \
-  _uint2fs.c \
-  _ulong2fs.c \
   _fs2schar.c \
   _fs2sint.c \
   _fs2slong.c \
@@ -14,40 +8,46 @@ COMMON_FLOAT = \
   _fs2ulong.c \
   _fsadd.c \
   _fsdiv.c \
-  _fsmul.c \
-  _fssub.c \
   _fseq.c \
   _fslt.c \
+  _fsmul.c \
   _fsneq.c \
-  fabsf.c \
-  frexpf.c \
-  ldexpf.c \
+  _fssub.c \
+  _schar2fs.c \
+  _sint2fs.c \
+  _slong2fs.c \
+  _uchar2fs.c \
+  _uint2fs.c \
+  _ulong2fs.c \
+  acosf.c \
+  asincosf.c \
+  asinf.c \
+  atan2f.c \
+  atanf.c \
+  ceilf.c \
+  cosf.c \
+  coshf.c \
+  cotf.c \
+  errno.c \
   expf.c \
+  fabsf.c \
+  floorf.c \
+  frexpf.c \
+  isinf.c \
+  isnan.c \
+  ldexpf.c \
+  log10f.c \
+  logf.c \
+  modff.c \
   powf.c \
   sincosf.c \
+  sincoshf.c \
   sinf.c \
-  cosf.c \
-  logf.c \
-  log10f.c \
+  sinhf.c \
   sqrtf.c \
   tancotf.c \
   tanf.c \
-  cotf.c \
-  asincosf.c \
-  asinf.c \
-  acosf.c \
-  atanf.c \
-  atan2f.c \
-  sincoshf.c \
-  sinhf.c \
-  coshf.c \
-  tanhf.c \
-  floorf.c \
-  ceilf.c \
-  modff.c \
-  errno.c \
-  isinf.c \
-  isnan.c
+  tanhf.c
 
 COMMON_LONG = \
   _divslong.c \
@@ -55,6 +55,34 @@ COMMON_LONG = \
   _modulong.c
 
 COMMON_SDCC = \
+  __assert.c \
+  _memcmp.c \
+  _memchr.c \
+  _memset.c \
+  _strcat.c \
+  _strcspn.c \
+  _strchr.c \
+  _strncat.c \
+  _strncmp.c \
+  _strncpy.c \
+  _strpbrk.c \
+  _strrchr.c \
+  _strspn.c \
+  _strstr.c \
+  _strtok.c \
+  abs.c \
+  aligned_alloc.c \
+  atoi.c \
+  atol.c \
+  atoll.c \
+  bsearch.c \
+  btowc.c \
+  c16rtomb.c \
+  c16stombs.c \
+  c32rtomb.c \
+  calloc.c \
+  free.c \
+  gets.c \
   isalnum.c \
   isalpha.c \
   isblank.c \
@@ -67,65 +95,37 @@ COMMON_SDCC = \
   isspace.c \
   isupper.c \
   isxdigit.c \
-  tolower.c \
-  toupper.c \
-  atoi.c \
-  atol.c \
-  atoll.c \
-  strtol.c \
-  strtoul.c \
-  bsearch.c \
-  qsort.c \
-  abs.c \
   labs.c \
-  rand.c \
-  _strcat.c \
-  _strchr.c \
-  _strcspn.c \
-  strdup.c \
-  strndup.c \
-  _strncat.c \
-  _strncmp.c \
-  strxfrm.c \
-  _strncpy.c \
-  _strpbrk.c \
-  _strrchr.c \
-  _strspn.c \
-  _strstr.c \
-  _strtok.c \
-  memccpy.c \
-  _memchr.c \
-  _memcmp.c \
-  _memset.c \
-  memset_explicit.c \
-  aligned_alloc.c \
-  calloc.c \
   malloc.c \
-  realloc.c \
-  free.c \
   mblen.c \
-  mbtowc.c \
-  wctomb.c \
-  mbstowcs.c \
-  wcstombs.c \
-  mbrtoc16.c \
-  c16rtomb.c \
-  mbrtoc32.c \
-  c32rtomb.c \
-  mbstoc16s.c \
-  c16stombs.c \
-  wcscmp.c \
-  wcslen.c \
-  btowc.c \
-  wctob.c \
-  mbsinit.c \
   mbrlen.c \
+  mbrtoc16.c \
+  mbrtoc32.c \
   mbrtowc.c \
-  wcrtomb.c \
+  mbsinit.c \
+  mbstoc16s.c \
+  mbstowcs.c \
+  mbtowc.c \
+  memccpy.c \
+  memset_explicit.c \
   printf_large.c \
   puts.c \
-  gets.c \
-  __assert.c \
-  time.c
+  qsort.c \
+  rand.c \
+  realloc.c \
+  strdup.c \
+  strndup.c \
+  strtol.c \
+  strtoul.c \
+  strxfrm.c \
+  time.c \
+  tolower.c \
+  toupper.c \
+  wcrtomb.c \
+  wcscmp.c \
+  wcslen.c \
+  wcstombs.c \
+  wctob.c \
+  wctomb.c
 
 MODELS = small medium large huge
