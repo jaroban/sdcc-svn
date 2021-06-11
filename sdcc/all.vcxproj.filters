@@ -1,29 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Info">
-      <UniqueIdentifier>{07e1e828-c225-4c91-8104-30ebdbfdcc2b}</UniqueIdentifier>
-      <Extensions>. .txt</Extensions>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ChangeLog">
-      <Filter>Info</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="bin_vc\makebin.exe" />
-    <CustomBuild Include="bin_vc\packihx.exe" />
-    <CustomBuild Include="bin_vc\sdas6808.exe" />
-    <CustomBuild Include="bin_vc\sdas8051.exe" />
-    <CustomBuild Include="bin_vc\sdasgb.exe" />
-    <CustomBuild Include="bin_vc\sdasz80.exe" />
-    <CustomBuild Include="bin_vc\sdcc.exe" />
-    <CustomBuild Include="bin_vc\sdcclib.exe" />
-    <CustomBuild Include="bin_vc\sdcpp.exe" />
-    <CustomBuild Include="bin_vc\sdld.exe" />
-    <CustomBuild Include="bin_vc\sdcdb.exe" />
-    <CustomBuild Include="bin_vc\sdranlib.exe" />
-    <CustomBuild Include="bin_vc\sdasrab.exe" />
+    <CopyFileToFolders Include="..\bin_vc\makebin.exe" />
+    <CopyFileToFolders Include="..\bin_vc\packihx.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdas390.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdas6808.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdas8051.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdasgb.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdasrab.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdasstm8.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdastlcs90.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdasz80.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdcc.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdcdb.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdcpp.exe" />
+    <CopyFileToFolders Include="..\bin_vc\sdld.exe" />
   </ItemGroup>
 </Project>
