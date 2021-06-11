@@ -205,24 +205,29 @@ copy %(Identity) bin\sdld6808.exe /y &gt; nul</Command>
       <Project>{76b78c5a-6b31-4ba1-9226-f1409b48f839}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="sdas\as6808\as_hc08.vcxproj">
-      <Project>{c81f84d7-f847-4100-969f-0791a95d2e4c}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="sdas\as6808\sdas6808.vcxproj">
+      <Project>{0917d23d-a4c7-4ae1-8fe2-663e4bd94f41}</Project>
     </ProjectReference>
-    <ProjectReference Include="sdas\as8051\asx8051.vcxproj">
-      <Project>{c14982c0-731b-46a0-9dd2-845e3811cf18}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="sdas\as8051\sdas8051.vcxproj">
+      <Project>{397a11ac-c039-465a-865e-bdece3389ff2}</Project>
     </ProjectReference>
     <ProjectReference Include="sdas\as8xcxxx\sdas390.vcxproj">
       <Project>{a9548e03-2812-4970-9749-e6c436e8c410}</Project>
     </ProjectReference>
-    <ProjectReference Include="sdas\asgb\asgb.vcxproj">
-      <Project>{37192eef-c964-4598-a8bd-4395df7ef5bf}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="sdas\asgb\sdasgb.vcxproj">
+      <Project>{0d32a912-a58a-4a86-ba3e-b3cf4ae34da2}</Project>
     </ProjectReference>
-    <ProjectReference Include="sdas\asz80\as_z80.vcxproj">
-      <Project>{a281c655-04b3-4f24-b0c4-e61567d60b5b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="sdas\asrab\sdasrab.vcxproj">
+      <Project>{ec7511af-56de-47d0-a358-95f6f34788fb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="sdas\asstm8\sdasstm8.vcxproj">
+      <Project>{3dda7ee1-73d6-4ad2-98be-00b108b883da}</Project>
+    </ProjectReference>
+    <ProjectReference Include="sdas\astlcs90\sdastlcs90.vcxproj">
+      <Project>{d0687f7a-663e-45bd-abf6-af40acc021d5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="sdas\asz80\sdasz80.vcxproj">
+      <Project>{3152f5fc-1314-4aed-820d-b4c78aa1b2dc}</Project>
     </ProjectReference>
     <ProjectReference Include="sdas\linksrc\aslink.vcxproj">
       <Project>{6e94db45-345e-4697-98da-6c72237d6eca}</Project>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,16 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ds8.h" />
-    <ClCompile Include="ds8adr.c" />
-    <ClCompile Include="ds8mch.c" />
-    <ClCompile Include="ds8pst.c" />
+    <ClInclude Include="gb.h" />
+    <ClCompile Include="gbadr.c" />
+    <ClCompile Include="gbmch.c" />
+    <ClCompile Include="gbpst.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a9548e03-2812-4970-9749-e6c436e8c410}</ProjectGuid>
-    <RootNamespace>sdas390</RootNamespace>
+    <ProjectGuid>{0d32a912-a58a-4a86-ba3e-b3cf4ae34da2}</ProjectGuid>
+    <RootNamespace>sdasgb</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
