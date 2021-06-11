@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_PropertySheetDisplayName>sdas_release</_PropertySheetDisplayName>
+    <_PropertySheetDisplayName>sdld_release</_PropertySheetDisplayName>
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin_vc\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\</IntDir>
@@ -17,8 +17,8 @@
       <ConformanceMode>true</ConformanceMode>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.;../asxxsrc;../../support/util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;INDEXLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -36,26 +36,5 @@
       <Project>{2f87ba6f-8ee1-48d0-9817-6ba30bddb3c1}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\sdcc_vc.h" />
-    <ClInclude Include="..\..\support\util\dbuf.h" />
-    <ClInclude Include="..\..\support\util\dbuf_string.h" />
-    <ClInclude Include="..\asxxsrc\asxxxx.h" />
-    <ClInclude Include="..\asxxsrc\sdas.h" />
-    <ClCompile Include="..\..\support\util\dbuf.c" />
-    <ClCompile Include="..\..\support\util\dbuf_string.c" />
-    <ClCompile Include="..\asxxsrc\asdata.c" />
-    <ClCompile Include="..\asxxsrc\asdbg.c" />
-    <ClCompile Include="..\asxxsrc\asexpr.c" />
-    <ClCompile Include="..\asxxsrc\aslex.c" />
-    <ClCompile Include="..\asxxsrc\aslist.c" />
-    <ClCompile Include="..\asxxsrc\asmain.c" />
-    <ClCompile Include="..\asxxsrc\asmcro.c" />
-    <ClCompile Include="..\asxxsrc\asout.c" />
-    <ClCompile Include="..\asxxsrc\assubr.c" />
-    <ClCompile Include="..\asxxsrc\assym.c" />
-    <ClCompile Include="..\asxxsrc\sdas.c" />
-    <ClCompile Include="..\asxxsrc\strcmpi.c" />
   </ItemGroup>
 </Project>
