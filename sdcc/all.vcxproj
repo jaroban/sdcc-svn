@@ -171,6 +171,9 @@
     <ProjectReference Include="sdas\asz80\sdasz80.vcxproj">
       <Project>{3152f5fc-1314-4aed-820d-b4c78aa1b2dc}</Project>
     </ProjectReference>
+    <ProjectReference Include="src\sdcc.vcxproj">
+      <Project>{141aa852-8660-4624-b3d2-0c57ce4e9194}</Project>
+    </ProjectReference>
     <ProjectReference Include="support\makebin\makebin.vcxproj">
       <Project>{c97cea8c-4e60-4830-a6eb-f6add12ef172}</Project>
     </ProjectReference>

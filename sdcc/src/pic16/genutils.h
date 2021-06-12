@@ -8,7 +8,7 @@
 
 
 #include "common.h"
-
+#include "pcode.h"
 
 #if !defined(__BORLANDC__) && !defined(_MSC_VER)
 #define DEBUGpc(fmt,...)  DEBUGpic16_emitcode("; =:=", "%s:%s:%d: " fmt, __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__)

@@ -3,20 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic16", "src\pic16\pic16.vcxproj", "{7E09A25E-1C9D-438D-85DB-8535F134890D}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcpp", "support\cpp\sdcpp.vcxproj", "{57BCB0F8-EF4A-4688-9B36-55A8F6DC93BF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcc_orig", "src\sdcc.vcxproj", "{F9485499-151B-4886-935C-7D687C4A0549}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0BA12B9F-BCD6-4C08-9992-69B4FB32D335} = {0BA12B9F-BCD6-4C08-9992-69B4FB32D335}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic14", "src\pic14\pic14.vcxproj", "{B96E942E-39F5-4C7C-97FD-A095DE6847C6}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcdb", "debugger\mcs51\sdcdb.vcxproj", "{76B78C5A-6B31-4BA1-9226-F1409B48F839}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stm8", "src\stm8\stm8.vcxproj", "{0BA12B9F-BCD6-4C08-9992-69B4FB32D335}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ucsim_all", "sim\ucsim\ucsim_all.vcxproj", "{CC304F9B-2629-49CE-8581-E86A5C79ED46}"
 EndProject
@@ -38,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblers", "assemblers", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcc_lib", "device\lib\sdcc_lib.vcxproj", "{39FE14BE-1943-443A-A6C3-83EBF968664C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcc2", "src\sdcc2.vcxproj", "{141AA852-8660-4624-B3D2-0C57CE4E9194}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcc", "src\sdcc.vcxproj", "{141AA852-8660-4624-B3D2-0C57CE4E9194}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "config", "config.vcxproj", "{4B94C77E-2FE8-4269-9FB5-6455E1049D94}"
 EndProject
@@ -72,11 +61,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mcs51", "src\mcs51\mcs51.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "z80", "src\z80\z80.vcxproj", "{61C0E439-AEAE-4B21-AA49-66334E4676BE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stm8_", "src\stm8\stm8_.vcxproj", "{6014D879-C468-44CE-9F73-7217074876D4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stm8", "src\stm8\stm8.vcxproj", "{6014D879-C468-44CE-9F73-7217074876D4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic14_", "src\pic14\pic14_.vcxproj", "{CC8045ED-DA89-40C4-9C28-13CE2086711B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic14", "src\pic14\pic14.vcxproj", "{CC8045ED-DA89-40C4-9C28-13CE2086711B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic16_", "src\pic16\pic16_.vcxproj", "{AC211807-F70B-48A2-A51E-0B0941AF39A5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic16", "src\pic16\pic16.vcxproj", "{AC211807-F70B-48A2-A51E-0B0941AF39A5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linker", "linker", "{5B940262-87D1-47C3-8321-6A3AAC79F9BB}"
 EndProject
