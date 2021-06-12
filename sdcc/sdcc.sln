@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mcs51", "src\mcs51\mcs51.vcxproj", "{9FACDB81-BE66-42D0-95F5-EA2FA3B09065}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic16", "src\pic16\pic16.vcxproj", "{7E09A25E-1C9D-438D-85DB-8535F134890D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcpp", "support\cpp\sdcpp.vcxproj", "{57BCB0F8-EF4A-4688-9B36-55A8F6DC93BF}"
@@ -13,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdcc_orig", "src\sdcc.vcxpr
 	ProjectSection(ProjectDependencies) = postProject
 		{0BA12B9F-BCD6-4C08-9992-69B4FB32D335} = {0BA12B9F-BCD6-4C08-9992-69B4FB32D335}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "z80", "src\z80\z80.vcxproj", "{7444A72F-C7C6-4F90-9A62-2D46240B52DB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pic14", "src\pic14\pic14.vcxproj", "{B96E942E-39F5-4C7C-97FD-A095DE6847C6}"
 EndProject
@@ -72,9 +68,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ds390", "src\ds390\ds390.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hc08", "src\hc08\hc08.vcxproj", "{872C3FBD-35A7-42A8-9D0D-D04481F2BEF7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mcs51_", "src\mcs51\mcs51_.vcxproj", "{911EE9DB-A027-4D86-AB03-0A9F479C3E35}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mcs51", "src\mcs51\mcs51.vcxproj", "{911EE9DB-A027-4D86-AB03-0A9F479C3E35}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "z80_", "src\z80\z80_.vcxproj", "{61C0E439-AEAE-4B21-AA49-66334E4676BE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "z80", "src\z80\z80.vcxproj", "{61C0E439-AEAE-4B21-AA49-66334E4676BE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stm8_", "src\stm8\stm8_.vcxproj", "{6014D879-C468-44CE-9F73-7217074876D4}"
 EndProject
