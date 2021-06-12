@@ -5,8 +5,8 @@
   <PropertyGroup>
     <_PropertySheetDisplayName>sdld_debug</_PropertySheetDisplayName>
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin_vc\</OutDir>
-    <IntDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\</IntDir>
+    <OutDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\bin\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -23,7 +23,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(SolutionDir)\bin_vc\$(TargetFileName)</OutputFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
     </Link>
   </ItemDefinitionGroup>

@@ -5,8 +5,8 @@
   <PropertyGroup>
     <_PropertySheetDisplayName>sdas_release</_PropertySheetDisplayName>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin_vc\</OutDir>
-    <IntDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\</IntDir>
+    <OutDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\bin\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -27,9 +27,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(SolutionDir)\bin_vc\$(TargetFileName)</OutputFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" $(SolutionDir)\bin_vc\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying $(TargetPath) to bin_vc</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\config.vcxproj">

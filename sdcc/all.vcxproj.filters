@@ -14,20 +14,4 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\bin_vc\makebin.exe" />
-    <CopyFileToFolders Include="..\bin_vc\packihx.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdas390.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdas6808.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdas8051.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdasgb.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdasrab.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdasstm8.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdastlcs90.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdasz80.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdcc.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdcdb.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdcpp.exe" />
-    <CopyFileToFolders Include="..\bin_vc\sdld.exe" />
-  </ItemGroup>
 </Project>
