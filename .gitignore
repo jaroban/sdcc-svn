@@ -387,12 +387,6 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-# external libary
-boost/*
-
-# tools
-utils/*
-
 # generated files
 sdcc/sdcc_vc.h
 sdcc/src/SDCClex.c
