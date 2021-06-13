@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)\$(ProjectName)\bin\</OutDir>
+    <IntDir>$(ProjectDir)\$(ProjectName)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)\$(ProjectName)\bin\</OutDir>
+    <IntDir>$(ProjectDir)\$(ProjectName)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)\$(ProjectName)\bin\</OutDir>
+    <IntDir>$(ProjectDir)\$(ProjectName)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)\$(ProjectName)\bin\</OutDir>
+    <IntDir>$(ProjectDir)\$(ProjectName)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="debugger\mcs51\sdcdb.vcxproj">
+      <Project>{62b67ab4-1171-4de5-9c6c-342b959139fd}</Project>
+    </ProjectReference>
     <ProjectReference Include="sdas\as6808\sdas6808.vcxproj">
       <Project>{0917d23d-a4c7-4ae1-8fe2-663e4bd94f41}</Project>
     </ProjectReference>

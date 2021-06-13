@@ -5,8 +5,8 @@
   <PropertyGroup>
     <_PropertySheetDisplayName>sdld_debug</_PropertySheetDisplayName>
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\bin\</OutDir>
-    <IntDir>$(ProjectDir)$(Configuration)_$(PlatformShortName)\obj\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)_$(PlatformShortName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
