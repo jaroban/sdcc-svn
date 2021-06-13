@@ -174,6 +174,9 @@
     <ProjectReference Include="src\sdcc.vcxproj">
       <Project>{141aa852-8660-4624-b3d2-0c57ce4e9194}</Project>
     </ProjectReference>
+    <ProjectReference Include="support\cpp\sdcpp.vcxproj">
+      <Project>{2167f70a-f468-43ce-8b2c-347d73845ce6}</Project>
+    </ProjectReference>
     <ProjectReference Include="support\makebin\makebin.vcxproj">
       <Project>{c97cea8c-4e60-4830-a6eb-f6add12ef172}</Project>
     </ProjectReference>

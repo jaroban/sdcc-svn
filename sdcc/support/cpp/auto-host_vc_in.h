@@ -76,7 +76,11 @@ Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.*/
 #pragma warning( disable : 4090 )
 #pragma warning( disable : 4022 )
 
-typedef int intptr_t;
+#ifdef _WIN64
+typedef __int64	intptr_t;
+#else
+typedef int		intptr_t;
+#endif
 #endif  /* _MSC_VER */
 
 #endif  /*CPP_VC_H_*/

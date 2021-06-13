@@ -241,7 +241,7 @@ search_line_acc_char (const uchar *s, const uchar *end ATTRIBUTE_UNUSED)
   word_type val, t;
   
   /* Align the buffer.  Mask out any bytes from before the beginning.  */
-  p = (word_type *)((uintptr_t)s & -sizeof(word_type));
+  p = (word_type *)((uintptr_t)s & (~sizeof(word_type) + 1));
   val = *p;
   misalign = (uintptr_t)s & (sizeof(word_type) - 1);
   if (misalign)
