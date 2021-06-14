@@ -1201,7 +1201,7 @@ cl_uc390::disass(t_addr addr)
 			case 'l': // long address
 				operand = 
 					(rom->get(addr + 1) << 16) |
-					(rom->get(addr + 2) << 8) +
+					(rom->get(addr + 2) << 8) |
 					 rom->get(addr + 3);
 				temp.format(rom->addr_format, operand);
 				addr_name(operand, rom, &temp);

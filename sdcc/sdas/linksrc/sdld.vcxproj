@@ -56,7 +56,7 @@
     <ClCompile Include="sdld.c" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\config.vcxproj">
+    <ProjectReference Include="..\..\config\config.vcxproj">
       <Project>{4b94c77e-2fe8-4269-9fb5-6455e1049d94}</Project>
     </ProjectReference>
   </ItemGroup>
