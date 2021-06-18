@@ -3591,14 +3591,20 @@ genCall (const iCode *ic)
           cost (180, 180);
         }
 
-      if (!stm8IsParmInCall(ftype, "x"))
+      if (stm8_extend_stack && !stm8IsParmInCall(ftype, "y") && ic->op != PCALL && optimize.codeSpeed) // 6 bytes, 4 cycles.
+        {
+          emit2 ("addw", "y, #%d", IC_RESULT (ic)->aop->aopu.bytes[getSize (ftype->next) - 1].byteu.stk + G.stack.size - 256 + G.stack.pushed);
+          cost (4, 2);
+          push (ASMOP_Y, 0, 2);
+        }
+      else if (!stm8IsParmInCall(ftype, "x")) // 5 bytes, 5 cycles.
         {
           emit2 ("ldw", "x, sp");
           emit2 ("addw", "x, #%d", IC_RESULT (ic)->aop->aopu.bytes[getSize (ftype->next) - 1].byteu.stk + G.stack.pushed);
           cost (1 + 3, 1 + 2);
           push (ASMOP_X, 0, 2);
         }
-      else if (!stm8IsParmInCall(ftype, "y"))
+      else if (!stm8IsParmInCall(ftype, "y")) // 8 bytes, 6 cycles.
         {
           emit2 ("ldw", "y, sp");
           emit2 ("addw", "y, #%d", IC_RESULT (ic)->aop->aopu.bytes[getSize (ftype->next) - 1].byteu.stk + G.stack.pushed);
@@ -3606,20 +3612,35 @@ genCall (const iCode *ic)
           push (ASMOP_Y, 0, 2);
         }
       else
-        wassertl (0, "Big return value require free x or y, but both are used for register parameters.");
+        wassertl (0, "Big return value requires free x or y, but both are used for register parameters.");
 
       freeAsmop (IC_RESULT (ic));
     }
   // Check if we can do tail call optimization.
   else if (!(currFunc && IFFUNC_ISISR (currFunc->type)) &&
-    (!SomethingReturned || aopInReg (IC_RESULT (ic)->aop, 0, aopRet (ftype)->aopu.bytes[0].byteu.reg->rIdx) && (IC_RESULT (ic)->aop->size < 2 || IC_RESULT (ic)->aop->size <= 2 && aopInReg (IC_RESULT (ic)->aop, 1, aopRet (ftype)->aopu.bytes[1].byteu.reg->rIdx))) &&
-    !ic->parmBytes &&
-    !isFuncCalleeStackCleanup (currFunc->type) &&
+    (!SomethingReturned ||
+      aopInReg (IC_RESULT (ic)->aop, 0, aopRet (ftype)->aopu.bytes[0].byteu.reg->rIdx) &&
+        (IC_RESULT (ic)->aop->size < 2 || IC_RESULT (ic)->aop->size <= 2 && aopInReg (IC_RESULT (ic)->aop, 1, aopRet (ftype)->aopu.bytes[1].byteu.reg->rIdx))) &&
+    !ic->parmBytes && !bigreturn &&
+    (!isFuncCalleeStackCleanup (currFunc->type) || !ic->parmEscapeAlive && options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (ftype) && !optimize.codeSize && ic->op == CALL) &&
     !ic->localEscapeAlive &&
     !(ic->op == PCALL && aopOnStack (left->aop, 0, left->aop->size)) &&
     !(options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (currFunc->type) && IFFUNC_ISCOSMIC (ftype))) // __cosmic uses 24 bits for return address on stack frame. Can only optimize tail call to __cosmic callee, if caller also uses 24 bits.
     {
       int limit = 16; // Avoid endless loops in the code putting us into an endless loop here.
+
+      if (isFuncCalleeStackCleanup (currFunc->type))
+        {
+           const bool caller_bigreturn = currFunc->type->next && (getSize (currFunc->type->next) > 4) || IS_STRUCT (currFunc->type->next);
+           int caller_stackparmbytes = caller_bigreturn * 2;
+           for (value *caller_arg = FUNC_ARGS(currFunc->type); caller_arg; caller_arg = caller_arg->next)
+             {
+               wassert (caller_arg->sym);
+               if (!SPEC_REGPARM (caller_arg->etype))
+                 caller_stackparmbytes += getSize (caller_arg->sym->type);
+             }
+           prestackadjust += caller_stackparmbytes;
+        }
 
       for (const iCode *nic = ic->next; nic && --limit;)
         {
@@ -3627,21 +3648,27 @@ genCall (const iCode *ic)
 
           if (nic->op == LABEL)
             ;
-          else if (nic->op == GOTO) // We dont have ebbi here, so we cant jsut use eBBWithEntryLabel (ebbi, ic->label). Search manually.
+          else if (nic->op == GOTO) // We dont have ebbi here, so we can't just use eBBWithEntryLabel (ebbi, ic->label). Search manually.
             targetlabel = IC_LABEL (nic);
           else if (nic->op == RETURN && (!IC_LEFT (nic) || SomethingReturned && IC_RESULT (ic)->key == IC_LEFT (nic)->key))
             targetlabel = returnLabel;
           else if (nic->op == ENDFUNCTION)
             {
               if (OP_SYMBOL (IC_LEFT (nic))->stack <= (optimize.codeSize ? 250 : 510))
-                {
-                  prestackadjust = OP_SYMBOL (IC_LEFT (nic))->stack;
-                  tailjump = true;
-                }
+                if (!isFuncCalleeStackCleanup (currFunc->type) || prestackadjust <= 250)
+                  {
+                    prestackadjust += OP_SYMBOL (IC_LEFT (nic))->stack;
+                    tailjump = true;emit2(";B", "tailjump %d prestackadjust %d", tailjump, prestackadjust);
+                    break;
+                  }
+              prestackadjust = 0;
               break;
             }
           else
-            break;
+            {
+              prestackadjust = 0;
+              break;
+            }
 
           if (targetlabel)
             {
@@ -3654,7 +3681,11 @@ genCall (const iCode *ic)
                   if (nnic->op == LABEL && IC_LABEL (nnic)->key == targetlabel->key)
                     break;
               if (!nnic)
-                break;
+                {
+                  prestackadjust = 0;
+                  tailjump = false;
+                  break;
+                }
 
               nic = nnic;
             }
@@ -3820,6 +3851,15 @@ genCall (const iCode *ic)
     }
   else
     {
+      if (isFuncCalleeStackCleanup (currFunc->type) && prestackadjust && !IFFUNC_ISNORETURN (ftype)) // Copy return value into correct location on stack for tail call optimization.
+        {
+          wassert (options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (ftype));
+          bool use_y = stm8IsParmInCall(ftype, "x");
+          emit2 ("ldw", use_y ? "y, (%d, sp)" : "x, (%d, sp)", G.stack.pushed + currFunc->stack + 1);
+          emit2 ("ldw", use_y ? "(%d, sp), y" : "(%d, sp), x", prestackadjust + 1);
+          cost (4, 4);
+        }
+
       adjustStack (prestackadjust, true, true, true);
 
       if (options.model == MODEL_LARGE || IFFUNC_ISCOSMIC (ftype))
@@ -3861,82 +3901,93 @@ genCall (const iCode *ic)
     }
 
 
-  const bool half = stm8_extend_stack && SomethingReturned && (aopRet (ftype)->regs[YL_IDX] >= 0 || aopRet (ftype)->regs[YH_IDX] >= 0);
+  const bool result_in_frameptr = stm8_extend_stack && SomethingReturned && !bigreturn && (aopRet (ftype)->regs[YL_IDX] >= 0 || aopRet (ftype)->regs[YH_IDX] >= 0);
 
-  /* Todo: More efficient handling of long return value for function with extendeds stack when the result value does not use the extended stack. */
+  asmop *result = IC_RESULT (ic)->aop;
 
-  /* Special handling of assignment of result value in y when using extended stack. */
-  if (half && (IC_RESULT (ic)->aop->type != AOP_STK && IC_RESULT (ic)->aop->type != AOP_REGSTK || !regalloc_dry_run && aopOnStackNotExt (IC_RESULT (ic)->aop, 0, IC_RESULT (ic)->aop->size)))
+  if (result_in_frameptr)
     {
-      genMove (IC_RESULT (ic)->aop, aopRet (ftype), true, true, true);
-      pop (ASMOP_Y, 0, 2);
-      goto restore;
-    }  
-  else if (half)
-    {
-      asmop *result;
-      int save_a = 0;
-      
-      wassert (regalloc_dry_run || aopRet (ftype) == ASMOP_XY || aopRet (ftype) == ASMOP_XYL); // Implementation assumes a 24-Bit or 32-Bit return value in XY.
+      bool result_in_extstk = (result->type == AOP_STK || result->type == AOP_REGSTK) && !(!regalloc_dry_run && aopOnStackNotExt (result, 0, result->size));
 
-      result = IC_RESULT (ic)->aop;
+      if (result->size == 1 && aopInReg (result, 0, XL_IDX) && aopInReg (aopRet (ftype), 0, YL_IDX) ||
+        result->size == 2 && aopInReg (aopRet (ftype), 0, Y_IDX) && result_in_extstk)
+        {
+          pop (ASMOP_X, 0, 2);
+          emit2 ("exgw", "x, y");
+          cost (1, 1);
+          genMove (result, ASMOP_X, true, true, !stm8_extend_stack);
+        }
+      else if (!result_in_extstk)
+        {
+          genMove (result, aopRet (ftype), true, true, true);
+          pop (ASMOP_Y, 0, 2);
+        }
+      else if (result->size == 1)
+        {
+          genMove (ASMOP_A, aopRet (ftype), true, true, true);
+          pop (ASMOP_Y, 0, 2);
+          genMove (result, ASMOP_A, true, true, !stm8_extend_stack);
+        }
+      else if (result->size == 2)
+        {
+          genMove (ASMOP_X, aopRet (ftype), true, true, true);
+          pop (ASMOP_Y, 0, 2);
+          genMove (result, ASMOP_X, true, true, !stm8_extend_stack);
+        }
+      else
+        {
+          push (ASMOP_Y, 0, 2);
 
-      push (ASMOP_Y, 0, 2);
-      emit2 ("ldw", "y, (3, sp)");
-      cost (2, 2);
+          // Restore frame pointer
+          emit2 ("ldw", "y, (3, sp)");
+          cost (2, 2);
 
-      emit2 ("ld", "a, (2, sp)");
-      cost (2, 1);
-      if (IC_RESULT (ic)->aop->size > 2)
-        cheapMove (IC_RESULT (ic)->aop, 2, ASMOP_A, 0, TRUE);
-      if (result->size > 2)
-        if (aopRS (result) && aopRS (ASMOP_A) &&
-          result->aopu.bytes[2].in_reg && ASMOP_A->aopu.bytes[0].in_reg &&
-          result->aopu.bytes[2].byteu.reg == ASMOP_A->aopu.bytes[0].byteu.reg)
+          for(int i = 0; i < result->size; i++)
             {
-              push (ASMOP_A, 0, 1);
-              save_a = 1;
+              bool a_dead = (result->regs[A_IDX] < 0 || result->regs[A_IDX] >= i);
+
+              if (result->aopu.bytes[i].in_reg &&
+                !aopInReg (result, i, YL_IDX) && !aopInReg (result, i, YH_IDX) &&
+                aopRet (ftype)->regs[result->aopu.bytes[i].byteu.reg->rIdx] > i && aopRet (ftype)->regs[result->aopu.bytes[i].byteu.reg->rIdx] < result->size)
+                {
+                  cost (300, 300);
+                  wassert (regalloc_dry_run);
+                }
+
+              if (aopInReg (aopRet (ftype), i, YL_IDX) || aopInReg (aopRet (ftype), i, YH_IDX))
+                {
+                  if (!a_dead)
+                    push (ASMOP_A, 0, 1);
+                  emit2 ("ld", "a, (%d, sp)", 1 + !a_dead + aopInReg (aopRet (ftype), i, YL_IDX));
+                  cost (2, 1);
+                  cheapMove (result, i, ASMOP_A, 0, true);
+                  if (!a_dead)
+                    pop (ASMOP_A, 0, 1);
+                }
+              else
+                cheapMove (result, i, aopRet (ftype), i, !a_dead);
             }
 
-      if (save_a)
-        emit2 ("ld", "a, (2, sp)");
-      else
-        emit2 ("ld", "a, (1, sp)");
-      cost (2, 1);
-      if (IC_RESULT (ic)->aop->size > 3)
-        cheapMove (IC_RESULT (ic)->aop, 3, ASMOP_A, 0, TRUE);
-      if (save_a)
-        {
-          pop (ASMOP_A, 0, 1);
-          save_a = 0;
+          adjustStack (4, aopRet (ftype)->regs[A_IDX] < 0, aopRet (ftype)->regs[XL_IDX] < 0 && aopRet (ftype)->regs[XH_IDX] < 0, false);
         }
 
-      adjustStack (4, FALSE, FALSE, FALSE);
-
-      if (IC_RESULT (ic)->aop->regs[XL_IDX] >= 2 || IC_RESULT (ic)->aop->regs[XH_IDX] >= 2)
-        {
-          wassert (regalloc_dry_run);
-          cost (180, 180);
-        }
+      goto restore;
     }
-  else if (stm8_extend_stack)
+
+  if (stm8_extend_stack)
     pop (ASMOP_Y, 0, 2);
 
   /* if we need assign a result value */
   if (SomethingReturned && !bigreturn)
     {
-      int size;
-
-      size = !half ? IC_RESULT (ic)->aop->size : (IC_RESULT (ic)->aop->size > 2 ? 2 : IC_RESULT (ic)->aop->size);   
-
       wassert (getSize (ftype->next) >= 1 && getSize (ftype->next) <= 4);
-
-      genMove_o (IC_RESULT (ic)->aop, 0, aopRet (ftype), 0, size, TRUE, TRUE, !stm8_extend_stack);
-
-      freeAsmop (IC_RESULT (ic));
+      genMove (result, aopRet (ftype), true, true, !stm8_extend_stack);
     }
 
 restore:
+  if (SomethingReturned && !bigreturn)
+    freeAsmop (IC_RESULT (ic));
+
   // Restore regs.
   if (!regDead (Y_IDX, ic) && !stm8_extend_stack)
     if (regDead (YH_IDX, ic))
@@ -4119,7 +4170,8 @@ genEndFunction (iCode *ic)
   bool y_free = !aopRet (sym->type) || (aopRet (sym->type)->regs[YL_IDX] < 0 && aopRet (sym->type)->regs[YH_IDX] < 0);
 
   /* adjust the stack for the function */
-  if (poststackadjust > 1 && x_free && options.model != MODEL_LARGE &&
+  if (poststackadjust > 1 && x_free &&
+    options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (sym->type) &&
     sym->stack < 255 - 1 &&
     !IFFUNC_ISISR (sym->type) && !IFFUNC_ISCRITICAL (sym->type))
     {
@@ -4165,7 +4217,7 @@ genEndFunction (iCode *ic)
           pop (ASMOP_X, 0, 2);
           adjustStack (poststackadjust, a_free, x_free, y_free);
         }
-      else if (4 + poststackadjust <= 255 && (options.model == MODEL_LARGE ||IFFUNC_ISCOSMIC (sym->type) ))
+      else if (4 + poststackadjust <= 255 && (options.model == MODEL_LARGE || IFFUNC_ISCOSMIC (sym->type) ))
         {
           bool pushed_a = false;
           if (!a_free)
