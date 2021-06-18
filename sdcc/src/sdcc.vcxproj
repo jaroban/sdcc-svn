@@ -118,33 +118,15 @@
   <ItemGroup>
     <CustomBuild Include="SDCC.lex">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">flex -8 -f -o%(Filename)lex.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generate lexer</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename)lex.c</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">flex -8 -f -o%(Filename)lex.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generate lexer</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename)lex.c</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">flex -8 -f -o%(Filename)lex.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate lexer</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename)lex.c</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">flex -8 -f -o%(Filename)lex.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generate lexer</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename)lex.c</Outputs>
+      <Command>flex -8 -f -o%(Filename)lex.c %(FullPath)</Command>
+      <Message>Generating lexer: %(Filename)lex.c</Message>
+      <Outputs>%(Filename)lex.c</Outputs>
     </CustomBuild>
     <CustomBuild Include="SDCC.y">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">bison -d -v -o %(Filename)y.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generate parser</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename)y.c;%(Filename)y.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">bison -d -v -o %(Filename)y.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generate parser</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename)y.c;%(Filename)y.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">bison -d -v -o %(Filename)y.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate parser</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename)y.c;%(Filename)y.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">bison -d -v -o %(Filename)y.c %(FullPath)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generate parser</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename)y.c;%(Filename)y.h</Outputs>
+      <Command>bison -d -v -o %(Filename)y.c %(FullPath)</Command>
+      <Message>Generating parser: %(Filename)y.c</Message>
+      <Outputs>%(Filename)y.c;%(Filename)y.h</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

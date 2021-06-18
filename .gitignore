@@ -415,6 +415,10 @@ sdcc/sim/ucsim/cmd.src/cmdpars.cc
 sdcc/sim/ucsim/cmd.src/cmdpars.hh
 sdcc/sim/ucsim/cmd.src/cmdpars.output
 sdcc/sim/ucsim/ddconfig.h
+sdcc/support/sdbinutils/binutils/arlex.c
+sdcc/support/sdbinutils/binutils/arparse.c
+sdcc/support/sdbinutils/binutils/arparse.h
+sdcc/support/sdbinutils/binutils/arparse.output
 
 # build dir
 sdcc/bin_vc/*

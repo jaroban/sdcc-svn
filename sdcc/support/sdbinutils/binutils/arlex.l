@@ -34,6 +34,11 @@
 #define YY_NO_UNPUT
 #endif
 
+#if defined(_MSC_VER)
+#include <io.h>
+#define YY_NO_UNISTD_H 1
+#endif
+
 extern int yylex (void);
 
 int linenumber;

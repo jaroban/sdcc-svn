@@ -18,34 +18,112 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\bfd\archive.c" />
+    <ClCompile Include="..\bfd\archures.c" />
+    <ClCompile Include="..\bfd\bfd.c" />
+    <ClCompile Include="..\bfd\bfdio.c" />
+    <ClCompile Include="..\bfd\binary.c" />
+    <ClCompile Include="..\bfd\cache.c" />
+    <ClCompile Include="..\bfd\coff-z80.c" />
+    <ClCompile Include="..\bfd\coffgen.c" />
+    <ClCompile Include="..\bfd\cpu-plugin.c" />
+    <ClCompile Include="..\bfd\cpu-z80.c" />
+    <ClCompile Include="..\bfd\format.c" />
+    <ClCompile Include="..\bfd\hash.c" />
+    <ClCompile Include="..\bfd\init.c" />
+    <ClCompile Include="..\bfd\libbfd.c" />
+    <ClCompile Include="..\bfd\linker.c" />
+    <ClCompile Include="..\bfd\opncls.c" />
+    <ClCompile Include="..\bfd\plugin.c" />
+    <ClCompile Include="..\bfd\section.c" />
+    <ClCompile Include="..\bfd\srec.c" />
+    <ClCompile Include="..\bfd\targets.c" />
+    <ClCompile Include="..\bfd\tekhex.c" />
+    <ClCompile Include="..\bfd\verilog.c" />
+    <ClCompile Include="..\binutils\ar.c" />
+    <ClCompile Include="..\binutils\arlex.c" />
+    <ClCompile Include="..\binutils\arparse.c" />
+    <ClCompile Include="..\binutils\arsup.c" />
+    <ClCompile Include="..\binutils\binemul.c" />
+    <ClCompile Include="..\binutils\bucomm.c" />
+    <ClCompile Include="..\binutils\emul_vanilla.c" />
+    <ClCompile Include="..\binutils\filemode.c" />
+    <ClCompile Include="..\binutils\is-ranlib.c" />
+    <ClCompile Include="..\binutils\rename.c" />
+    <ClCompile Include="..\binutils\version.c" />
+    <ClCompile Include="..\libiberty\argv.c" />
+    <ClCompile Include="..\libiberty\asprintf.c" />
+    <ClCompile Include="..\libiberty\cplus-dem.c" />
+    <ClCompile Include="..\libiberty\filename_cmp.c" />
+    <ClCompile Include="..\libiberty\fnmatch.c" />
+    <ClCompile Include="..\libiberty\getopt.c" />
+    <ClCompile Include="..\libiberty\getpwd.c" />
+    <ClCompile Include="..\libiberty\hashtab.c" />
+    <ClCompile Include="..\libiberty\lbasename.c" />
+    <ClCompile Include="..\libiberty\lrealpath.c" />
+    <ClCompile Include="..\libiberty\objalloc.c" />
+    <ClCompile Include="..\libiberty\safe-ctype.c" />
+    <ClCompile Include="..\libiberty\unlink-if-ordinary.c" />
+    <ClCompile Include="..\libiberty\xatexit.c" />
+    <ClCompile Include="..\libiberty\xexit.c" />
+    <ClCompile Include="..\libiberty\xmalloc.c" />
+    <ClCompile Include="..\libiberty\xstrdup.c" />
+    <ClCompile Include="..\libiberty\xstrerror.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\binutils\arlex.l">
+      <FileType>Document</FileType>
+      <Command>flex -8 -f -o..\binutils\%(Filename).c %(FullPath)</Command>
+      <Message>Generating lexer: %(Filename).c</Message>
+      <Outputs>..\binutils\%(Filename).c</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\binutils\arparse.y">
+      <FileType>Document</FileType>
+      <Command>bison -d -v -o ..\binutils\%(Filename).c %(FullPath)</Command>
+      <Message>Generating parser: %(Filename).c</Message>
+      <Outputs>..\binutils\%(Filename).c;..\binutils\%(Filename).h</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\binutils\arparse.h" />
+    <ClInclude Include="..\binutils\arsup.h" />
+    <ClInclude Include="..\binutils\binemul.h" />
+    <ClInclude Include="..\binutils\bucomm.h" />
+    <ClInclude Include="..\windows\bfd.h" />
+    <ClInclude Include="..\windows\bfdver.h" />
+    <ClInclude Include="..\windows\config.h" />
+    <ClInclude Include="..\windows\dirent.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{814bbc63-9739-4b2c-848b-6d5696effb03}</ProjectGuid>
-    <RootNamespace>ucsimcmd</RootNamespace>
+    <ProjectGuid>{5f7f293a-b6f6-48ec-879e-46f8375b66c7}</ProjectGuid>
+    <RootNamespace>sdranlib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -75,11 +153,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>.;..;..\sim.src;..\gui.src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>.;..;..\sim.src;..\gui.src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -91,14 +167,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\bfd;..\windows</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4146</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -108,14 +183,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\bfd;..\windows</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4146</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -125,14 +199,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\bfd;..\windows</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4146</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -142,76 +215,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\bfd;..\windows</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4146</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="cmdlexcl.h" />
-    <ClInclude Include="cmdpars.hh" />
-    <ClInclude Include="cmdutil.h" />
-    <ClInclude Include="cmd_bpcl.h" />
-    <ClInclude Include="cmd_confcl.h" />
-    <ClInclude Include="cmd_execcl.h" />
-    <ClInclude Include="cmd_getcl.h" />
-    <ClInclude Include="cmd_guicl.h" />
-    <ClInclude Include="cmd_infocl.h" />
-    <ClInclude Include="cmd_memcl.h" />
-    <ClInclude Include="cmd_setcl.h" />
-    <ClInclude Include="cmd_showcl.h" />
-    <ClInclude Include="cmd_statcl.h" />
-    <ClInclude Include="cmd_timercl.h" />
-    <ClInclude Include="cmd_uccl.h" />
-    <ClInclude Include="commandcl.h" />
-    <ClInclude Include="newcmdcl.h" />
-    <ClInclude Include="newcmdposixcl.h" />
-    <ClInclude Include="syntaxcl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="cmdlex.cc" />
-    <ClCompile Include="cmdpars.cc" />
-    <ClCompile Include="cmdutil.cc" />
-    <ClCompile Include="cmd_bp.cc" />
-    <ClCompile Include="cmd_conf.cc" />
-    <ClCompile Include="cmd_exec.cc" />
-    <ClCompile Include="cmd_get.cc" />
-    <ClCompile Include="cmd_gui.cc" />
-    <ClCompile Include="cmd_info.cc" />
-    <ClCompile Include="cmd_mem.cc" />
-    <ClCompile Include="cmd_set.cc" />
-    <ClCompile Include="cmd_show.cc" />
-    <ClCompile Include="cmd_stat.cc" />
-    <ClCompile Include="cmd_timer.cc" />
-    <ClCompile Include="cmd_uc.cc" />
-    <ClCompile Include="command.cc" />
-    <ClCompile Include="newcmd.cc" />
-    <ClCompile Include="newcmdposix.cc" />
-    <ClCompile Include="syntax.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="cmdlex.l">
-      <Command>flex -8 -f -o%(Filename).cc %(FullPath)</Command>
-      <Message>Generating lexer: %(Filename).cc</Message>
-      <Outputs>%(Filename).cc</Outputs>
-      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatOutputAsContent>
-      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</TreatOutputAsContent>
-    </CustomBuild>
-    <CustomBuild Include="cmdpars.y">
-      <Command>bison -d -v -o %(Filename).cc %(FullPath)</Command>
-      <Message>Generating parser: %(Filename).cc</Message>
-      <Outputs>%(Filename).cc;%(Filename).hh</Outputs>
-      <TreatOutputAsContent>false</TreatOutputAsContent>
-    </CustomBuild>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
