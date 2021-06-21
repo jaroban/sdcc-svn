@@ -21,32 +21,32 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d3e15139-383d-4b2f-b70b-3287d21f670a}</ProjectGuid>
-    <RootNamespace>all</RootNamespace>
+    <ProjectGuid>{d6ece039-4f6e-415d-8f24-b5f6fa05ac9c}</ProjectGuid>
+    <RootNamespace>setup</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Utility</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Utility</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Utility</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Utility</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -72,23 +72,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,51 +139,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\debugger\mcs51\sdcdb.vcxproj">
-      <Project>{62b67ab4-1171-4de5-9c6c-342b959139fd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sdas\as6808\sdas6808.vcxproj">
-      <Project>{0917d23d-a4c7-4ae1-8fe2-663e4bd94f41}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sdas\as8051\sdas8051.vcxproj">
-      <Project>{397a11ac-c039-465a-865e-bdece3389ff2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sdas\as8xcxxx\sdas390.vcxproj">
-      <Project>{a9548e03-2812-4970-9749-e6c436e8c410}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sdas\asgb\sdasgb.vcxproj">
-      <Project>{0d32a912-a58a-4a86-ba3e-b3cf4ae34da2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sdas\asrab\sdasrab.vcxproj">
-      <Project>{ec7511af-56de-47d0-a358-95f6f34788fb}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sdas\asstm8\sdasstm8.vcxproj">
-      <Project>{3dda7ee1-73d6-4ad2-98be-00b108b883da}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\setup\setup.vcxproj">
-      <Project>{d6ece039-4f6e-415d-8f24-b5f6fa05ac9c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\support\sdbinutils\sdranlib\sdranlib.vcxproj">
-      <Project>{5f7f293a-b6f6-48ec-879e-46f8375b66c7}</Project>
-    </ProjectReference>
-    <ProjectReference Include="sdas\astlcs90\sdastlcs90.vcxproj">
-      <Project>{d0687f7a-663e-45bd-abf6-af40acc021d5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\sdas\asz80\sdasz80.vcxproj">
-      <Project>{3152f5fc-1314-4aed-820d-b4c78aa1b2dc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\src\sdcc.vcxproj">
-      <Project>{141aa852-8660-4624-b3d2-0c57ce4e9194}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\support\cpp\sdcpp.vcxproj">
-      <Project>{2167f70a-f468-43ce-8b2c-347d73845ce6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\support\makebin\makebin.vcxproj">
-      <Project>{c97cea8c-4e60-4830-a6eb-f6add12ef172}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\support\packihx\packihx.vcxproj">
-      <Project>{7fa31ab7-7d9e-4ef4-b8c0-b5d498e07ef7}</Project>
-    </ProjectReference>
+    <CustomBuild Include="download_boost.ps1">
+      <FileType>Document</FileType>
+      <Command>powershell -ExecutionPolicy Unrestricted %(FullPath)</Command>
+      <Message>Downloading boost...</Message>
+      <Outputs>..\..\..\boost\boost_1_76_0.7z;..\..\..\boost\boost_1_76_0\index.html</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="download_bison_flex.ps1">
+      <FileType>Document</FileType>
+      <Command>powershell -ExecutionPolicy Unrestricted %(FullPath)</Command>
+      <Message>Downloading bison and flex...</Message>
+      <Outputs>..\..\..\utils\win_flex_bison-2.5.24.zip;..\..\..\utils\bison.exe;..\..\..\utils\flex.exe</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="download_gawk.ps1">
+      <FileType>Document</FileType>
+      <Command>powershell -ExecutionPolicy Unrestricted %(FullPath)</Command>
+      <Message>Downloading gawk...</Message>
+      <Outputs>..\..\..\utils\msvc_cl_64_rel_c.zip;..\..\..\utils\gawk.exe</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="configure.ps1">
+      <FileType>Document</FileType>
+      <Command>powershell -ExecutionPolicy Unrestricted %(FullPath)</Command>
+      <Message>Configuring...</Message>
+      <Outputs>..\sim\ucsim\ddconfig.h</Outputs>
+      <AdditionalInputs>..\sim\ucsim\ddconfig_win.h</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="download_zlib.ps1">
+      <FileType>Document</FileType>
+      <Command>powershell -ExecutionPolicy Unrestricted %(FullPath)</Command>
+      <Message>Downloading zlib...</Message>
+      <Outputs>..\..\..\zlib\zlib1211.zip;..\..\..\zlib\zlib-1.2.11\README</Outputs>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

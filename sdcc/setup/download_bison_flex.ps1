@@ -36,5 +36,5 @@ if (-not(Test-Path -Path "$utils_folder/bison.exe" -PathType Leaf)) {
     Copy-Item $utils_folder/win_flex.exe $utils_folder/flex.exe
 }
 else {
-    "files are already renamed"
+    "Files are already renamed"
 }

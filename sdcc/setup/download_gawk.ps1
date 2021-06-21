@@ -40,5 +40,5 @@ if (-not(Test-Path -Path "$utils_folder/gawk.exe" -PathType Leaf)) {
     Remove-Item $extracted_folder
 }
 else {
-    "files are already moved"
+    "Files are already moved"
 }

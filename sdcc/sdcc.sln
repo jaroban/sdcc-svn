@@ -81,7 +81,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdranlib", "support\sdbinut
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libiberty", "support\sdbinutils\libiberty\libiberty.vcxproj", "{C2AF498E-10D0-4B7B-9393-53389CB6B62C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibstat", "..\..\zlib\contrib\vstudio\vc14\zlibstat.vcxproj", "{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibstat", "..\..\zlib\zlib-1.2.11\contrib\vstudio\vc14\zlibstat.vcxproj", "{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "setup", "setup\setup.vcxproj", "{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -626,6 +628,22 @@ Global
 		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.ReleaseWithoutAsm|Win32.Build.0 = ReleaseWithoutAsm|Win32
 		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.ReleaseWithoutAsm|x64.ActiveCfg = ReleaseWithoutAsm|x64
 		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}.ReleaseWithoutAsm|x64.Build.0 = ReleaseWithoutAsm|x64
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Debug|Itanium.ActiveCfg = Debug|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Debug|Win32.Build.0 = Debug|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Debug|x64.ActiveCfg = Debug|x64
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Debug|x64.Build.0 = Debug|x64
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Release|Itanium.ActiveCfg = Release|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Release|Win32.ActiveCfg = Release|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Release|Win32.Build.0 = Release|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Release|x64.ActiveCfg = Release|x64
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.Release|x64.Build.0 = Release|x64
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.ReleaseWithoutAsm|Itanium.ActiveCfg = Debug|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.ReleaseWithoutAsm|Itanium.Build.0 = Debug|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.ReleaseWithoutAsm|Win32.ActiveCfg = Release|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.ReleaseWithoutAsm|Win32.Build.0 = Release|Win32
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.ReleaseWithoutAsm|x64.ActiveCfg = Release|x64
+		{D6ECE039-4F6E-415D-8F24-B5F6FA05AC9C}.ReleaseWithoutAsm|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
