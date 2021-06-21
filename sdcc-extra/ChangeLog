@@ -1,3 +1,13 @@
+2021-06-20 Philipp Klaus Krause <pkk AT spth.de>
+
+	* historygraphs/whetstone-z80*
+	  historygraphs/execute_benchmark-z80,
+	  historygraphs/Makefile,
+	  historygraphs/dhrystone-z80-size.svg,
+	  historygraphs/stdcbench-z80-sizetable.p,
+	  historygraphs/stdcbench-z80-size.svg:
+	  Size graphs for z80.
+
 2021-06-15 Philipp Klaus Krause <pkk AT spth.de>
 
 	* historygraphs/dhrystone-mcs51/stm8l.h,

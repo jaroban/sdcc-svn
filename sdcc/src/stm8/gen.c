@@ -1506,7 +1506,7 @@ adjustStack (int n, bool a_free, bool x_free, bool y_free)
       // seems addw sp, byte has a signed operand, while sub sp, #byte has an unsigned operand, also, in contrast to what the
       // manual states, addw sp, #byte only takes 1 cycle.
 
-      // todo: For big n, use addition in X or Y when free.
+      // For big n, use addition in X or Y when free.
       if (abs (n) > 255 * 2 + (n > 0 || a_free) + (optimize.codeSize ? x_free : 255) && x_free)
         {
           emit2 ("ldw", "x, sp");
@@ -2246,7 +2246,7 @@ skip_byte:
           i++;
           continue;
         }
-      else if (i < n - 1 && (aopInReg (result, roffset + i, X_IDX) || aopInReg (result, roffset + i, Y_IDX)) && aopOnStackNotExt (source, soffset + i, 2))
+      else if (i < n - 1 && (aopInReg (result, roffset + i, X_IDX) && aopOnStackNotExt (source, soffset + i, 2) || aopInReg (result, roffset + i, Y_IDX) && aopOnStack (source, soffset + i, 2)))
         {
           wassert_bt (size >= 2);
           emit2 ("ldw", aopInReg (result, roffset + i, X_IDX) ? "x, %s" : "y, %s", aopGet2 (source, soffset + i));
@@ -3658,7 +3658,7 @@ genCall (const iCode *ic)
                 if (!isFuncCalleeStackCleanup (currFunc->type) || prestackadjust <= 250)
                   {
                     prestackadjust += OP_SYMBOL (IC_LEFT (nic))->stack;
-                    tailjump = true;emit2(";B", "tailjump %d prestackadjust %d", tailjump, prestackadjust);
+                    tailjump = true;
                     break;
                   }
               prestackadjust = 0;
@@ -3855,7 +3855,7 @@ genCall (const iCode *ic)
         {
           wassert (options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (ftype));
           bool use_y = stm8IsParmInCall(ftype, "x");
-          emit2 ("ldw", use_y ? "y, (%d, sp)" : "x, (%d, sp)", G.stack.pushed + currFunc->stack + 1);
+          emit2 ("ldw", use_y ? "y, (%d, sp)" : "x, (%d, sp)", G.stack.pushed + 1);
           emit2 ("ldw", use_y ? "(%d, sp), y" : "(%d, sp), x", prestackadjust + 1);
           cost (4, 4);
         }
@@ -4122,7 +4122,7 @@ genFunction (iCode *ic)
   bigreturn = (getSize (ftype->next) > 4);
   G.stack.param_offset += bigreturn * 2;
 
-  // Cosmic stack frame always uses 14-bit return address.
+  // Cosmic stack frame always uses 24-bit return address.
   if (IFFUNC_ISCOSMIC (ftype) && options.model != MODEL_LARGE)
     G.stack.param_offset++;
 
@@ -4130,8 +4130,18 @@ genFunction (iCode *ic)
     debugFile->writeFrameAddress (NULL, &stm8_regs[SP_IDX], 1);
 
   /* adjust the stack for the function */
-  if (sym->stack)
-    adjustStack (-sym->stack, TRUE, TRUE, !stm8_extend_stack);
+  {
+    int fadjust = -sym->stack;
+    if (stm8_extend_stack && G.stack.size - 256 >= 255 && // Using frame pointer speeds up stack adjustment (unless we add in x anyway).
+      fadjust < -255 && fadjust >= -255 - (G.stack.size - 256))
+      {
+        emit2 ("ldw", "sp, y");
+        G.stack.pushed += (G.stack.size - 256);
+        fadjust += G.stack.size - 256;
+        updateCFA ();
+      }
+    adjustStack (fadjust, true, true, !stm8_extend_stack);
+  }
 }
 
 /*-----------------------------------------------------------------*/

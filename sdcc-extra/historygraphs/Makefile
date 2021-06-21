@@ -80,9 +80,11 @@ BENCHMARKS_DHRYSTONE_R3KA_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCH
 BENCHMARKS_DHRYSTONE_Z80_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_DHRYSTONE), $(BENCHMARKS_Z80)))
 BENCHMARKS_COREMARK_STM8_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_COREMARK), $(BENCHMARKS_STM8)))
 BENCHMARKS_COREMARK_R3KA_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_COREMARK), $(BENCHMARKS_R3KA)))
+BENCHMARKS_COREMARK_Z80_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_COREMARK), $(BENCHMARKS_Z80)))
 BENCHMARKS_STDCBENCH_STM8_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_STDCBENCH), $(BENCHMARKS_STM8)))
 BENCHMARKS_STDCBENCH_MCS51_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_STDCBENCH), $(BENCHMARKS_MCS51)))
 BENCHMARKS_STDCBENCH_R3KA_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_STDCBENCH), $(BENCHMARKS_R3KA)))
+BENCHMARKS_STDCBENCH_Z80_SIZES = $(patsubst %image.ihx, %size, $(filter $(BENCHMARKS_STDCBENCH), $(BENCHMARKS_Z80)))
 BENCHMARKS_WHETSTONE_STM8_SCORES = $(patsubst %image.ihx, %score, $(filter $(BENCHMARKS_WHETSTONE), $(BENCHMARKS_STM8)))
 BENCHMARKS_WHETSTONE_MCS51_SCORES = $(patsubst %image.ihx, %score, $(filter $(BENCHMARKS_WHETSTONE), $(BENCHMARKS_MCS51)))
 BENCHMARKS_WHETSTONE_R3KA_SCORES = $(patsubst %image.ihx, %score, $(filter $(BENCHMARKS_WHETSTONE), $(BENCHMARKS_R3KA)))
@@ -133,7 +135,7 @@ coremark-r3ka: coremark_v1.0.tgz coremark-1.0-r3ka.patch
 	cd coremark-r3ka && cp barebones/core_portme.? ./ && cat ../coremark-1.0-r3ka.patch | patch -p1
 	cp Makefile.coremark coremark-r3ka/Makefile
 
-# stdcbench-0.6.tar.gz is free, can be downloaded from http://stdcbench.sourceforge.net
+# stdcbench-0.7.tar.gz is free, can be downloaded from http://stdcbench.sourceforge.net
 # Using custom Makefile, portme.h, portme.c, since stdcbench 0.7 doesn't come with one suitable for the Rabbit 3000A.
 stdcbench-r3ka: stdcbench-0.7.tar.gz Makefile.stdcbench-SDCC-R3KA portme.h.stdcbench-SDCC-R3KA portme.c.stdcbench-SDCC-R3KA
 	rm -rf stdcbench-0.7
@@ -142,6 +144,17 @@ stdcbench-r3ka: stdcbench-0.7.tar.gz Makefile.stdcbench-SDCC-R3KA portme.h.stdcb
 	cp Makefile.stdcbench-SDCC-R3KA stdcbench-r3ka/Makefile
 	cp portme.h.stdcbench-SDCC-R3KA stdcbench-r3ka/examples/portme.h.SDCC-R3KA
 	cp portme.c.stdcbench-SDCC-R3KA stdcbench-r3ka/examples/portme.c.SDCC-R3KA
+
+# stdcbench-0.7.tar.gz is free, can be downloaded from http://stdcbench.sourceforge.net
+# Using custom Makefile, portme.h, portme.c, since stdcbench 0.7 doesn't come with one suitable for the Rabbit 3000A.
+stdcbench-z80: stdcbench-0.7.tar.gz Makefile.stdcbench-SDCC-Z80 portme.h.stdcbench-SDCC-Z80 portme.c.stdcbench-SDCC-Z80 crt.0.s.stdcbench-SDCC-Z80
+	rm -rf stdcbench-0.7
+	tar -xzf stdcbench-0.7.tar.gz
+	mv stdcbench-0.7 stdcbench-z80
+	cp Makefile.stdcbench-SDCC-Z80 stdcbench-z80/Makefile
+	cp portme.h.stdcbench-SDCC-Z80 stdcbench-z80/examples/portme.h.SDCC-Z80
+	cp portme.c.stdcbench-SDCC-Z80 stdcbench-z80/examples/portme.c.SDCC-Z80
+	cp crt.0.s.stdcbench-SDCC-Z80 stdcbench-z80/examples/crt0.s.SDCC-Z80
 
 whetstone-stm8-size.svg: whetstone-stm8-sizetable whetstone-stm8-sizetable.p
 	gnuplot whetstone-stm8-sizetable.p
@@ -179,6 +192,9 @@ stdcbench-mcs51-size.svg: stdcbench-mcs51-sizetable stdcbench-mcs51-sizetable.p
 stdcbench-r3ka-size.svg: stdcbench-r3ka-sizetable stdcbench-r3ka-sizetable.p
 	gnuplot stdcbench-r3ka-sizetable.p
 
+stdcbench-z80-size.svg: stdcbench-z80-sizetable stdcbench-z80-sizetable.p
+	gnuplot stdcbench-z80-sizetable.p
+
 whetstone-stm8-score.svg: whetstone-stm8-scoretable whetstone-stm8-scoretable.p
 	gnuplot whetstone-stm8-scoretable.p
 
@@ -187,6 +203,9 @@ whetstone-mcs51-score.svg: whetstone-mcs51-scoretable whetstone-mcs51-scoretable
 
 whetstone-r3ka-score.svg: whetstone-r3ka-scoretable whetstone-r3ka-scoretable.p
 	gnuplot whetstone-r3ka-scoretable.p
+
+whetstone-z80-size.svg: whetstone-z80-sizetable whetstone-z80-sizetable.p
+	gnuplot whetstone-z80-sizetable.p
 
 dhrystone-stm8-score.svg: dhrystone-stm8-scoretable dhrystone-stm8-scoretable.p
 	gnuplot dhrystone-stm8-scoretable.p
@@ -212,6 +231,9 @@ stdcbench-mcs51-score.svg: stdcbench-mcs51-scoretable stdcbench-mcs51-scoretable
 stdcbench-r3ka-score.svg: stdcbench-r3ka-scoretable stdcbench-r3ka-scoretable.p
 	gnuplot stdcbench-r3ka-scoretable.p
 
+stdcbench-z80-score.svg: stdcbench-r3ka-scoretable stdcbench-z80-scoretable.p
+	gnuplot stdcbench-z80-scoretable.p
+
 whetstone-stm8-sizetable: $(BENCHMARKS_WHETSTONE_STM8_SIZES)
 	echo "#Revision size speed default" > $@
 	for r in $(REVISIONS); do \
@@ -236,6 +258,15 @@ whetstone-r3ka-sizetable: $(BENCHMARKS_WHETSTONE_R3KA_SIZES)
 		SIZE_SIZE=`cat whetstone-r3ka-size-$$r/size`; \
 		SIZE_SPEED=`cat whetstone-r3ka-speed-$$r/size`; \
 		SIZE_DEFAULT=`cat whetstone-r3ka-default-$$r/size `; \
+		echo $$r $$SIZE_SIZE $$SIZE_SPEED $$SIZE_DEFAULT >> $@; \
+	done
+
+whetstone-z80-sizetable: $(BENCHMARKS_WHETSTONE_Z80_SIZES)
+	echo "#Revision size speed default" > $@
+	for r in $(REVISIONS); do \
+		SIZE_SIZE=`cat whetstone-z80-size-$$r/size`; \
+		SIZE_SPEED=`cat whetstone-z80-speed-$$r/size`; \
+		SIZE_DEFAULT=`cat whetstone-z80-default-$$r/size `; \
 		echo $$r $$SIZE_SIZE $$SIZE_SPEED $$SIZE_DEFAULT >> $@; \
 	done
 
@@ -293,6 +324,15 @@ coremark-r3ka-sizetable: $(BENCHMARKS_COREMARK_R3KA_SIZES)
 		echo $$r $$SIZE_SIZE $$SIZE_SPEED $$SIZE_DEFAULT >> $@; \
 	done
 
+coremark-z80-sizetable: $(BENCHMARKS_COREMARK_Z80_SIZES)
+	echo "#Revision size speed default" > $@
+	for r in $(REVISIONS); do \
+		SIZE_SIZE=`cat coremark-z80-size-$$r/size`; \
+		SIZE_SPEED=`cat coremark-z80-speed-$$r/size`; \
+		SIZE_DEFAULT=`cat coremark-z80-default-$$r/size `; \
+		echo $$r $$SIZE_SIZE $$SIZE_SPEED $$SIZE_DEFAULT >> $@; \
+	done
+
 stdcbench-stm8-sizetable: $(BENCHMARKS_STDCBENCH_STM8_SIZES)
 	echo "#Revision size speed default" > $@
 	for r in $(REVISIONS); do \
@@ -317,6 +357,15 @@ stdcbench-r3ka-sizetable: $(BENCHMARKS_STDCBENCH_R3KA_SIZES)
 		SIZE_SIZE=`cat stdcbench-r3ka-size-$$r/size`; \
 		SIZE_SPEED=`cat stdcbench-r3ka-speed-$$r/size`; \
 		SIZE_DEFAULT=`cat stdcbench-r3ka-default-$$r/size `; \
+		echo $$r $$SIZE_SIZE $$SIZE_SPEED $$SIZE_DEFAULT >> $@; \
+	done
+
+stdcbench-z80-sizetable: $(BENCHMARKS_STDCBENCH_Z80_SIZES)
+	echo "#Revision size speed default" > $@
+	for r in $(REVISIONS); do \
+		SIZE_SIZE=`cat stdcbench-z80-size-$$r/size`; \
+		SIZE_SPEED=`cat stdcbench-z80-speed-$$r/size`; \
+		SIZE_DEFAULT=`cat stdcbench-z80-default-$$r/size `; \
 		echo $$r $$SIZE_SIZE $$SIZE_SPEED $$SIZE_DEFAULT >> $@; \
 	done
 
@@ -430,7 +479,7 @@ $(COMPILERS): sdcc-%/bin/sdcc:
 .SECONDEXPANSION:
 $(BENCHMARKS_3000): %/image.ihx: $$(BENCHMARK)-$$(TARGET) sdcc-$$(REVISION)/bin/sdcc
 	rm -rf $(BENCHMARK)-$(TARGET)-$(GOAL)-$(REVISION)
-	cp -r $(BENCHMARK)-$(TARGET) $(BENCHMARK)-$(TARGET)-$(GOAL)-$(REVISION)
+	cp --reflink=auto -r $(BENCHMARK)-$(TARGET) $(BENCHMARK)-$(TARGET)-$(GOAL)-$(REVISION)
 	if [ "$(TARGET)" = "mcs51" ] ; \
 	then \
 		cd $(BENCHMARK)-$(TARGET)-$(GOAL)-$(REVISION) && $(MAKE) SDCC="../sdcc-$(REVISION)/bin/sdcc" SDCCFLAGS="$(SDCCFLAGS) --nostdinc -I../sdcc-$(REVISION)/device/include -I../sdcc-$(REVISION)/device/include/$(TARGET) -L ../sdcc-$(REVISION)/device/lib/build/large-stack-auto"; \
