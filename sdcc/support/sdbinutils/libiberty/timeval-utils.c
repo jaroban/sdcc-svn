@@ -36,6 +36,10 @@ Boston, MA 02110-1301, USA.  */
 # endif
 #endif
 
+#ifdef _MSC_VER
+#include <winsock.h>
+#endif
+
 #include "timeval-utils.h"
 
 /* 

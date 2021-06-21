@@ -49,6 +49,7 @@ was made to unlink the file because it is special.
 #endif
 
 #include "libiberty.h"
+#include "system.h"
 
 #ifndef S_ISLNK
 #ifdef S_IFLNK

@@ -20,6 +20,7 @@ Boston, MA 02110-1301, USA.  */
 #include "config.h"
 #include "libiberty.h"
 #include "simple-object.h"
+#include "auto-host.h"
 
 #include <errno.h>
 #include <fcntl.h>

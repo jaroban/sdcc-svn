@@ -726,6 +726,18 @@ extern void *C_alloca (size_t) ATTRIBUTE_MALLOC;
    const unsigned long libiberty_len = strlen (libiberty_optr) + 1; \
    char *const libiberty_nptr = (char *) alloca (libiberty_len); \
    (char *) memcpy (libiberty_nptr, libiberty_optr, libiberty_len); }))
+#elif defined(_MSC_VER)
+# define alloca(x) _alloca(x)
+# undef USE_C_ALLOCA
+# undef C_ALLOCA
+extern const char *libiberty_optr;
+extern char *libiberty_nptr;
+extern unsigned long libiberty_len;
+# define ASTRDUP(X) \
+  (libiberty_optr = (X), \
+   libiberty_len = strlen (libiberty_optr) + 1, \
+   libiberty_nptr = (char *) alloca (libiberty_len), \
+   (char *) memcpy (libiberty_nptr, libiberty_optr, libiberty_len))
 #else
 # define alloca(x) C_alloca(x)
 # undef USE_C_ALLOCA

@@ -16,12 +16,6 @@
     <Filter Include="Source Files\libcpp">
       <UniqueIdentifier>{b4a237cd-0b1c-4767-a292-3f4da10c2154}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\win32">
-      <UniqueIdentifier>{4ac79269-f50f-46ea-9607-31fa2d3c30a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\libiberty">
-      <UniqueIdentifier>{d6f1c956-daab-43d8-8552-3ca1d2e05fa0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Custom Build">
       <UniqueIdentifier>{89211ba4-add8-4484-875d-bdc3b412e366}</UniqueIdentifier>
     </Filter>
@@ -30,9 +24,6 @@
     </Filter>
     <Filter Include="Header Files\libcpp_h\include">
       <UniqueIdentifier>{c7b29ff6-19ab-4af2-8124-f97a7c684856}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\win32_h">
-      <UniqueIdentifier>{a61e577a-c6e9-44fd-bb01-cb294ad8e9d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +147,6 @@
     <ClCompile Include="..\sdbinutils\libiberty\xstrerror.c">
       <Filter>Source Files\libiberty</Filter>
     </ClCompile>
-    <ClCompile Include="win32\dirent.c">
-      <Filter>Source Files\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\sdbinutils\libiberty\vprintf-support.c">
       <Filter>Source Files\libiberty</Filter>
     </ClCompile>
@@ -242,9 +230,6 @@
     <ClInclude Include="libcpp\include\symtab.h">
       <Filter>Header Files\libcpp_h\include</Filter>
     </ClInclude>
-    <ClInclude Include="win32\dirent.h">
-      <Filter>Header Files\win32_h</Filter>
-    </ClInclude>
     <ClInclude Include="..\sdbinutils\include\filenames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -256,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="auto-host.h">
       <Filter>Header Files\libcpp_h\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdbinutils\windows\dirent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

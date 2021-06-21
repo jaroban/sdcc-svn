@@ -60,7 +60,6 @@
     <ClCompile Include="libcpp\mkdeps.c" />
     <ClCompile Include="libcpp\symtab.c" />
     <ClCompile Include="libcpp\traditional.c" />
-    <ClCompile Include="win32\dirent.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ansidecl.h" />
@@ -92,7 +91,7 @@
     <ClInclude Include="libcpp\include\line-map.h" />
     <ClInclude Include="libcpp\include\mkdeps.h" />
     <ClInclude Include="libcpp\include\symtab.h" />
-    <ClInclude Include="win32\dirent.h" />
+    <ClInclude Include="..\sdbinutils\windows\dirent.h" />
     <ClInclude Include="..\sdbinutils\include\libiberty.h" />
     <ClInclude Include="..\sdbinutils\include\safe-ctype.h" />
     <ClInclude Include="..\sdbinutils\include\splay-tree.h" />

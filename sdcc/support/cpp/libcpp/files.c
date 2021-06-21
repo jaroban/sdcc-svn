@@ -30,7 +30,11 @@ along with this program; see the file COPYING3.  If not see
 #include "obstack.h"
 #include "hashtab.h"
 #include "md5.h"
+#ifdef _MSC_VER
+#include "dirent.h"
+#else
 #include <dirent.h>
+#endif
 
 /* Variable length record files on VMS will have a stat size that includes
    record control characters that won't be included in the read size.  */

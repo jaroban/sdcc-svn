@@ -6,6 +6,9 @@
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
+#ifdef _MSC_VER
+#include <winsock.h>
+#endif
 
 /* 
 

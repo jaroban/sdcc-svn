@@ -123,13 +123,13 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mkdtemp' function. */
-#define HAVE_MKDTEMP 1
+#undef HAVE_MKDTEMP
 
 /* Define to 1 if you have the `mkstemp' function. */
 #undef HAVE_MKSTEMP
 
 /* Define to 1 if you have the `sbrk' function. */
-#define HAVE_SBRK 1
+#undef HAVE_SBRK
 
 /* Define to 1 if you have the `setlocale' function. */
 #define HAVE_SETLOCALE 1
@@ -153,7 +153,7 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the <sys/file.h> header file. */
-#define HAVE_SYS_FILE_H 1
+#undef HAVE_SYS_FILE_H
 
 /* Define to 1 if you have the <sys/param.h> header file. */
 #undef HAVE_SYS_PARAM_H
@@ -165,7 +165,7 @@
 #define HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
-#define HAVE_SYS_WAIT_H 1
+#undef HAVE_SYS_WAIT_H
 
 /* Is the type time_t defined in <time.h>? */
 #define HAVE_TIME_T_IN_TIME_H 1
@@ -184,6 +184,10 @@
 
 /* Define to 1 if you have the <windows.h> header file. */
 #define HAVE_WINDOWS_H 1
+
+#define HAVE_MALLOC_H 1
+
+#define HAVE_TIME_H 1
 
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST 
@@ -299,3 +303,17 @@
 #define SELECT_ARCHITECTURES &bfd_z80_arch,&bfd_plugin_arch
 
 #define BINDIR "\\sdcc\\bin"
+
+#define pid_t int
+
+#define __extension__
+
+#define UNSIGNED_64BIT_TYPE unsigned __int64
+
+#define HAVE_UINTPTR_T
+
+#define DEBUGDIR "/lib/debug"
+
+#define bin_dummy_emulation bin_vanilla_emulation
+
+// #define alloca(x) _alloca(x)

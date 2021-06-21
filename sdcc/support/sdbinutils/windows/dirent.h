@@ -37,6 +37,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <ctype.h>
+#include <tchar.h>
 
 /* Indicates that d_type field is available in dirent structure */
 #define _DIRENT_HAVE_D_TYPE
@@ -912,7 +913,7 @@ static int strverscmp(const char *a, const char *b)
 
 	/* Count backwards and find the leftmost digit */
 	j = i;
-	while (j > 0 && isdigit(a[j-1])) {
+	while (j > 0 && _istdigit(a[j-1])) {
 		--j;
 	}
 
@@ -924,23 +925,23 @@ static int strverscmp(const char *a, const char *b)
 		}
 
 		/* String with more digits is smaller, e.g 002 < 01 */
-		if (isdigit(a[j])) {
-			if (!isdigit(b[j])) {
+		if (_istdigit(a[j])) {
+			if (!_istdigit(b[j])) {
 				return -1;
 			}
-		} else if (isdigit(b[j])) {
+		} else if (_istdigit(b[j])) {
 			return 1;
 		}
-	} else if (isdigit(a[j]) && isdigit(b[j])) {
+	} else if (_istdigit(a[j]) && _istdigit(b[j])) {
 		/* Numeric comparison */
 		size_t k1 = j;
 		size_t k2 = j;
 
 		/* Compute number of digits in each string */
-		while (isdigit(a[k1])) {
+		while (_istdigit(a[k1])) {
 			k1++;
 		}
-		while (isdigit(b[k2])) {
+		while (_istdigit(b[k2])) {
 			k2++;
 		}
 
