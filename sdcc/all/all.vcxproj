@@ -168,17 +168,17 @@
     <ProjectReference Include="..\sdas\asstm8\sdasstm8.vcxproj">
       <Project>{3dda7ee1-73d6-4ad2-98be-00b108b883da}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\sdas\astlcs90\sdastlcs90.vcxproj">
+      <Project>{d0687f7a-663e-45bd-abf6-af40acc021d5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sdas\asz80\sdasz80.vcxproj">
+      <Project>{3152f5fc-1314-4aed-820d-b4c78aa1b2dc}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\setup\setup.vcxproj">
       <Project>{d6ece039-4f6e-415d-8f24-b5f6fa05ac9c}</Project>
     </ProjectReference>
     <ProjectReference Include="..\support\sdbinutils\sdranlib\sdranlib.vcxproj">
       <Project>{5f7f293a-b6f6-48ec-879e-46f8375b66c7}</Project>
-    </ProjectReference>
-    <ProjectReference Include="sdas\astlcs90\sdastlcs90.vcxproj">
-      <Project>{d0687f7a-663e-45bd-abf6-af40acc021d5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\sdas\asz80\sdasz80.vcxproj">
-      <Project>{3152f5fc-1314-4aed-820d-b4c78aa1b2dc}</Project>
     </ProjectReference>
     <ProjectReference Include="..\src\sdcc.vcxproj">
       <Project>{141aa852-8660-4624-b3d2-0c57ce4e9194}</Project>

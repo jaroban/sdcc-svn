@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_PropertySheetDisplayName>sdranlib_debug</_PropertySheetDisplayName>
+    <_PropertySheetDisplayName>sdar_debug</_PropertySheetDisplayName>
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)bin\$(Configuration)_$(PlatformShortName)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)_$(PlatformShortName)\</IntDir>
