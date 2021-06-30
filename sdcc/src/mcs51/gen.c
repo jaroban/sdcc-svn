@@ -3387,7 +3387,9 @@ genPcall (iCode * ic)
 
   D (emitcode (";", "genPcall"));
 
-  dtype = operandType (IC_LEFT (ic))->next;
+  dtype = operandType (IC_LEFT (ic));
+  if (IS_FUNCPTR (dtype))
+    dtype = dtype->next;
   etype = getSpec (dtype);
   /* if caller saves & we have not saved then */
   if (!ic->regsSaved)
@@ -9065,7 +9067,7 @@ genlshFixed (operand *result, operand *left, int shCount)
           shiftL1Left2Result (left, LSB, result, full_bytes, shCount);
         }
     }
-  for (b = LSB; b < full_bytes; b++)
+  for (b = LSB; b < full_bytes && b < size; b++)
     aopPut (result, zero, b);
   return;
 }
