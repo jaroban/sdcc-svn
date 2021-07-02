@@ -1,3 +1,6 @@
+# you may have to run:
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+#
 # TODO: check for updates at
 # https://github.com/lexxmark/winflexbison
 $version = '2.5.24'

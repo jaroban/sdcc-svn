@@ -1,3 +1,6 @@
+# you may have to run:
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+#
 # TODO: check for updates at
 # https://github.com/mbuilov/gawk-windows
 $version = '06102020'

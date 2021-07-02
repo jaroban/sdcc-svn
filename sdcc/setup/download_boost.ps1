@@ -1,3 +1,6 @@
+# you may have to run:
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+#
 # TODO: check for updates at
 # https://www.boost.org
 # if the version changes, also update the include path in \sdcc\SDCC.props !

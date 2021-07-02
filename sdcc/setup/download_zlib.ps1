@@ -1,3 +1,6 @@
+# you may have to run:
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+#
 # TODO: check for updates at
 # https://zlib.net
 # if the version changes, also update the include path in .vcxproj and .props files
@@ -28,7 +31,9 @@ if (-not(Test-Path -Path "$zlib_folder/zlib-$version/README" -PathType Leaf)) {
     # Extract zlib
     & "C:/Program Files/7-Zip/7z.exe" x $zlib_zipped "-o$zlib_folder"
 
-    "An additional step is required: right click on zlibstat, select 'Retarget projects', retarget to newest version"
+    # these project files were updated to VS community 2019
+    Copy-Item zlibstat.vcxproj $zlib_folder/zlib-$version/contrib/vstudio/vc14/
+    Copy-Item zlibvc.vcxproj $zlib_folder/zlib-$version/contrib/vstudio/vc14/
 }
 else {
     "$zlib_zipped is already extracted"
