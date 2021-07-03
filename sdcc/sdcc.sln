@@ -92,6 +92,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdar", "support\sdbinutils\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibvc", "..\..\zlib\zlib-1.2.11\contrib\vstudio\vc14\zlibvc.vcxproj", "{8FD826F8-3739-44E6-8CC8-997122E53B8D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "z80_lib", "device\lib\z80\z80_lib.vcxproj", "{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Itanium = Debug|Itanium
@@ -685,6 +687,22 @@ Global
 		{8FD826F8-3739-44E6-8CC8-997122E53B8D}.ReleaseWithoutAsm|Win32.Build.0 = ReleaseWithoutAsm|Win32
 		{8FD826F8-3739-44E6-8CC8-997122E53B8D}.ReleaseWithoutAsm|x64.ActiveCfg = ReleaseWithoutAsm|x64
 		{8FD826F8-3739-44E6-8CC8-997122E53B8D}.ReleaseWithoutAsm|x64.Build.0 = ReleaseWithoutAsm|x64
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Debug|Itanium.ActiveCfg = Debug|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Debug|Win32.Build.0 = Debug|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Debug|x64.ActiveCfg = Debug|x64
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Debug|x64.Build.0 = Debug|x64
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Release|Itanium.ActiveCfg = Release|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Release|Win32.ActiveCfg = Release|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Release|Win32.Build.0 = Release|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Release|x64.ActiveCfg = Release|x64
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.Release|x64.Build.0 = Release|x64
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.ReleaseWithoutAsm|Itanium.ActiveCfg = Debug|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.ReleaseWithoutAsm|Itanium.Build.0 = Debug|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.ReleaseWithoutAsm|Win32.ActiveCfg = Release|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.ReleaseWithoutAsm|Win32.Build.0 = Release|Win32
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.ReleaseWithoutAsm|x64.ActiveCfg = Release|x64
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428}.ReleaseWithoutAsm|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -723,6 +741,7 @@ Global
 		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8} = {57BB31FD-74E5-4B82-9B9D-4D0216517A7E}
 		{6DAE484B-2C5D-44D1-B0BB-4173E687CD61} = {57BB31FD-74E5-4B82-9B9D-4D0216517A7E}
 		{8FD826F8-3739-44E6-8CC8-997122E53B8D} = {57BB31FD-74E5-4B82-9B9D-4D0216517A7E}
+		{4ADFE1AB-C823-494D-8616-1AB9C2E6D428} = {D32595F7-DF2C-403D-8C9A-E1AD6ABCCE5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F90282CC-D407-4651-919E-36A42D2A6E78}

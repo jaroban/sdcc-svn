@@ -5103,7 +5103,7 @@ d_print_comp_inner(struct d_print_info* dpi, int options,
 
 		dpi->modifiers = dpm.next;
 
-		if (dpi != NULL && need_template_restore && saved_templates != NULL)
+		if (dpi != NULL && need_template_restore)
 			dpi->templates = saved_templates;
 
 		return;
