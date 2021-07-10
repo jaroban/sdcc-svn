@@ -2299,7 +2299,7 @@ _bfd_write_archive_contents(bfd* arch)
 			total_read_bytes += read_bytes;
 			total_amount += amt;
 
-			if (bfd_bwrite(buffer, amt, arch) != amt)
+			if (bfd_bwrite(buffer, read_bytes, arch) != read_bytes)
 				return FALSE;
 			remaining -= amt;
 		}
