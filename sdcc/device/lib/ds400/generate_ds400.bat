@@ -5,7 +5,7 @@ use warnings;
 use Data::GUID;
 use Data::Dumper;
 
-open(my $fh, '>', "ds390_lib.vcxproj") or die $!;
+open(my $fh, '>', "ds400_lib.vcxproj") or die $!;
 
 print $fh <<END;
 <?xml version="1.0" encoding="utf-8"?>
@@ -231,9 +231,8 @@ $sources{'sdcc'} = [@COMMON_SDCC, qw|
     bpx.c
 |];
 
-$sources{'ds390'} = [qw|
-    tinibios.c memcpyx.c lcd390.c i2c390.c rtc390.c putchar.c gptr_cmp.c
-    atomic_flag_test_and_set.c atomic_flag_clear.c
+$sources{'ds400'} = [qw|
+    tinibios.c memcpyx.c ds400rom.c
 |];
 
 # print Dumper(\%sources);
@@ -244,7 +243,7 @@ my @C_FILES = (
     (map { "..\\$_" } @{$sources{'long'}}),
     (map { "..\\$_" } @{$sources{'longlong'}}),
     (map { "..\\$_" } @{$sources{'sdcc'}}),
-    @{$sources{'ds390'}}
+    @{$sources{'ds400'}}
 );
 
 foreach my $c_source (@C_FILES)
@@ -252,7 +251,7 @@ foreach my $c_source (@C_FILES)
     print $fh <<END;
     <CustomBuild Include="$c_source">
       <FileType>CppCode</FileType>
-      <Command>..\\..\\..\\bin_vc\\sdcc.exe -mds390 -I. -I..\\..\\include -I..\\..\\include\\mcs51 -I..\\..\\include\\ds390 --std-c11 -o obj\\ -c %(FullPath)</Command>
+      <Command>..\\..\\..\\bin_vc\\sdcc.exe -mds400 -I. -I..\\..\\include -I..\\..\\include\\mcs51 -I..\\..\\include\\ds400 --std-c11 -o obj\\ -c %(FullPath)</Command>
       <Message>Compiling %(FullPath)</Message>
       <Outputs>obj\\%(Filename).rel</Outputs>
     </CustomBuild>
@@ -270,24 +269,24 @@ foreach my $type (keys %sources)
       <FileType>Document</FileType>
       <Command>call %(FullPath)</Command>
       <Message>Linking lib$type.lib</Message>
-      <Outputs>..\\build\\ds390\\lib$type.lib</Outputs>
+      <Outputs>..\\build\\ds400\\lib$type.lib</Outputs>
       <AdditionalInputs>$additional_inputs</AdditionalInputs>
     </CustomBuild>
 END
 
     open(my $link, '>', "link_$type.bat") or die $!;
     print $link <<END;
-mkdir ..\\build\\ds390
-del ..\\build\\ds390\\lib$type.lib
-..\\..\\..\\bin_vc\\sdar.exe -rcD ..\\build\\ds390\\lib$type.lib $object_files_with_spaces
+mkdir ..\\build\\ds400
+del ..\\build\\ds400\\lib$type.lib
+..\\..\\..\\bin_vc\\sdar.exe -rcD ..\\build\\ds400\\lib$type.lib $object_files_with_spaces
 END
     close $link or die $!;
 }
 
 # rest of project file
 my $guid = Data::GUID->new;
-$guid = '7383327A-6BF6-1014-A5DE-5CA30E936024'; 
-my $namespace = 'ds390lib';
+$guid = '63D623B9-6C30-1014-8D7B-2CE90E936024'; 
+my $namespace = 'ds400lib';
 
 print $fh <<END;
   </ItemGroup>
@@ -434,20 +433,20 @@ sub get_rel_files {
 
 =aaa
 
-    <CustomBuild Include="ds390\tinibios.c">
+    <CustomBuild Include="ds400\tinibios.c">
       <FileType>CppCode</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin_vc\sdcc.exe -c -mds390 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds390\obj\ %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin_vc\sdcc.exe -c -mds400 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds400\obj\ %(FullPath)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(FullPath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ds390\obj\%(Filename).rel</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\bin_vc\sdcc.exe -c -mds390 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds390\obj\ %(FullPath)</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ds400\obj\%(Filename).rel</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\bin_vc\sdcc.exe -c -mds400 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds400\obj\ %(FullPath)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(FullPath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ds390\obj\%(Filename).rel</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\bin_vc\sdcc.exe -c -mds390 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds390\obj\ %(FullPath)</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ds400\obj\%(Filename).rel</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\bin_vc\sdcc.exe -c -mds400 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds400\obj\ %(FullPath)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling %(FullPath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ds390\obj\%(Filename).rel</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\bin_vc\sdcc.exe -c -mds390 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds390\obj\ %(FullPath)</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ds400\obj\%(Filename).rel</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\bin_vc\sdcc.exe -c -mds400 -I..\include -I..\include\mcs51 --nostdinc --std-c11 -o ds400\obj\ %(FullPath)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(FullPath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ds390\obj\%(Filename).rel</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ds400\obj\%(Filename).rel</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
