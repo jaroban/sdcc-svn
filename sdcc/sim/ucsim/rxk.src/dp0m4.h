@@ -1,5 +1,5 @@
 /*
- * Simulator of microcontrollers (glob.h)
+ * Simulator of microcontrollers (dp0m4.h)
  *
  * Copyright (C) 2020,2021 Drotos Daniel, Talker Bt.
  * 
@@ -25,27 +25,23 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA. */
 /*@1@*/
 
-#ifndef GLOB_HEADER
-#define GLOB_HEADER
+#ifndef DP0M4_HEADER
+#define DP0M4_HEADER
 
-#include "stypes.h"
-#include "iwrap.h"
+// opcodes valid in 4k mode only
 
+// opcodes mean different insts in 3k/4k modes
+// meaning of 4k mode follows
 
-extern instruction_wrapper_fn itab[256];
-extern instruction_wrapper_fn itab_dd[256];
-extern instruction_wrapper_fn itab_ed[256];
-extern instruction_wrapper_fn itab_fd[256];
-extern instruction_wrapper_fn itab_7f[256];
+#define PAGE_4K6D	instruction_4k6d
+#define PAGE_4K7F	instruction_4k7f
 
-extern u8_t sbox_tab[256];
-extern u8_t ibox_tab[256];
-
-extern struct dis_entry disass_rxk[];
-
-extern void init_sbox();
-
+#define RL_HL		instruction_4k42
+#define RL_BC		instruction_4k62
+#define SUB_HL_JK	instruction_4k45
+#define SUB_HL_DE	instruction_4k55
+#define TEST_HL		instruction_4k4c
 
 #endif
 
-/* End of rxk.src/glob.h */
+/* End of rxk.src/dp0m4.h */
