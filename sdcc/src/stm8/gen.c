@@ -3652,7 +3652,7 @@ genCall (const iCode *ic)
     !ic->parmBytes && !bigreturn &&
     (!isFuncCalleeStackCleanup (currFunc->type) || !ic->parmEscapeAlive && options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (ftype) && !optimize.codeSize && ic->op == CALL) &&
     !ic->localEscapeAlive &&
-    !(ic->op == PCALL && aopOnStack (left->aop, 0, left->aop->size)) &&
+    !(ic->op == PCALL && (left->aop->type == AOP_STK || left->aop->type == AOP_REGSTK)) && // Avoid destroying the pointer that we need to call
     !(options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (currFunc->type) && IFFUNC_ISCOSMIC (ftype))) // __cosmic uses 24 bits for return address on stack frame. Can only optimize tail call to __cosmic callee, if caller also uses 24 bits.
     {
       int limit = 16; // Avoid endless loops in the code putting us into an endless loop here.
@@ -4209,20 +4209,20 @@ genEndFunction (iCode *ic)
   bool x_free = !aopRet (sym->type) || (aopRet (sym->type)->regs[XL_IDX] < 0 && aopRet (sym->type)->regs[XH_IDX] < 0);
   bool y_free = !aopRet (sym->type) || (aopRet (sym->type)->regs[YL_IDX] < 0 && aopRet (sym->type)->regs[YH_IDX] < 0);
 
-  /* adjust the stack for the function */
-  if (poststackadjust > 1 && x_free &&
+  // Adjust the stack for the function.
+  if ((poststackadjust > 1 && x_free || poststackadjust > 2 && y_free) && // Try to do both stack adjustments at once.
     options.model != MODEL_LARGE && !IFFUNC_ISCOSMIC (sym->type) &&
     sym->stack < 255 - 1 &&
     !IFFUNC_ISISR (sym->type) && !IFFUNC_ISCRITICAL (sym->type))
     {
-      emit2 ("ldw", "x, (%d, sp)", sym->stack+ 1);
+      emit2 ("ldw", x_free ? "x, (%d, sp)" : "y, (%d, sp)", sym->stack+ 1);
       cost (2, 2);
-      adjustStack (sym->stack + 2 + poststackadjust, a_free, x_free, y_free);
-      emit2 ("jp", "(x)");
-      cost (1, 1);
+      adjustStack (sym->stack + 2 + poststackadjust, a_free, false, x_free ? y_free : false);
+      emit2 ("jp", x_free ? "(x)" : "(y)");
+      cost (1 + !x_free, 1);
       return;
     }
-  else if (sym->stack)
+  else if (sym->stack) // Only do the first one for now.
     adjustStack (sym->stack, a_free, x_free, y_free);
 
   wassertl (!G.stack.pushed, "Unbalanced stack.");
